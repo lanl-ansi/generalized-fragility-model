@@ -1,8 +1,8 @@
-package gov.lanl.nisac.fragility.GFMcore;
+package gov.lanl.nisac.fragility.core;
 
 public class HazardFieldFactory {
 
-    public HazardField getHazardField(String fileName, GFMEngine broker) {
+    public HazardField getHazardField(String fileName) {
 
         String extension = null;
         int idx = fileName.lastIndexOf(".");
@@ -18,9 +18,9 @@ public class HazardFieldFactory {
 
         // Factory
         if (extension.equalsIgnoreCase("ASC")) {
-            return new HazardAsc(fileName, broker);
+            return new HazardAsc(fileName);
         } else if (extension.equalsIgnoreCase("tif")) {
-            return new HazardTif(fileName, broker);
+            return new HazardTif(fileName);
         }
         else{
             System.out.println("Cannot recognize file extension");

@@ -1,4 +1,4 @@
-package gov.lanl.nisac.fragility.GFMcore;
+package gov.lanl.nisac.fragility.core;
 
 import java.util.ArrayList;
 

@@ -1,22 +1,22 @@
-package gov.lanl.nisac.fragility.GFMcore;
+package gov.lanl.nisac.fragility.core;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class GeometryLineString implements GeometryObject {
+public class GeometryPoint implements GeometryObject {
 
+    // geoJSON POINT coordinates
     private ArrayList<double[]> coordinates;
     private String identifier;
     private GFMEngine broker;
 
-    public GeometryLineString(String id, GFMEngine broker) {
+    public GeometryPoint(String id, GFMEngine broker) {
         this.identifier = id;
         this.broker = broker;
     }
 
     @Override
     public String getIdentifier() {
-        return identifier;
+        return this.identifier;
     }
 
     @Override
