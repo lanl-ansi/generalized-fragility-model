@@ -1,4 +1,4 @@
-package gov.lanl.nisac.fragility.GFMcore;
+package gov.lanl.nisac.fragility.core;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import org.geotools.coverage.grid.GridCoverage2D;
@@ -13,14 +13,12 @@ import java.io.IOException;
 
 public class HazardAsc implements HazardField {
 
-    private GFMEngine broker;
     private final String fileLocation;
     private String fileName;
     private GridCoverage2D grid;
 
-    public HazardAsc(String fileLocation, GFMEngine mediator) {
+    public HazardAsc(String fileLocation) {
         this.fileLocation = fileLocation;
-        this.broker = mediator;
         setFileName(fileLocation);
         openFile();
     }
@@ -71,12 +69,6 @@ public class HazardAsc implements HazardField {
         try {
             GridCoverageReader reader = new ArcGridReader(f);
             grid = (GridCoverage2D) reader.read(null);
-
-//            Coordinate crd = new Coordinate(-72.65, 41.74);
-//            CoordinateReferenceSystem crs = grid.getCoordinateReferenceSystem2D();
-//            DirectPosition p = JTS.toDirectPosition(crd, crs);
-//            double[] r = grid.evaluate(p, new double[1]);
-
         } catch (IOException e) {
             e.printStackTrace();
         }

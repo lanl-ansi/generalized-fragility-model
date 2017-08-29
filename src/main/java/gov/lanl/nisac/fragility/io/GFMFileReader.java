@@ -2,12 +2,13 @@ package gov.lanl.nisac.fragility.io;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import gov.lanl.nisac.fragility.GFMcore.*;
+import gov.lanl.nisac.fragility.core.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class GFMFileReader {
 
@@ -35,11 +36,17 @@ public final class GFMFileReader {
         ArrayList<HazardField> hazObj = new ArrayList<>();
         ArrayList<double[]> crd = null;
 
+
+
         for (JsonNode n : fileNodes.findValue("features")) {
             JsonNode n1 = n.get("geometry").get("coordinates");
             String geoType = n.get("geometry").get("type").asText();
-//            String identifier = n.get("properties").get("id").asText("-99999");
+//            String identifier = n.get("properties").get("id").asText("-99999"); TODO: this needs to go back
             String identifier = n.get("id").asText("-99999");
+
+            String properties = n.get("properties").asText("-- NULL --");
+            JsonNode pp = n.get("properties");
+
 
             GeometryObject g = geoObjectBuilder.getGeometry(geoType, identifier, broker);
             crd = new ArrayList<>();
@@ -56,6 +63,8 @@ public final class GFMFileReader {
         return geoObj;
     }
 
+
+
     private static void setObjectMapper(JsonNode jsonNodes) {
         fileNodes = jsonNodes;
     }
@@ -65,7 +74,7 @@ public final class GFMFileReader {
         ArrayList<HazardField> hazObj = new ArrayList<>();
         hazObjectBuilder = new HazardFieldFactory();
 
-        HazardField hazfld  = hazObjectBuilder.getHazardField(fileName, broker);
+        HazardField hazfld  = hazObjectBuilder.getHazardField(fileName);
         hazObj.add(hazfld);
 
         return hazObj;

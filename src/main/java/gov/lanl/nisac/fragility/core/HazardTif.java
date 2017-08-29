@@ -1,16 +1,14 @@
-package gov.lanl.nisac.fragility.GFMcore;
+package gov.lanl.nisac.fragility.core;
 
 import org.geotools.coverage.grid.GridCoverage2D;
 
 public class HazardTif implements HazardField {
 
     private final String fileLocation;
-    private final GFMEngine broker;
     private GridCoverage2D grid;
 
-    public HazardTif(String fileName, GFMEngine mediator){
+    public HazardTif(String fileName){
         this.fileLocation = fileName;
-        this.broker = mediator;
     }
 
     @Override
