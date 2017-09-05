@@ -5,10 +5,12 @@ import org.geotools.coverage.grid.GridCoverage2D;
 public class HazardTif implements HazardField {
 
     private final String fileLocation;
+    private final String identifier;
     private GridCoverage2D grid;
 
     public HazardTif(String fileName){
         this.fileLocation = fileName;
+        this.identifier = "wind"; //TODO: generalize tif identifiers
     }
 
     @Override

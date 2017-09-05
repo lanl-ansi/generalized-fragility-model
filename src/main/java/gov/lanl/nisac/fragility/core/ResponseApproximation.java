@@ -1,20 +1,29 @@
 package gov.lanl.nisac.fragility.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+
 public class ResponseApproximation {
 
-    private String assetId;
-    private String geometryObject;
-    private double value;
+    ObjectMapper mapper = new ObjectMapper();
+    ArrayNode array = mapper.createArrayNode();
 
-    public void setAssetId(String assetId) {
-        this.assetId = assetId;
-    }
+    public void buildingJson(){
 
-    public void setGeometryObject(String geometryObject) {
-        this.geometryObject = geometryObject;
-    }
+        ObjectNode singleNode = mapper.createObjectNode().put("id", "1")
+                .put("type", "probability")
+                .put("hazard", "1")
+                .put("value", 0.0062123496);
+        array.add(singleNode);
 
-    public void setValue(double value) {
-        this.value = value;
+        singleNode = mapper.createObjectNode().put("id", "2")
+                .put("type", "probability")
+                .put("hazard", "1")
+                .put("value", 0.232349611);
+        array.add(singleNode);
+
+        System.out.println("-->> "+array);
     }
 }
