@@ -7,11 +7,9 @@ public class GeometryPoint implements GeometryObject {
     // geoJSON POINT coordinates
     private ArrayList<double[]> coordinates;
     private String identifier;
-    private GFMEngine broker;
 
-    public GeometryPoint(String id, GFMEngine broker) {
+    public GeometryPoint(String id) {
         this.identifier = id;
-        this.broker = broker;
     }
 
     @Override

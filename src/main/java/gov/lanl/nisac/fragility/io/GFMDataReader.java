@@ -8,34 +8,43 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
-public final class GFMFileReader {
+public final class GFMDataReader {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
     private static JsonNode fileNodes;
     private static GeometryObjectFactory geoObjectBuilder = new GeometryObjectFactory();
-    private static HazardFieldFactory hazObjectBuilder = new HazardFieldFactory();
+    private static HazardFieldFactory hazardObjectBuilder = new HazardFieldFactory();
 
-    private GFMFileReader() {}
+    private static ArrayList<JsonNode> properties = new ArrayList<>();
+    private static ArrayList<GeometryObject> geometryObjects = new ArrayList<>();
+    private static ArrayList<HazardField> hazardFields = new ArrayList<>();
 
-    public static ArrayList<GeometryObject> readGeoJsonFile(String FileLocation, GFMEngine broker) {
+    private GFMDataReader() {
+    }
+
+    public static ArrayList<GeometryObject> getGeometryObjects(){
+        return geometryObjects;
+    }
+
+    public static ArrayList<JsonNode> getProperties(){
+        return properties;
+    }
+
+    public static void readGeoJsonFile(String FileLocation) {
 
         InputStream inStream;
 
         try {
             inStream = new FileInputStream(FileLocation);
-            setObjectMapper(objectMapper.readTree(inStream));
+            fileNodes = objectMapper.readTree(inStream);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         double[] coordHolder;
-        ArrayList<GeometryObject> geoObj = new ArrayList<>();
-        ArrayList<HazardField> hazObj = new ArrayList<>();
         ArrayList<double[]> crd = null;
-
 
 
         for (JsonNode n : fileNodes.findValue("features")) {
@@ -44,11 +53,9 @@ public final class GFMFileReader {
 //            String identifier = n.get("properties").get("id").asText("-99999"); TODO: this needs to go back
             String identifier = n.get("id").asText("-99999");
 
-            String properties = n.get("properties").asText("-- NULL --");
-            JsonNode pp = n.get("properties");
+            properties.add( n.get("properties"));
 
-
-            GeometryObject g = geoObjectBuilder.getGeometry(geoType, identifier, broker);
+            GeometryObject g = geoObjectBuilder.getGeometry(geoType, identifier);
             crd = new ArrayList<>();
             coordHolder = new double[2];
 
@@ -57,27 +64,20 @@ public final class GFMFileReader {
             crd.add(coordHolder);
             g.setCoordinates(crd);
 
-            geoObj.add(g);
+            geometryObjects.add(g);
         }
-
-        return geoObj;
     }
 
 
+    public static ArrayList<HazardField> readHazardFile(String fileName) {
 
-    private static void setObjectMapper(JsonNode jsonNodes) {
-        fileNodes = jsonNodes;
-    }
+        HazardField hf = hazardObjectBuilder.getHazardField(fileName);
 
+        hazardFields.add(hf);
+        hazardFields.add(hf);
+        hazardFields.add(hf);
 
-    public static ArrayList<HazardField> readHazardFile(String fileName, GFMEngine broker){
-        ArrayList<HazardField> hazObj = new ArrayList<>();
-        hazObjectBuilder = new HazardFieldFactory();
-
-        HazardField hazfld  = hazObjectBuilder.getHazardField(fileName);
-        hazObj.add(hazfld);
-
-        return hazObj;
+        return hazardFields;
     }
 
 }

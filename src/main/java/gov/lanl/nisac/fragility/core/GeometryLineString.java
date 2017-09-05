@@ -6,11 +6,9 @@ public class GeometryLineString implements GeometryObject {
 
     private ArrayList<double[]> coordinates;
     private String identifier;
-    private GFMEngine broker;
 
-    public GeometryLineString(String id, GFMEngine broker) {
+    public GeometryLineString(String id) {
         this.identifier = id;
-        this.broker = broker;
     }
 
     @Override
