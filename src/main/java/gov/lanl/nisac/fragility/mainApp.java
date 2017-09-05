@@ -29,10 +29,6 @@ public class mainApp {
         ResponseEstimatorFactory ref = new ResponseEstimatorFactory();
         ResponseEstimator r1 = ref.getResponseEstimator("PowerPoleWindStressEstimator", broker);
 
-//        PowerPoleWindStress pp = new PowerPoleWindStress(broker);
-//        System.out.println(responses.getExposure("1462")); //58.4585
-//        System.out.println(responses.getExposure("8"));    //36.8623
-//        System.out.println(responses.getExposure("912"));  //37.4214
 
     }
 
