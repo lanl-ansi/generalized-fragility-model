@@ -19,7 +19,7 @@ public class GFMEngine {
     private ArrayList<HazardField> hazardFields;
     private ArrayList<GeometryObject> geometryObjects;
     private ArrayList<JsonNode> assetProperties;
-    private ArrayList<HashMap<String, HashMap<String, Double>>> exposures = new ArrayList<>();
+    private HashMap<String, HashMap<String, Double>> exposures = new HashMap<>();
 
     private ObjectMapper mapper = new ObjectMapper();
     private ArrayNode array = mapper.createArrayNode();
@@ -34,13 +34,16 @@ public class GFMEngine {
         double[] r;     // exposures value
         int index = 0;  // index for each hazard field
 
+        String hazardName=null;
+
 
         for (HazardField h : hazardFields) {
             // getting coordinate reference system
             crs = h.getField().getCoordinateReferenceSystem2D();
 
-            exposures.add(new HashMap<>());
-            exposures.get(index).put(h.getFileLocation(), new HashMap<>());
+            // get hazard field identifier - currently using the file name
+            hazardName = h.getFileLocation().toString();
+            exposures.put(hazardName, new HashMap<>());
 
             for (GeometryObject g : geometryObjects) {
 
@@ -62,7 +65,7 @@ public class GFMEngine {
                 }
 
                 // add to exposures collection
-                exposures.get(index).get(h.getFileLocation()).put(g.getIdentifier(), r[0]);
+                exposures.get(hazardName).put(g.getIdentifier(), r[0]);
             }
             index = index + 1;
         }
@@ -85,7 +88,7 @@ public class GFMEngine {
         return assetProperties;
     }
 
-    public ArrayList<HashMap<String, HashMap<String, Double>>> getExposures(){
+    public HashMap<String, HashMap<String, Double>> getExposures(){
         return exposures;
     }
 

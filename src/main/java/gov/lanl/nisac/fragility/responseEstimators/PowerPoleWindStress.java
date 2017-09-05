@@ -35,34 +35,20 @@ public class PowerPoleWindStress implements ResponseEstimator {
         System.out.println("made it here");
 
         // getting all exposures
-        ArrayList<HashMap<String, HashMap<String, Double>>> exposures = broker.getExposures();
+        HashMap<String, HashMap<String, Double>> exposures = broker.getExposures();
 
         // data structure for stored fragility calculations
         responses = new HashMap<>();
 
-        //TODO: calculate fragility here
+        /*
+        ******  Calculate fragility here
+         */
         for(JsonNode n : assets){
             String id = n.get("lineId").asText();
-            Double dv = exposures.get(0).get("windField_example.asc").get("0");
+            Double dv = exposures.get("windField_example.asc").get("0");
+            calcFailures();
             responses.put(id, dv);
         }
-
-//
-//        for (HashMap<String, HashMap<String, Double>> hazardField : exposures) {
-//            // for each hazard field
-//            hazardField.forEach((k, exps) -> {
-//                exps.forEach((identifier, value) -> {
-//
-//
-//                    calcFailures();
-//
-//
-//                    //add each response
-//                    responses.put(identifier, value);
-//                });
-//            });
-//        }
-
     }
 
     private static void calcFailures(){}
