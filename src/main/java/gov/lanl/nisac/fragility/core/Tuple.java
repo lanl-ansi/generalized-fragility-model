@@ -1,6 +1,6 @@
 package gov.lanl.nisac.fragility.core;
 
-public final class Tuple<H,V> {
+public final class Tuple<H, V> {
 
     private final H hazard;
     private final V value;
@@ -10,8 +10,8 @@ public final class Tuple<H,V> {
         this.value = value;
     }
 
-    public static <H,V> Tuple<H,V> with (H hazard, V value) {
-        return new Tuple<H,V>(hazard,value);
+    public static <H, V> Tuple<H, V> with(H hazard, V value) {
+        return new Tuple<H, V>(hazard, value);
     }
 
     public H getHazard() {
