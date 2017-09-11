@@ -3,11 +3,13 @@ package gov.lanl.nisac.fragility.io;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.lanl.nisac.fragility.core.*;
+import org.geotools.coverage.grid.GridCoverage2D;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public final class GFMDataReader {
 
@@ -19,6 +21,7 @@ public final class GFMDataReader {
     private static ArrayList<JsonNode> properties = new ArrayList<>();
     private static ArrayList<GeometryObject> geometryObjects = new ArrayList<>();
     private static ArrayList<HazardField> hazardFields = new ArrayList<>();
+    private static HashMap<String, GridCoverage2D> hazardMap = new HashMap<>();
 
     private GFMDataReader() {
     }
@@ -50,10 +53,9 @@ public final class GFMDataReader {
         for (JsonNode n : fileNodes.findValue("features")) {
             JsonNode n1 = n.get("geometry").get("coordinates");
             String geoType = n.get("geometry").get("type").asText();
-//            String identifier = n.get("properties").get("id").asText("-99999"); TODO: this needs to go back
-            String identifier = n.get("id").asText("-99999");
+            String identifier = n.get("properties").get("id").asText();
 
-            properties.add( n.get("properties"));
+            properties.add( n.get("properties") );
 
             GeometryObject g = geoObjectBuilder.getGeometry(geoType, identifier);
             crd = new ArrayList<>();
@@ -69,12 +71,16 @@ public final class GFMDataReader {
     }
 
 
+    /**
+     * TODO: generalize for multiple command line arguments
+     * @param fileName - hazard file location
+     * @return ArrayList<HazardField>
+     */
     public static ArrayList<HazardField> readHazardFile(String fileName) {
 
         HazardField hf = hazardObjectBuilder.getHazardField(fileName);
 
-        hazardFields.add(hf);
-        hazardFields.add(hf);
+        hazardMap.put(hf.getFileName(), hf.getField());
         hazardFields.add(hf);
 
         return hazardFields;

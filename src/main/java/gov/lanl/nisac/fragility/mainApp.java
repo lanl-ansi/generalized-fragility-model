@@ -11,24 +11,24 @@ public class mainApp {
 
     public static void main(String[] args) {
 
-        System.out.println("It has begun...");
-        String abspath = "RDT-to-Poles.json";
+        String abspath = "..\\new_sd_poles.json";
         GFMDataReader.readGeoJsonFile(abspath);
         ArrayList<GeometryObject> dataAssets = GFMDataReader.getGeometryObjects();
         ArrayList<JsonNode> props = GFMDataReader.getProperties();
 
-        String hazabspath = "windField_example.asc";
+        String hazabspath = "..\\san_diego_hurr_ciclops_input_extrap_interp_hfhr_2.asc";
         ArrayList<HazardField> hazObj = GFMDataReader.readHazardFile(hazabspath);
 
         GFMEngine broker = new GFMEngine();
         broker.setHazardfields(hazObj);
+
         broker.setGeometryObjects(dataAssets);
         broker.setAssetProperties(props);
         broker.produceExposures();
 
         ResponseEstimatorFactory ref = new ResponseEstimatorFactory();
-        ResponseEstimator r1 = ref.getResponseEstimator("PowerPoleWindStressEstimator", broker);
-
+        ResponseEstimator r1 = ref.runResponseEstimator("PowerPoleWindStressEstimator", broker);
+        r1.writeResults();
 
     }
 
