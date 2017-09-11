@@ -15,12 +15,10 @@ public class HazardAsc implements HazardField {
 
     private final String fileLocation;
     private String fileName;
-    private String identifier;
     private GridCoverage2D grid;
 
     public HazardAsc(String fileLocation) {
         this.fileLocation = fileLocation;
-        this.identifier = "wind"; //TODO: generalize asc identifiers
         setFileName(fileLocation);
         openFile();
 
@@ -37,7 +35,7 @@ public class HazardAsc implements HazardField {
         }
     }
 
-    @Override
+    // TODO: deprecate this method...
     public double getExposure(double[] latLon) {
 
         Coordinate crd = new Coordinate(latLon[0], latLon[1]);
@@ -73,9 +71,5 @@ public class HazardAsc implements HazardField {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public String getIdentifier() {
-        return identifier;
     }
 }

@@ -13,7 +13,7 @@ public class HazardTif implements HazardField {
         this.identifier = "wind"; //TODO: generalize tif identifiers
     }
 
-    @Override
+
     public double getExposure(double[] latLon) {
         return 0;
     }
