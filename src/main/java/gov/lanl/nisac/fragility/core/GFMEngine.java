@@ -6,16 +6,16 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vividsolutions.jts.geom.Coordinate;
 import gov.lanl.nisac.fragility.io.GFMFileWriter;
-import org.geotools.coverage.grid.GridCoverage2D;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-
+/**
+ * This class manages functionality between geometry objects and hazard fields
+ */
 public class GFMEngine {
 
     private ArrayList<HazardField> hazardFields;
@@ -26,28 +26,33 @@ public class GFMEngine {
     private ObjectMapper mapper = new ObjectMapper();
     private ArrayNode array = mapper.createArrayNode();
 
+    /**
+     * general methods that extracts exposure values from hazard fields to geomtry object identifiers
+     */
     public void produceExposures() {
 
-        // create complex hashing scheme - general way to associate hazard keys with arbitrarily many values.
-
-        CoordinateReferenceSystem crs;
+        // hashing scheme - general way to associate hazard keys with arbitrarily many values.
+        CoordinateReferenceSystem crs; // coordinate reference system
         double x;       // longitude
         double y;       // latitude
         double[] r;     // exposures value
-        int index = 0;  // index for each hazard field
 
         String hazardName = null;
-        exposures.put(hazardName, new HashMap<>());
 
         for (HazardField h : hazardFields) {
             // getting coordinate reference system
             crs = h.getField().getCoordinateReferenceSystem2D();
 
-            // get hazard field identifier - currently using the file name
-            hazardName = h.getFileName().toString();
+            // get hazard field identifier
+            hazardName = h.getIdentifier();
+
+            // create new HashMap for each identifier/hazard field
             exposures.put(hazardName, new HashMap<>());
+
+            // counter for geometry objects within field extent
             int count = 0;
 
+            // for each geometry object, extract field exposure value
             for (GeometryObject g : geometryObjects) {
 
                 // getting coordinate array list: (lon, lat)
@@ -62,7 +67,7 @@ public class GFMEngine {
                 try {
                     r = h.getField().evaluate(p, new double[1]);
                 } catch (org.opengis.coverage.PointOutsideCoverageException e) {
-                    // if outside coverage, set to default value
+                    // if outside coverage, set to default value of 0.0
                     count = count + 1;
                     r = new double[1];
                     r[0] = 0.0;
@@ -71,16 +76,13 @@ public class GFMEngine {
                 // add to exposures collection
                 exposures.get(hazardName).put(g.getIdentifier(), r[0]);
             }
-            index = index + 1;
 
             if (count > 0) {
                 System.out.println(" -- > WARNING - " + count + " objects outside of hazard domain " + h.getFileName());
                 System.out.println("      Used default exposure value of 0.0");
             }
-
         }
     }
-
 
     public void setGeometryObjects(ArrayList<GeometryObject> geometryObjects) {
         this.geometryObjects = geometryObjects;
@@ -104,17 +106,26 @@ public class GFMEngine {
         return exposures;
     }
 
-    public void writeResults(HashMap<String, Double> responses) {
+    /**
+     * Store results into a hashmap, id --> value
+     * @param responses a response hashmap of recorded response estimations
+     * @param fileOutputPath absolute file location for output data
+     */
+    public void storeResults(HashMap<String, Double> responses, String fileOutputPath) {
 
         responses.forEach((k, v) -> {
             ObjectNode singleNode = mapper.createObjectNode().put("id", k)
                     .put("value", v);
             array.add(singleNode);
         });
+
+//        exposures.forEach((id, value) -> {
+//            value.forEach((k,v)->{
+//                System.out.println(id+" "+k+" " +v);
+//            });
+//        });
+
         System.out.println("Writing response estimators");
-
-        GFMFileWriter.writeSomething(array,
-                "C:\\Users\\301338\\Desktop\\PROJECTS\\code_development\\micot-GFM\\f_OUTPUT.json");
+        GFMFileWriter.writeResults(array, fileOutputPath);
     }
-
 }

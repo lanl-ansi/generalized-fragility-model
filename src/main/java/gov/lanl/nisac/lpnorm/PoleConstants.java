@@ -1,4 +1,4 @@
-package gov.lanl.nisac.fragility.LPNORM;
+package gov.lanl.nisac.lpnorm;
 
 /**
  * Default constant values for distribution pole.

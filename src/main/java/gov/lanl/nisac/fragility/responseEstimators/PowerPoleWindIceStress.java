@@ -1,5 +1,6 @@
 package gov.lanl.nisac.fragility.responseEstimators;
 
+
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.nisac.fragility.core.GFMEngine;
 import gov.lanl.nisac.fragility.core.ResponseEstimator;
@@ -8,12 +9,13 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PowerPoleWindStress implements ResponseEstimator {
+public class PowerPoleWindIceStress implements ResponseEstimator {
 
     private GFMEngine gfmBroker;
     private HashMap<String, Double> responses;
     private ArrayList<JsonNode> assets;
     private String fileOutputPath;
+
 
     /**
      * Response Estimator for power pole fragility with wind and ice stresses
@@ -21,21 +23,20 @@ public class PowerPoleWindStress implements ResponseEstimator {
      * @param broker
      * @param fileOutput
      */
-    public PowerPoleWindStress(GFMEngine broker, String fileOutput) {
+    public PowerPoleWindIceStress(GFMEngine broker, String fileOutput) {
         gfmBroker = broker;
         assets = broker.getAssetProperties();
         fileOutputPath = fileOutput;
 
         // calculate fragility in this method
         calcFragility();
-
     }
 
     /**
      * Do not change this method
      */
     public void writeResults() {
-        gfmBroker.storeResults(this.responses, fileOutputPath);
+        gfmBroker.storeResults(responses, fileOutputPath);
     }
 
     /**
@@ -58,19 +59,19 @@ public class PowerPoleWindStress implements ResponseEstimator {
         for (JsonNode n : assets) {
 
             String id = n.get("id").asText();
-            Double dv = exposures.get("wind").get(id);
+            Double dw = exposures.get("wind").get(id);
+            Double di = exposures.get("ice").get(id);
 
-            failure = new FragilityWind(n, dv).getFailureProbability();
+            failure = new FragilityWindIce(n, dw, di).getFailureProbability();
             responses.put(id, failure);
         }
     }
 }
 
-
 /**
- *  General class to calculate physical stresses due to wind
+ *  General class to calculate physical stresses due to wind and ice
  */
-class FragilityWind {
+class FragilityWindIce {
 
     private double baseDiameter;
     private double cableSpan;
@@ -88,9 +89,11 @@ class FragilityWind {
     private double topDiameter;
     private double woodDensity;
     private double windExposure;
+    private double iceExposure;
 
     private double failureProbability;
 
+    private static final double ICE_DENSITY = 900.0; // (kg / m^3)
     private static final double AIR_DENSITY = 1.225; // (kg / m^3)
     private static final double GRAVITY = 9.80665;   // (m / s^2)
     private static final double PI = Math.PI;
@@ -98,8 +101,9 @@ class FragilityWind {
     private NormalDistribution nd = null;
 
 
-    FragilityWind(JsonNode n, double exposure) {
-        windExposure = exposure;
+    FragilityWindIce(JsonNode n, double wind, double ice) {
+        windExposure = wind;
+        iceExposure = ice;
         baseDiameter = n.get("baseDiameter").asDouble();
         cableSpan = n.get("cableSpan").asDouble();
         cableSpan = n.get("cableSpan").asDouble();
@@ -118,7 +122,6 @@ class FragilityWind {
         woodDensity = n.get("woodDensity").asDouble();
 
         calculate();
-
     }
 
     public void calculate() {

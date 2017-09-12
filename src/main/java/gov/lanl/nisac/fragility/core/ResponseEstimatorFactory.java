@@ -1,26 +1,31 @@
 package gov.lanl.nisac.fragility.core;
 
+import gov.lanl.nisac.fragility.responseEstimators.PowerPoleWindIceStress;
 import gov.lanl.nisac.fragility.responseEstimators.PowerPoleWindStress;
 
 public class ResponseEstimatorFactory {
 
-    public ResponseEstimator runResponseEstimator(String name, GFMEngine broker ){
+    public ResponseEstimator runResponseEstimator(String estimatorId, GFMEngine broker, String fileOutputPath) {
 
-        if (name == null) {
-            System.out.println("null estimator");
+        if (estimatorId == null) {
+            System.out.println("null estimator?");
             System.exit(0);
             return null;
         }
 
-        if (name.equalsIgnoreCase("ThresholdFloodResponseEstimator")) {
+        if (estimatorId.equalsIgnoreCase("flood")) {
             return null;
-        } else if (name.equalsIgnoreCase("PowerPoleWindStressEstimator")) {
-            return new PowerPoleWindStress(broker);
-        }else{
-            System.out.println("Didn't recognize response estimator - - quiting ...");
+
+        } else if (estimatorId.equalsIgnoreCase("wind")) {
+            return new PowerPoleWindStress(broker, fileOutputPath);
+
+        } else if (estimatorId.equalsIgnoreCase("windIce")) {
+            return new PowerPoleWindIceStress(broker, fileOutputPath);
+
+        } else {
+            System.out.println("Didn't recognize response estimator \""+estimatorId+"\"");
             System.exit(0);
         }
-
         return null;
     }
 }

@@ -1,25 +1,36 @@
 package gov.lanl.nisac.fragility.core;
 
+/**
+ * Hazard field factory to instantiate and read Esri asc or tif data
+ */
 public class HazardFieldFactory {
 
-    public HazardField getHazardField(String fileName) {
+    /**
+     *
+     * @param fileName
+     * @param id
+     * @return
+     */
+    public HazardField getHazardField(String fileName, String id) {
 
         String extension = null;
-        int idx = fileName.lastIndexOf(".");
+        int idx = fileName.lastIndexOf('.');
 
         if (idx > 0) {
             extension = fileName.substring(idx + 1);
 
         } else {
-            System.out.println("No file extension");
+            System.out.println("--> Hazard file has no file extension.");
             System.exit(1);
         }
 
         // Factory
         if (extension.equalsIgnoreCase("asc")) {
-            return new HazardAsc(fileName);
+            return new HazardAsc(fileName, id);
+
         } else if (extension.equalsIgnoreCase("tif")) {
             return new HazardTif(fileName);
+
         } else {
             System.out.println("Cannot recognize file extension");
             System.exit(1);

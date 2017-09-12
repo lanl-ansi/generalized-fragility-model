@@ -11,31 +11,43 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Hazard class for Esri asc formatted data
+ */
 public class HazardAsc implements HazardField {
 
-    private final String fileLocation;
+    private final String fileLocationPath;
+    private final String identifier;
+
     private String fileName;
     private GridCoverage2D grid;
 
-    public HazardAsc(String fileLocation) {
-        this.fileLocation = fileLocation;
+    /**
+     * Constructor
+     * @param fileLocation
+     * @param id
+     */
+    HazardAsc(String fileLocation, String id) {
+        fileLocationPath = fileLocation;
+        identifier = id;
         setFileName(fileLocation);
         openFile();
 
     }
 
+    /**
+     *
+     * @param fileLocation defines absolute file location
+     */
     private void setFileName(String fileLocation){
         if (fileLocation.contains("\\")){
             int idx = fileLocation.lastIndexOf("\\");
-            String fileName = fileLocation.substring(idx+1);
-            System.out.println(fileName);
-            this.fileName = fileName;
-        }else{
-            System.out.println("-->"+fileLocation);
+            String name = fileLocation.substring(idx+1);
+            fileName = name;
         }
     }
 
-    // TODO: deprecate this method...
+    @Deprecated
     public double getExposure(double[] latLon) {
 
         Coordinate crd = new Coordinate(latLon[0], latLon[1]);
@@ -47,8 +59,8 @@ public class HazardAsc implements HazardField {
     }
 
     @Override
-    public String getFileLocation() {
-        return fileLocation;
+    public String getFileLocationPath() {
+        return fileLocationPath;
     }
 
     @Override
@@ -63,7 +75,7 @@ public class HazardAsc implements HazardField {
 
     private void openFile() {
 
-        File f = new File(fileLocation);
+        File f = new File(fileLocationPath);
 
         try {
             GridCoverageReader reader = new ArcGridReader(f);
@@ -71,5 +83,9 @@ public class HazardAsc implements HazardField {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 }

@@ -10,6 +10,7 @@ public class GeometryObjectFactory {
 
         if (shapeType.equalsIgnoreCase("LineString")) {
             return new GeometryLineString(AssetId);
+
         } else if (shapeType.equalsIgnoreCase("Point")) {
             return new GeometryPoint(AssetId);
         }

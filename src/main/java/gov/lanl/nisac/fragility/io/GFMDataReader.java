@@ -3,13 +3,11 @@ package gov.lanl.nisac.fragility.io;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.lanl.nisac.fragility.core.*;
-import org.geotools.coverage.grid.GridCoverage2D;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public final class GFMDataReader {
 
@@ -21,16 +19,15 @@ public final class GFMDataReader {
     private static ArrayList<JsonNode> properties = new ArrayList<>();
     private static ArrayList<GeometryObject> geometryObjects = new ArrayList<>();
     private static ArrayList<HazardField> hazardFields = new ArrayList<>();
-    private static HashMap<String, GridCoverage2D> hazardMap = new HashMap<>();
 
     private GFMDataReader() {
     }
 
-    public static ArrayList<GeometryObject> getGeometryObjects(){
+    public static ArrayList<GeometryObject> getGeometryObjects() {
         return geometryObjects;
     }
 
-    public static ArrayList<JsonNode> getProperties(){
+    public static ArrayList<JsonNode> getProperties() {
         return properties;
     }
 
@@ -55,7 +52,7 @@ public final class GFMDataReader {
             String geoType = n.get("geometry").get("type").asText();
             String identifier = n.get("properties").get("id").asText();
 
-            properties.add( n.get("properties") );
+            properties.add(n.get("properties"));
 
             GeometryObject g = geoObjectBuilder.getGeometry(geoType, identifier);
             crd = new ArrayList<>();
@@ -70,18 +67,20 @@ public final class GFMDataReader {
         }
     }
 
+    public static ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {
 
-    /**
-     * TODO: generalize for multiple command line arguments
-     * @param fileName - hazard file location
-     * @return ArrayList<HazardField>
-     */
-    public static ArrayList<HazardField> readHazardFile(String fileName) {
+        int numberFiles = fileName.length;
+        int numberIdentifiers = id.length;
 
-        HazardField hf = hazardObjectBuilder.getHazardField(fileName);
+        if (numberFiles != numberIdentifiers) {
+            System.out.println("EXITING:  Number of files and identifiers aren't equal");
+            System.exit(2);
+        }
 
-        hazardMap.put(hf.getFileName(), hf.getField());
-        hazardFields.add(hf);
+        for (int i = 0; i < numberFiles; i++) {
+            HazardField hf = hazardObjectBuilder.getHazardField(fileName[i], id[i]);
+            hazardFields.add(hf);
+        }
 
         return hazardFields;
     }
