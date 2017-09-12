@@ -1,10 +1,9 @@
-package gov.lanl.nisac.fragility;
+package gov.lanl.nisac;
 
 import org.apache.commons.cli.*;
 
 import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+
 
 /**
  * Class that defines command line options

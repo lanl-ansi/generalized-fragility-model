@@ -1,4 +1,4 @@
-package gov.lanl.nisac.fragility;
+package gov.lanl.nisac;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.nisac.fragility.core.*;
