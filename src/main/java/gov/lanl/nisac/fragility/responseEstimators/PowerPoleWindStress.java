@@ -28,7 +28,6 @@ public class PowerPoleWindStress implements ResponseEstimator {
 
         // calculate fragility in this method
         calcFragility();
-
     }
 
     /**
@@ -91,13 +90,19 @@ class FragilityWind {
 
     private double failureProbability;
 
-    private static final double AIR_DENSITY = 1.225; // (kg / m^3)
-    private static final double GRAVITY = 9.80665;   // (m / s^2)
+    //The density of ice is 917 kg/m^3, and the density of sea water is 1025 kg/m^3
+    //At sea level and at 15 °C air has a density of approximately 1.225 kg/m^3
+    private static final double AIR_DENSITY = 1.00; // (kg / m^3)
+    private static final double GRAVITY = 9.81;   // (m / s^2)
     private static final double PI = Math.PI;
     private static final double TO_METERS_PER_SECOND = 0.514444; // conversion from knots
     private NormalDistribution nd = null;
 
-
+    /**
+     * Fragility computations for wind induced probability of damage.
+     * @param n JsonNode that contains needed properties
+     * @param exposure wind exposure value
+     */
     FragilityWind(JsonNode n, double exposure) {
         windExposure = exposure;
         baseDiameter = n.get("baseDiameter").asDouble();
@@ -166,7 +171,6 @@ class FragilityWind {
         nd = new NormalDistribution(meanPoleStrength, stdDevPoleStrength);
         failureProbability = nd.cumulativeProbability(poleTensileStress);
     }
-
 
     double getFailureProbability() {
         return failureProbability;

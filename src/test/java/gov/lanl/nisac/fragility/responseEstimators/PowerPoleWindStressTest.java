@@ -55,17 +55,13 @@ public class PowerPoleWindStressTest extends TestCase {
     }
 
     public void testWriteResults() throws Exception {
-        System.out.println("--- ---- --->>>>>>>");
+        System.out.println("--- ---- --->");
         setupWindTest();
 
         File f = new File("fragility_output.json");
         System.out.println(f.exists());
         assertTrue(f.exists());
         f.delete();
-    }
-
-    public void testCalcFragility() throws Exception {
-        System.out.println("rand second test here ");
     }
 
 

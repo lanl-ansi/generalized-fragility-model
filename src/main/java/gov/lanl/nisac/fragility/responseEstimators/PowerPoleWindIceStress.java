@@ -33,7 +33,7 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
     }
 
     /**
-     * Do not change this method
+     * Do not change this method - generic method to write JSON
      */
     public void writeResults() {
         gfmBroker.storeResults(responses, fileOutputPath);
@@ -69,7 +69,7 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
 }
 
 /**
- *  General class to calculate physical stresses due to wind and ice
+ * General class to calculate physical stresses due to wind and ice
  */
 class FragilityWindIce {
 
@@ -89,21 +89,28 @@ class FragilityWindIce {
     private double topDiameter;
     private double woodDensity;
     private double windExposure;
-    private double iceExposure;
+    private double iceThickness;
 
     private double failureProbability;
 
+    //The density of ice is 917 kg/m^3, and the density of sea water is 1025 kg/m^3
+    //At sea level and at 15 °C air has a density of approximately 1.225 kg/m^3
     private static final double ICE_DENSITY = 900.0; // (kg / m^3)
-    private static final double AIR_DENSITY = 1.225; // (kg / m^3)
-    private static final double GRAVITY = 9.80665;   // (m / s^2)
+    private static final double AIR_DENSITY = 1.00; // (kg / m^3)
+    private static final double GRAVITY = 9.81;   // (m / s^2)
     private static final double PI = Math.PI;
     private static final double TO_METERS_PER_SECOND = 0.514444; // conversion from knots
     private NormalDistribution nd = null;
 
-
+    /**
+     * Fragility computations for ice and wind induced probability of damage.
+     * @param n
+     * @param wind
+     * @param ice
+     */
     FragilityWindIce(JsonNode n, double wind, double ice) {
         windExposure = wind;
-        iceExposure = ice;
+        iceThickness = ice;
         baseDiameter = n.get("baseDiameter").asDouble();
         cableSpan = n.get("cableSpan").asDouble();
         cableSpan = n.get("cableSpan").asDouble();
@@ -148,8 +155,19 @@ class FragilityWindIce {
         // cable surface areas (m^2) and dynamic wind pressure (Pa)
         double commsCableArea = commCableDiameter * commCableNumber * cableSpan;
         double powerCableArea = powerCableDiameter * powerCableNumber * cableSpan;
+
         double windDynamicPressure = 0.5 * AIR_DENSITY * (windExposure * TO_METERS_PER_SECOND)
                 * (windExposure * TO_METERS_PER_SECOND);
+
+        // cable ice
+        double iceMassPowerCable = ((powerCableDiameter + 2.0 * iceThickness) * (powerCableDiameter + 2.0 * iceThickness)
+                - powerCableDiameter * powerCableDiameter) * powerCableNumber;
+
+        double iceMassCommsCable = ((commCableDiameter + 2.0 * iceThickness) * (commCableDiameter + 2.0 * iceThickness)
+                - commCableDiameter * commCableDiameter) * commCableNumber;
+
+        double iceStress = PI / 4.0 * (iceMassCommsCable + iceMassPowerCable) * cableSpan * ICE_DENSITY;
+
 
         // cable wind force ( N ) and moments ( N-m )
         double powerCableWindForce = powerCableArea * windDynamicPressure;
@@ -164,12 +182,11 @@ class FragilityWindIce {
         double poleCablesTensileStress = commsCableTensileStress + powerCableTensileStress;
 
         // total tensile stress ( Pa )
-        double poleTensileStress = poleCablesTensileStress - compressiveStress;
+        double poleTensileStress = poleCablesTensileStress - (iceStress - compressiveStress);
 
         nd = new NormalDistribution(meanPoleStrength, stdDevPoleStrength);
         failureProbability = nd.cumulativeProbability(poleTensileStress);
     }
-
 
     double getFailureProbability() {
         return failureProbability;

@@ -6,7 +6,6 @@ package gov.lanl.nisac.fragility.core;
 public class HazardFieldFactory {
 
     /**
-     *
      * @param fileName
      * @param id
      * @return

@@ -8,7 +8,7 @@ import java.io.File;
 /**
  * Class that defines command line options
  */
-class CommandLineOptions {
+public class CommandLineOptions {
 
     private static Options options = defineOptions();
 
@@ -16,19 +16,22 @@ class CommandLineOptions {
     private boolean hasIdentifiers;
     private boolean hasHazards;
     private boolean hasOutput;
+    private boolean hasRDT;
 
     private String assetInputPath;
     private String[] hazardInputPaths;
     private String[] identifiers;
     private String outputFilePath;
     private String estimator;
+    private String rdtInputPath;
+
 
     /**
      * Constructor
      *
      * @param args
      */
-    CommandLineOptions(String[] args) {
+    public CommandLineOptions(String[] args) {
 
         try {
             parse(args);
@@ -39,7 +42,7 @@ class CommandLineOptions {
 
 
     /**
-     * defines details for each option
+     * Defines details for each option
      *
      * @return
      */
@@ -49,6 +52,13 @@ class CommandLineOptions {
         options.addOption(Option.builder("h")
                 .desc("help text")
                 .longOpt("help")
+                .build()
+        );
+
+        options.addOption(Option.builder("r")
+                .desc("RDT processing")
+                .hasArg()
+                .longOpt("rdt")
                 .build()
         );
 
@@ -112,6 +122,12 @@ class CommandLineOptions {
             System.exit(0);
         }
 
+        if (commandLine.hasOption("rdt")) {
+            hasRDT = true;
+            rdtInputPath = commandLine.getOptionValue("rdt");
+            checkFile(rdtInputPath);
+        }
+
         if (commandLine.hasOption("assets")) {
             hasAssets = true;
             assetInputPath = commandLine.getOptionValue("assets");
@@ -142,13 +158,14 @@ class CommandLineOptions {
     /**
      * helper method that
      */
-    static void printHelp() {
+    private static void printHelp() {
         String header = "fragility  [OPTIONS]\n options:\n" +
                 "-a             asset data\n" +
                 "-hf            hazard field files \n" +
                 "-i             identifiers\n" +
                 "-e             estimator identifier\n" +
-                "-o (optional)  output file name\n";
+                "-o (optional)  output file name\n" +
+                "-r (optional)  RDT processing \n";
 
         String footer =
                 "Examples:\nFragility.jar  -a <GeoJSON data> -hf <hazard fields>" +
@@ -176,8 +193,10 @@ class CommandLineOptions {
     private void checkFile(String filePath) {
 
         File f = new File(filePath);
+
         if (!f.exists() || f.isDirectory()) {
             System.out.println("input file \"" + filePath + "\" doesn't exist");
+            System.out.println(f.getAbsolutePath());
             System.exit(3);
         }
     }
@@ -186,11 +205,11 @@ class CommandLineOptions {
         return hasAssets;
     }
 
-    String getAssetInputPath() {
+    public String getAssetInputPath() {
         return assetInputPath;
     }
 
-    String[] getHazardInputPaths() {
+    public String[] getHazardInputPaths() {
         return hazardInputPaths;
     }
 
@@ -202,7 +221,7 @@ class CommandLineOptions {
         return hasHazards;
     }
 
-    String[] getIdentifiers() {
+    public String[] getIdentifiers() {
         return identifiers;
     }
 
@@ -210,11 +229,19 @@ class CommandLineOptions {
         return hasOutput;
     }
 
-    String getOutputFilePath() {
+    public String getOutputFilePath() {
         return outputFilePath;
     }
 
-    String getEstimator() {
+    public String getEstimator() {
         return estimator;
+    }
+
+    public boolean hasRDT() {
+        return hasRDT;
+    }
+
+    public String getRdtInputPath(){
+        return rdtInputPath;
     }
 }
