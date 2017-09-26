@@ -16,14 +16,22 @@ public class CommandLineOptions {
     private boolean hasIdentifiers;
     private boolean hasHazards;
     private boolean hasOutput;
+
     private boolean hasRDT;
+    private boolean hasRDTPoles;
+    private boolean hasNumberOfScenarios;
+    private boolean hasScenarioOutput;
 
     private String assetInputPath;
     private String[] hazardInputPaths;
     private String[] identifiers;
     private String outputFilePath;
     private String estimator;
+
     private String rdtInputPath;
+    private int numberOfScenarios;
+    private String scenarioOutput;
+    private String rdtPolesOutput;
 
 
     /**
@@ -44,7 +52,7 @@ public class CommandLineOptions {
     /**
      * Defines details for each option
      *
-     * @return
+     * @return option value object
      */
     private static Options defineOptions() {
         options = new Options();
@@ -93,9 +101,30 @@ public class CommandLineOptions {
         );
 
         options.addOption(Option.builder("o")
-                .desc("response estimator identifier")
+                .desc("response estimator output path")
                 .hasArg()
                 .longOpt("output")
+                .build()
+        );
+
+        options.addOption(Option.builder("num")
+                .desc("number of scenarios to generate for RDT processing")
+                .hasArg()
+                .longOpt("numberScenarios")
+                .build()
+        );
+
+        options.addOption(Option.builder("so")
+                .desc("RDT scenario block output path")
+                .hasArg()
+                .longOpt("RDTScenarioPath")
+                .build()
+        );
+
+        options.addOption(Option.builder("ro")
+                .desc("RDT-to-Poles output path")
+                .hasArg()
+                .longOpt("RDTToPoles")
                 .build()
         );
 
@@ -153,6 +182,22 @@ public class CommandLineOptions {
             hazardInputPaths = commandLine.getOptionValues("hazardFields");
             checkFiles(hazardInputPaths);
         }
+
+        if (commandLine.hasOption("numberScenarios")) {
+            hasNumberOfScenarios = true;
+            String num = commandLine.getOptionValue("numberScenarios");
+            numberOfScenarios = Integer.parseInt(num);
+        }
+
+        if (commandLine.hasOption("RDTScenarioPath")) {
+            hasScenarioOutput = true;
+            scenarioOutput = commandLine.getOptionValue("RDTScenarioPath");
+        }
+
+        if (commandLine.hasOption("RDTToPoles")) {
+            hasRDTPoles = true;
+            rdtPolesOutput = commandLine.getOptionValue("RDTToPoles");
+        }
     }
 
     /**
@@ -165,7 +210,8 @@ public class CommandLineOptions {
                 "-i             identifiers\n" +
                 "-e             estimator identifier\n" +
                 "-o (optional)  output file name\n" +
-                "-r (optional)  RDT processing \n";
+                "-r (optional)  RDT processing \n" +
+                "-num (optional)  For RDT processing - number of scenarios to generate \n";
 
         String footer =
                 "Examples:\nFragility.jar  -a <GeoJSON data> -hf <hazard fields>" +
@@ -241,7 +287,31 @@ public class CommandLineOptions {
         return hasRDT;
     }
 
-    public String getRdtInputPath(){
+    public String getRdtInputPath() {
         return rdtInputPath;
+    }
+
+    public int getNumberOfScenarios() {
+        return numberOfScenarios;
+    }
+
+    public boolean isHasNumberOfScenarios() {
+        return hasNumberOfScenarios;
+    }
+
+    public boolean isHasScenarioOutput() {
+        return hasScenarioOutput;
+    }
+
+    public String getScenarioOutput() {
+        return scenarioOutput;
+    }
+
+    public boolean isHasRDTPoles() {
+        return hasRDTPoles;
+    }
+
+    public String getRdtPolesOutput() {
+        return rdtPolesOutput;
     }
 }

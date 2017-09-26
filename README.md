@@ -19,19 +19,27 @@ Wind and Ice Fields:
     java -jar Fragility.jar -a < file.json > -hf <hazard1.asc;hazard2.asc> -i "wind;ice" -e "windIce"
 
     ............................................
-    -a    asset data 
+    -a      asset data 
   
-    -hf   hazard field files
+    -hf     hazard field files
   
-    -i    identifiers
+    -i      hazard identifiers
   
-    -e    estimator identifier
+    -e      estimator identifier
   
-    -o    output file name (optional) - defaults to "fragility_output.json"
+    -o      output file name (optional) - defaults to "fragility_output.json"
   
-#### RDT Input
+#### RDT Input description
+
+   **** RDT processing commands ****
+    
+    -ro     generated poles output path (optional)
+    
+    -num    number of scenarios to generate - default is one (optional)
+    
+    -so     scenario block file output (optional)
 
 This option takes in RDT data and approximates poles locations along distribution lines.
 
-java -jar Fragility.jar -r 
+java -jar Fragility.jar -r test_data/inputs/example_rdt.json -i wind -e wind -hf test_data/fields/windField_example.asc -ro RDT_Poles.json -o repsonses.json -so SCENARIOS.json -num 13 
     

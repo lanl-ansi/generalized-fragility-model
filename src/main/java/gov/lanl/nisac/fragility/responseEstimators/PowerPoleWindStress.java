@@ -41,7 +41,7 @@ public class PowerPoleWindStress implements ResponseEstimator {
      * General method place for fragility calculations
      */
     public void calcFragility() {
-        System.out.println("calculating . . . ");
+        System.out.println("Calculating . . . ");
 
         // getting all exposures
         HashMap<String, HashMap<String, Double>> exposures = gfmBroker.getExposures();

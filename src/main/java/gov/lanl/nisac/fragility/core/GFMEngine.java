@@ -24,7 +24,7 @@ public class GFMEngine {
     private HashMap<String, HashMap<String, Double>> exposures = new HashMap<>();
 
     private ObjectMapper mapper = new ObjectMapper();
-    private ArrayNode array = mapper.createArrayNode();
+    private ArrayNode reponsesArray = mapper.createArrayNode();
 
     /**
      * general methods that extracts exposure values from hazard fields to geomtry object identifiers
@@ -55,7 +55,7 @@ public class GFMEngine {
             // for each geometry object, extract field exposure value
             for (GeometryObject g : geometryObjects) {
 
-                // getting coordinate array list: (lon, lat)
+                // getting coordinate reponsesArray list: (lon, lat)
                 ArrayList<double[]> crd = g.getCoordinates();
 
                 // TODO: generalize for LineStrings, Polygons, etc.
@@ -116,7 +116,7 @@ public class GFMEngine {
         responses.forEach((k, v) -> {
             ObjectNode singleNode = mapper.createObjectNode().put("id", k)
                     .put("value", v);
-            array.add(singleNode);
+            reponsesArray.add(singleNode);
         });
 
 //        exposures.forEach((id, value) -> {
@@ -126,6 +126,10 @@ public class GFMEngine {
 //        });
 
         System.out.println("Writing response estimators");
-        GFMDataWriter.writeResults(array, fileOutputPath);
+        GFMDataWriter.writeResults(reponsesArray, fileOutputPath);
+    }
+
+    public ArrayNode getResponsesArray(){
+        return this.reponsesArray;
     }
 }

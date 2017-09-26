@@ -1,6 +1,7 @@
 package gov.lanl.nisac.fragility.io;
 
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -39,6 +40,22 @@ public class GFMDataWriter {
     }
 
     public static void writeResults(ObjectNode objs, String filePath){
+
+        if (!(filePath == null)){
+            fileOutputPath = filePath;
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+
+        try {
+            writer.writeValue(new File(fileOutputPath), objs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeResults(JsonNode objs, String filePath){
 
         if (!(filePath == null)){
             fileOutputPath = filePath;

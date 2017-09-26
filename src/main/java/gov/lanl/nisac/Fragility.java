@@ -20,9 +20,8 @@ public class Fragility {
         }
 
         if (parser.hasRDT()) {
-
             String path = parser.getRdtInputPath();
-            RDTProcessing.inferPoles(path);
+            RDTProcessing.inferPoles(path, parser);
 
         } else {
             mainRoutine();
