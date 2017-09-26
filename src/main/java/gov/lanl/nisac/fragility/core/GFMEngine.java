@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vividsolutions.jts.geom.Coordinate;
-import gov.lanl.nisac.fragility.io.GFMFileWriter;
+import gov.lanl.nisac.fragility.io.GFMDataWriter;
 import org.geotools.geometry.jts.JTS;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -126,6 +126,6 @@ public class GFMEngine {
 //        });
 
         System.out.println("Writing response estimators");
-        GFMFileWriter.writeResults(array, fileOutputPath);
+        GFMDataWriter.writeResults(array, fileOutputPath);
     }
 }

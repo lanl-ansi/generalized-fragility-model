@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import gov.lanl.nisac.fragility.io.GFMDataWriter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,14 +18,18 @@ import static gov.lanl.nisac.lpnorm.PoleConstants.*;
 public final class RDTProcessing {
 
 
+    private static ObjectNode inferredPoles;
+
     private RDTProcessing() {
     }
 
     public static void inferPoles(String filePath) {
-        readRDTJSON(filePath);
+        inferredPoles = readRDTJSON(filePath);
+        GFMDataWriter.writeResults(inferredPoles, "RDT-to-Poles.json");
+
     }
 
-    private static void readRDTJSON(String filePath) {
+    private static ObjectNode readRDTJSON(String filePath) {
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode fileNodes = null;
@@ -51,8 +56,8 @@ public final class RDTProcessing {
             nodeLocation.get(sid).add(yValue);
         }
 
-
         int id_count = 0;
+        ArrayNode features = mapper.createArrayNode();
 
         // create poles for each line segment
         for (JsonNode n : fileNodes.findValue("lines")) {
@@ -88,8 +93,6 @@ public final class RDTProcessing {
 //                    System.out.println(" -- NO POLES created for line: " + lid);
 //                }
 
-
-                ArrayNode features = mapper.createArrayNode();
                 ObjectNode obj;
                 for (int i = 0; i < numPoles; i++) {
                     obj = createPoleAsset(id_count, lid, new double[]{x0, y0});
@@ -108,6 +111,12 @@ public final class RDTProcessing {
         }
         System.out.println("Number of poles created: " + id_count);
 
+        // create geoJSON Feature Collection
+        ObjectNode featureNode = mapper.createObjectNode()
+                .put("type", "FeatureCollection")
+                .putPOJO("features", features);
+
+        return featureNode;
     }
 
 
@@ -118,11 +127,13 @@ public final class RDTProcessing {
         // creates one GeoJSON Point Object
         ObjectNode featureNode = mapper.createObjectNode()
                 .putPOJO("geometry", mapper.createObjectNode()
-                        .putArray("coordinates")
-                        .add(coord[0])
-                        .add(coord[1])
-                )
-                .put("type", "Point")
+                        .put("type", "Point")
+                        .putPOJO("coordinates", mapper.createArrayNode()
+                                .add(coord[0])
+                                .add(coord[1])
+                        ))
+                .put("type", "Feature")
+
                 .putPOJO("properties", mapper.createObjectNode()
                         .put("id", id)
                         .put("baseDiameter", BASE_DIAMETER)
@@ -146,6 +157,5 @@ public final class RDTProcessing {
         return featureNode;
 
     }
-
 
 }

@@ -14,6 +14,11 @@ public class Fragility {
     public static void main(String[] args) {
         parser = new CommandLineOptions(args);
 
+        if(args.length < 1){
+            System.err.println("no arguments provided - use help 'h' option");
+            System.exit(1);
+        }
+
         if (parser.hasRDT()) {
 
             String path = parser.getRdtInputPath();
