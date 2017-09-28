@@ -1,7 +1,13 @@
 package gov.lanl.nisac.fragility.core;
 
 public class GeometryObjectFactory {
-
+    /**
+     * geometry object factory
+     *
+     * @param shapeType - specified shape type
+     * @param AssetId   - asset identification
+     * @return returns geometry object instance
+     */
     public GeometryObject getGeometry(String shapeType, String AssetId) {
 
         if (shapeType == null) {

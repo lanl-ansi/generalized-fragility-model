@@ -24,8 +24,9 @@ public class HazardAsc implements HazardField {
 
     /**
      * Constructor
-     * @param fileLocation
-     * @param id
+     *
+     * @param fileLocation - string path to file
+     * @param id           - identifier
      */
     HazardAsc(String fileLocation, String id) {
         fileLocationPath = fileLocation;
@@ -36,13 +37,12 @@ public class HazardAsc implements HazardField {
     }
 
     /**
-     *
-     * @param fileLocation defines absolute file location
+     * @param fileLocation - defines absolute file location
      */
-    private void setFileName(String fileLocation){
-        if (fileLocation.contains("\\")){
+    private void setFileName(String fileLocation) {
+        if (fileLocation.contains("\\")) {
             int idx = fileLocation.lastIndexOf("\\");
-            String name = fileLocation.substring(idx+1);
+            String name = fileLocation.substring(idx + 1);
             fileName = name;
         }
     }
@@ -79,7 +79,7 @@ public class HazardAsc implements HazardField {
 
         try {
             GridCoverageReader reader = new ArcGridReader(f);
-            grid = (GridCoverage2D) reader.read(null);
+            this.grid = (GridCoverage2D) reader.read(null);
         } catch (IOException e) {
             e.printStackTrace();
         }

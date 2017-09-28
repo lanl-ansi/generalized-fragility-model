@@ -6,9 +6,9 @@ package gov.lanl.nisac.fragility.core;
 public class HazardFieldFactory {
 
     /**
-     * @param fileName
-     * @param id
-     * @return
+     * @param fileName - string path for file
+     * @param id       - hazard identification
+     * @return returns hazard field object
      */
     public HazardField getHazardField(String fileName, String id) {
 

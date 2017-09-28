@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class manages functionality between geometry objects and hazard fields
+ * Manages and mediates functionality between geometry objects, hazard fields, and response estimators
  */
 public class GFMEngine {
 
@@ -27,7 +27,7 @@ public class GFMEngine {
     private ArrayNode reponsesArray = mapper.createArrayNode();
 
     /**
-     * general methods that extracts exposure values from hazard fields to geomtry object identifiers
+     * method that extracts exposure values from hazard fields to geometry object identifiers
      */
     public void produceExposures() {
 
@@ -84,15 +84,30 @@ public class GFMEngine {
         }
     }
 
+    /**
+     * method to set a collection geometry objects
+     *
+     * @param geometryObjects - list of geometry objects
+     */
     public void setGeometryObjects(ArrayList<GeometryObject> geometryObjects) {
         this.geometryObjects = geometryObjects;
     }
 
+    /**
+     * method to set a collection of hazard fields
+     *
+     * @param hazardfields - list of hazard fields
+     */
     public void setHazardfields(ArrayList<HazardField> hazardfields) {
         System.out.println(hazardfields.size() + " hazard fields read");
         hazardFields = hazardfields;
     }
 
+    /**
+     * methods to set asset properties
+     *
+     * @param assetProperties - list of asset properties
+     */
     public void setAssetProperties(ArrayList<JsonNode> assetProperties) {
         System.out.println(assetProperties.size() + " assets read");
         this.assetProperties = assetProperties;
@@ -108,8 +123,9 @@ public class GFMEngine {
 
     /**
      * Store results into a hashmap, id --> value
-     * @param responses a response hashmap of recorded response estimations
-     * @param fileOutputPath absolute file location for output data
+     *
+     * @param responses      - a response hashmap of recorded response estimations
+     * @param fileOutputPath - absolute file location for output data
      */
     public void storeResults(HashMap<String, Double> responses, String fileOutputPath) {
 
@@ -119,17 +135,11 @@ public class GFMEngine {
             reponsesArray.add(singleNode);
         });
 
-//        exposures.forEach((id, value) -> {
-//            value.forEach((k,v)->{
-//                System.out.println(id+" "+k+" " +v);
-//            });
-//        });
-
         System.out.println("Writing response estimators");
         GFMDataWriter.writeResults(reponsesArray, fileOutputPath);
     }
 
-    public ArrayNode getResponsesArray(){
+    public ArrayNode getResponsesArray() {
         return this.reponsesArray;
     }
 }
