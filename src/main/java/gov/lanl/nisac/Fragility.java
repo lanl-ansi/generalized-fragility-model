@@ -26,7 +26,6 @@ public class Fragility {
         } else {
             mainRoutine();
         }
-
     }
 
     private static void mainRoutine() {

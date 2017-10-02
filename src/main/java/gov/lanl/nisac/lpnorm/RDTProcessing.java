@@ -20,7 +20,7 @@ import java.util.Random;
 import static gov.lanl.nisac.lpnorm.PoleConstants.*;
 
 /**
- * This class handles RDT data pricessing and generates the corresponding scenario block
+ * This class handles RDT data processing and generates the corresponding scenario block
  */
 public final class RDTProcessing {
 

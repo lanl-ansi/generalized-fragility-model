@@ -14,7 +14,7 @@ public class PowerPoleWindStressTest extends TestCase {
 
     public void setupWindTest() throws Exception {
 
-        String[] cmds = new String[8];
+        String[] cmds = new String[10];
 
         cmds[0] = "-a";
         cmds[1] = "test_data\\inputs\\example_poles.json";
@@ -24,6 +24,8 @@ public class PowerPoleWindStressTest extends TestCase {
         cmds[5] = "wind";
         cmds[6] = "-e";
         cmds[7] = "wind";
+        cmds[8] = "-o";
+        cmds[9] = "fragility_output.json";
 
         parser = new CommandLineOptions(cmds);
 
@@ -63,6 +65,5 @@ public class PowerPoleWindStressTest extends TestCase {
         assertTrue(f.exists());
         f.delete();
     }
-
 
 }

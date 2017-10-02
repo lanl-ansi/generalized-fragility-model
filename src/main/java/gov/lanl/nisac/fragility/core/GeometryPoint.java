@@ -7,6 +7,7 @@ public class GeometryPoint implements GeometryObject {
     // geoJSON POINT coordinates
     private ArrayList<double[]> coordinates;
     private String identifier;
+    private double exposureValue;
 
     public GeometryPoint(String id) {
         this.identifier = id;

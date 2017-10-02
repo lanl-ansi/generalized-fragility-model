@@ -20,7 +20,9 @@ public class GeometryObjectFactory {
         } else if (shapeType.equalsIgnoreCase("Point")) {
             return new GeometryPoint(AssetId);
         }
-
-        return null;
+        else{
+            System.out.println(shapeType+" <-- Geometry type not recognized for " + AssetId);
+            return null;
+        }
     }
 }

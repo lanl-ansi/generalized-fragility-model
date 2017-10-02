@@ -1,6 +1,7 @@
 package gov.lanl.nisac;
 
 import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
 
 import java.io.File;
 
@@ -11,6 +12,7 @@ import java.io.File;
 public class CommandLineOptions {
 
     private static Options options = defineOptions();
+    public static CommandLineParser parser;
 
     private boolean hasAssets;
     private boolean hasIdentifiers;
@@ -87,14 +89,14 @@ public class CommandLineOptions {
         options.addOption(Option.builder("i")
                 .desc("estimator identifier - same order as hazard file names")
                 .hasArgs()
-                .valueSeparator(';')
+                .valueSeparator(' ')
                 .longOpt("identifiers")
                 .build()
         );
 
         options.addOption(Option.builder("hf")
                 .hasArgs()
-                .valueSeparator(';')
+                .valueSeparator(' ')
                 .desc("hazard input file(s)")
                 .longOpt("hazardFields")
                 .build()
@@ -132,14 +134,14 @@ public class CommandLineOptions {
     }
 
     /**
-     * General method that checks options
+     * General method that checks options and sets field values
      *
      * @param args
      * @throws ParseException
      */
     private void parse(String[] args) throws ParseException {
         CommandLine commandLine;
-        CommandLineParser parser = new DefaultParser();
+        parser = new DefaultParser();
 
         // Parse the options and return the command line object.
         commandLine = parser.parse(options, args);
@@ -205,13 +207,13 @@ public class CommandLineOptions {
      */
     private static void printHelp() {
         String header = "fragility  [OPTIONS]\n options:\n" +
-                "-a             asset data\n" +
-                "-hf            hazard field files \n" +
-                "-i             identifiers\n" +
-                "-e             estimator identifier\n" +
-                "-o (optional)  output file name\n" +
-                "-r (optional)  RDT processing \n" +
-                "-num (optional)  For RDT processing - number of scenarios to generate \n";
+                "-a              asset data\n" +
+                "-hf             hazard field files \n" +
+                "-i              identifiers\n" +
+                "-e              estimator identifier\n" +
+                "-o (optional)   output file name\n" +
+                "-r (optional)   RDT processing \n" +
+                "-num (optional) for RDT processing - number of scenarios to generate \n";
 
         String footer =
                 "Examples:\nFragility.jar  -a <GeoJSON data> -hf <hazard fields>" +

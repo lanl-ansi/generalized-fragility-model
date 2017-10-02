@@ -26,6 +26,7 @@ public class ResponseEstimatorFactory {
             System.out.println("Didn't recognize response estimator \""+estimatorId+"\"");
             System.exit(0);
         }
+
         return null;
     }
 }

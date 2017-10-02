@@ -1,11 +1,13 @@
 package gov.lanl.nisac.fragility.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GeometryLineString implements GeometryObject {
 
     private ArrayList<double[]> coordinates;
     private String identifier;
+    private HashMap<Integer, double[]> exposureValues;
 
     /**
      * Constructor

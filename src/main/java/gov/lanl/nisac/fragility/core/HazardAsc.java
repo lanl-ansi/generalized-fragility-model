@@ -24,9 +24,8 @@ public class HazardAsc implements HazardField {
 
     /**
      * Constructor
-     *
      * @param fileLocation - string path to file
-     * @param id           - identifier
+     * @param id - indentifier
      */
     HazardAsc(String fileLocation, String id) {
         fileLocationPath = fileLocation;
@@ -37,12 +36,13 @@ public class HazardAsc implements HazardField {
     }
 
     /**
+     *
      * @param fileLocation - defines absolute file location
      */
-    private void setFileName(String fileLocation) {
-        if (fileLocation.contains("\\")) {
+    private void setFileName(String fileLocation){
+        if (fileLocation.contains("\\")){
             int idx = fileLocation.lastIndexOf("\\");
-            String name = fileLocation.substring(idx + 1);
+            String name = fileLocation.substring(idx+1);
             fileName = name;
         }
     }
