@@ -65,8 +65,7 @@ in test_data/inputs/example_buildings.json
 An example hazard field is provided in test_data/fields/spectralField_example.asc
 > Spectral displacement field was randomly generated and doesn;t represent real data!
 
-![alt text](test_data/hazardField.png "Spectral Displacement Field")
-
+<img src="https://github.com/tscrawford/turbo-fresh-gfm/blob/master/test_data/hazardField.PNG" width="400" height="400" />
 
 ### Response Estimation 
 
@@ -139,7 +138,7 @@ based on building spatial coordinates.
 modeled as a cumulative lognormal distribution.  This implementation is covered in the HAZUS
 manual, page 15-40:
 
-![alt text](test_data/equation.png "Spectral Displacement Field")
+<img src="https://github.com/tscrawford/turbo-fresh-gfm/blob/master/test_data/equation.PNG"/>
 
 
 ```java 
