@@ -7,7 +7,7 @@ import gov.lanl.nisac.fragility.core.ResponseEstimator;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ResponseEstimatorTemplate implements ResponseEstimator {
+public class SpectralDisplacement implements ResponseEstimator {
 
     private GFMEngine gfmBroker;
     private HashMap<String, Double> responses;
@@ -58,7 +58,7 @@ public class ResponseEstimatorTemplate implements ResponseEstimator {
         for (JsonNode n : assets) {
 
             String id = n.get("id").asText();
-            Double exposureValue = exposures.get("wind").get(id);
+            Double dv = exposures.get("wind").get(id);
 
             // store responses
             responses.put(id, failure);

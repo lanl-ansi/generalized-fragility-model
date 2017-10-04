@@ -7,12 +7,6 @@ public class ResponseEstimatorFactory {
 
     public ResponseEstimator runResponseEstimator(String estimatorId, GFMEngine broker, String fileOutputPath) {
 
-        if (estimatorId == null) {
-            System.out.println("null estimator?");
-            System.exit(0);
-            return null;
-        }
-
         if (estimatorId.equalsIgnoreCase("flood")) {
             return null;
 
@@ -23,7 +17,7 @@ public class ResponseEstimatorFactory {
             return new PowerPoleWindIceStress(broker, fileOutputPath);
 
         } else {
-            System.out.println("Didn't recognize response estimator \""+estimatorId+"\"");
+            System.out.println("Didn't recognize response estimator option -e: \""+estimatorId+"\"");
             System.exit(0);
         }
 

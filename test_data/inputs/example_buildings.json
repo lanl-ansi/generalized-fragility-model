@@ -1,0 +1,104 @@
+{
+ "type": "FeatureCollection",
+ "name": "hazus buildings example",
+ "features": [
+  {
+   "geometry": {
+    "coordinates":
+     [-110.5283, 44.8050],
+    "type": "Point"
+   },
+   "properties": {
+	"id": "b-0",
+	"buildType": "W1M",
+	"MSD": 5.04,
+	"LogNormStdDev": 0.85 
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates":
+     [-110.5353, 44.7840],
+    "type": "Point"
+   },
+   "properties": {
+	"id": "b-1",
+	"buildType": "C1M",
+	"MSD": 9.0,
+	"LogNormStdDev": 0.68 
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates":
+     [-110.5523, 44.7547],
+    "type": "Point"
+   },
+   "properties": {
+	"id": "b-2",
+	"buildType": "W1M",
+	"MSD": 5.04,
+	"LogNormStdDev": 0.85 
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates":
+     [-110.6950, 44.7220],
+    "type": "Point"
+   },
+   "properties": {
+	"id": "b-3",
+	"buildType": "S2M",
+	"MSD": 10.8,
+	"LogNormStdDev": 0.68 
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates":
+     [-110.7517, 44.8952],
+    "type": "Point"
+   },
+   "properties": {
+	"id": "b-4",
+	"buildType": "S2M",
+	"MSD": 10.8,
+	"LogNormStdDev": 0.68 
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates":
+     [-110.6387, 44.9162],
+    "type": "Point"
+   },
+   "properties": {
+	"id": "b-5",
+	"buildType": "W1M",
+	"MSD": 5.04,
+	"LogNormStdDev": 0.85 
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates":
+     [-110.6937, 44.6260],
+    "type": "Point"
+   },
+   "properties": {
+	"id": "b-6",
+	"buildType": "C1M",
+	"MSD": 9.0,
+	"LogNormStdDev": 0.68 
+   },
+   "type": "Feature"
+  }
+ ]
+}

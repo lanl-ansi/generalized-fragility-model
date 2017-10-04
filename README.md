@@ -5,14 +5,14 @@ This is a new rewrite of [micot-general-fragility](https://github.com/lanl-ansi/
 The General Fragility Modeling (GFM) tool is an extensible software tool 
 that provides a framework for modelers to easily write customized fragility 
 routines using generalized software components.  GFM basically accepts a set of geographic 
-raster fields for each hazard quantity and a collections of assets that are exposed to those
-hazard fields.  It then uses custom-made response estimator routines to evaluate exposure 
-response of each asset. 
+raster fields for each hazard quantity and a collection of assets, which are exposed to those
+hazard fields by spatial location.  It then provides an interface for users to create their own
+custom-made response estimator routines. 
 
 The remainder of this document will cover the following:
 
-* Installation overviews
-* Quick/Example use
+* Installation overview
+* Example use
 * Data input and options
 * Customized response estimators
 * Resilient Design Tool implementation 
@@ -54,8 +54,7 @@ xmlns="http://maven.apache.org/SETTINGS/1.0.0">
 
 # Data Input and Options
 
-
-GFM follows the [GeoJSON](https://tools.ietf.org/html/rfc7946) format, which is a data interchange format 
+For asset inputs, GFM follows the [GeoJSON](https://tools.ietf.org/html/rfc7946) format, which is a data interchange format 
 based on JavaScript Object Notation (JSON).  The current implementation uses only FeatureCollection objects 
 "Point" and "LineString" objects.  Future implementations are described later in this document. 
 
@@ -65,7 +64,7 @@ GFM expects that all asset attributes/data are defined in a Feature using a
 
 For example:
 
-```
+```json
  {
        "type": "FeatureCollection",
        "features": [{
@@ -110,21 +109,35 @@ from hazard field data.  For instance, if an asset is exposed to two hazard fiel
 using a hash table structure that associates unique identifiers to an array of exposure values - based on the input
 order.
 
-``` java -jar Fragility.jar -a < AssetData.geojson > -hf <hazard1.asc;hazard2.asc> -i "wind;ice" -e "windIce" ```
+``` java -jar Fragility.jar -a < AssetData.geojson > -hf <hazard1.asc hazard2.asc> -i "wind;ice" -e "windIce" ```
 
-From the previous command line arguments, all asset identifiers have exposures assigned:
+From the above command line arguments, all asset identifiers have exposures assigned as follows:
 
 | key | array values |
 | ---  | --- |
-| id0 | {ExposureValue[0], ExposureValue[1]} |
-| id1 | {ExposureValue[0], ExposureValue[1]} |
+| id0 | { ExposureValue[0](hazard 1), ExposureValue[1](hazard 2) } |
+| id1 | { ExposureValue[0](hazard 1), ExposureValue[1](hazard 2) } |
+| ... | { ExposureValue[0](hazard 1), ExposureValue[1](hazard 2) } |
 
+Notice how the exposure values are in the same order as specified with the -hf option.
+
+#### Options overview
+
+```-hf``` This tells fragility where your hazard raster data is located 
 
 # Customized Response Estimators
 
-TODO
+Customizing your own response estimator routines is outlined in the following steps:
+
+1. Using _ResponseEstimateTemplate.java_, create new routine
+2. Update _ResponseEstimatorFactory.java_ (gov.lanl.nisac.core)
+* to include your new response estimator class and unique string identifier for command line
+input
 
 
+## Tutorial
+
+Tutorial is [here](tutorial.md).
 
 
 
@@ -146,5 +159,14 @@ Example:
 ``` 
 java -jar Fragility.jar -r test_data/inputs/example_rdt.json -i wind -e wind -hf test_data/fields/windField_example.asc -ro RDT_Poles.json -o repsonses.json -so SCENARIOS.json -num 13 
 ```
+
+
+# Future Work
+In no particular order:
+
+* incorporate hazard fields in Esri shapefile format
+* add functionality for GeoJSON MultiPoints, polygons, MultiLineString, etc.
+
+\alpha 
 
 
