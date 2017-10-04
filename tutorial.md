@@ -105,6 +105,7 @@ else if (estimatorId.equalsIgnoreCase("eqdisplacement")) {
         }
 ```
 This basically registers your new class to be specified from command line options ``` -e eqdisplacement ```.
+
 3. below the ```responses``` declaration, paste the following code
 ```java
 double failure = 0.0;
