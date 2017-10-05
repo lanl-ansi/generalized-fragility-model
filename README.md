@@ -55,8 +55,8 @@ xmlns="http://maven.apache.org/SETTINGS/1.0.0">
 # Data Input and Options
 
 For asset inputs, GFM follows the [GeoJSON](https://tools.ietf.org/html/rfc7946) format, which is a data interchange format 
-based on JavaScript Object Notation (JSON).  The current implementation uses only FeatureCollection objects 
-"Point" and "LineString" objects.  Future implementations are described later in this document. 
+based on JavaScript Object Notation (JSON).  The current implementation uses only "Point" Feature objects.  
+Future implementations are described later in this document. 
 
 ## Asset Data Input
 GFM expects that all asset attributes/data are defined in a Feature using a 
