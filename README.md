@@ -2,20 +2,23 @@
 
 This is a new rewrite of [micot-general-fragility](https://github.com/lanl-ansi/micot-general-fragility).
 
-The General Fragility Modeling (GFM) tool is an extensible software tool 
+The Generalized Fragility Model (GFM) is an extensible software tool 
 that provides a framework for modelers to easily write customized fragility 
-routines using generalized software components.  GFM basically accepts a set of geographic 
-raster fields for each hazard quantity and a collection of assets, which are exposed to those
+routines using predefined software components.  GFM basically accepts a set of geographic 
+raster fields for each hazard quantity and a collection of assets, which are then exposed to those
 hazard fields by spatial location.  It then provides an interface for users to create their own
 custom-made response estimator routines. 
+
+<img src="https://github.com/tscrawford/turbo-fresh-gfm/blob/master/test_data/dataFlow.PNG" width="400" height="200" />
 
 The remainder of this document will cover the following:
 
 * Installation overview
 * Example use
-* Data input and options
+* Data input, options, schema
 * Customized response estimators
 * Resilient Design Tool implementation 
+* Tutorial 
 * Future Work
 
 # Installation
@@ -91,6 +94,10 @@ For example:
 
 For multiple values, use a space separator.
 
+### Schema 
+
+GFM's schema details can be found [here](schema.md)
+
 ##### Wind and Ice Fields Example:
 ``` 
 java -jar Fragility.jar -a < AssetData.geojson > -hf <hazard1.asc> <hazard2.asc> -i wind ice -e windIce
@@ -111,15 +118,31 @@ order.
 
 ``` java -jar Fragility.jar -a < AssetData.geojson > -hf <hazard1.asc hazard2.asc> -i "wind;ice" -e "windIce" ```
 
-From the above command line arguments, all asset identifiers have exposures assigned as follows:
+From the above command line arguments, Point type assets have exposures assigned as follows:
 
-| key | array values |
-| ---  | --- |
-| id0 | { ExposureValue[0](hazard 1), ExposureValue[1](hazard 2) } |
-| id1 | { ExposureValue[0](hazard 1), ExposureValue[1](hazard 2) } |
-| ... | { ExposureValue[0](hazard 1), ExposureValue[1](hazard 2) } |
+| hazard field key | identifier key | list of array values |
+| ---  | --- | --- |
+| hazard 1 | id0 | { ExposureValue[0] } |
+| hazard 1 | id1 | { ExposureValue[0] } |
+| ... | ... | ... |
+| hazard 2 | id0 | { ExposureValue[0] } |
+| hazard 2 | id1 | { ExposureValue[0] } |
 
-Notice how the exposure values are in the same order as specified with the -hf option.
+LineString types can hold multiple exposure values, and look something like this:
+
+| hazardField key | identifier key | list of array values |
+| ---  | --- | --- |
+| hazard 1 | id0 | { ExposureValue[0], ExposureValue[1], ExposureValue[2] } |
+| hazard 1 | id1 | { ExposureValue[0], ExposureValue[1] } |
+| ... | ... | ... |
+| hazard 2 | id0 | { ExposureValue[0], ExposureValue[1], ExposureValue[2] } |
+| hazard 2 | id1 | { ExposureValue[0], ExposureValue[1] } |
+
+
+Notice how the exposure values are in the same order as specified with the -hf option.  For LineStrings,
+exposure values are in the order of first and last coordinates.
+
+
 
 #### Options overview
 

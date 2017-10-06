@@ -78,7 +78,7 @@ This class implements the Response Estimator interface and already has a predefi
 
 All exposures are contained with the line 
 ```java
-HashMap<String, HashMap<String, Double>> exposures = gfmBroker.getExposures();
+Map<String, HashMap<String, ArrayList<Double>>> exposures = gfmBroker.getExposures();
 ```
 For convenience a field variable "responses" has been defined as the structure to store
 you response results 
@@ -116,7 +116,7 @@ double failure = 0.0;
         for (JsonNode n : assets) {
 
             String id = n.get("id").asText();
-            Double exposureValue = exposures.get("eqd").get(id);
+            Double exposureValue = exposures.get("wind").get(id).get(0);
 
             // store responses
             responses.put(id, failure);
@@ -143,6 +143,7 @@ manual, page 15-40:
 
 
 ```java 
+
         double failure = 0.0;
         NormalDistribution nd = null;
 
@@ -158,7 +159,7 @@ manual, page 15-40:
             // getting standard deviation of spectral displacement
             Double stdDev = n.get("LogNormStdDev").asDouble();
             // gettting spectral displacement exposure
-            Double exposureValue = exposures.get("eqd").get(id);
+            Double exposureValue = exposures.get("eqd").get(id).get(0);
 
             // conditional probability of being in, or exceeding, a particular damage state,
             // given the spectral displacement
