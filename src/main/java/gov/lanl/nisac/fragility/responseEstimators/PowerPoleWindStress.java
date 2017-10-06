@@ -7,6 +7,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PowerPoleWindStress implements ResponseEstimator {
 
@@ -44,7 +45,7 @@ public class PowerPoleWindStress implements ResponseEstimator {
         System.out.println("Calculating . . . ");
 
         // getting all exposures
-        HashMap<String, HashMap<String, Double>> exposures = gfmBroker.getExposures();
+        Map<String, HashMap<String, ArrayList<Double>>> exposures = gfmBroker.getExposures();
 
         // data structure for stored fragility calculations
         responses = new HashMap<>();
@@ -57,7 +58,7 @@ public class PowerPoleWindStress implements ResponseEstimator {
         for (JsonNode n : assets) {
 
             String id = n.get("id").asText();
-            Double dv = exposures.get("wind").get(id);
+            Double dv = exposures.get("wind").get(id).get(0);
 
             failure = new FragilityWind(n, dv).getFailureProbability();
             responses.put(id, failure);

@@ -12,6 +12,8 @@ import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Manages and mediates functionality between geometry objects, hazard fields, and response estimators
@@ -21,22 +23,21 @@ public class GFMEngine {
     private ArrayList<HazardField> hazardFields;
     private ArrayList<GeometryObject> geometryObjects;
     private ArrayList<JsonNode> assetProperties;
-    private HashMap<String, HashMap<String, Double>> exposures = new HashMap<>();
+
+    private Map<String, HashMap<String, ArrayList<Double>>> exposures = new HashMap<>();
 
     private ObjectMapper mapper = new ObjectMapper();
     private ArrayNode reponsesArray = mapper.createArrayNode();
+
+    private int outsideExtentCount;
+    CoordinateReferenceSystem crs;
 
     /**
      * method that extracts exposure values from hazard fields to geometry object identifiers
      */
     public void produceExposures() {
 
-        // hashing scheme - general way to associate hazard keys with arbitrarily many values.
-        CoordinateReferenceSystem crs; // coordinate reference system
-        double x;       // longitude
-        double y;       // latitude
-        double[] r;     // exposures value
-
+        // hazard field string identifier
         String hazardName = null;
 
         for (HazardField h : hazardFields) {
@@ -50,37 +51,87 @@ public class GFMEngine {
             exposures.put(hazardName, new HashMap<>());
 
             // counter for geometry objects within field extent
-            int count = 0;
+            outsideExtentCount = 0;
 
             // for each geometry object, extract field exposure value
             for (GeometryObject g : geometryObjects) {
 
-                // getting coordinate reponsesArray list: (lon, lat)
-                ArrayList<double[]> crd = g.getCoordinates();
-
-                // TODO: generalize for LineStrings, Polygons, etc.
-                x = crd.get(0)[0];
-                y = crd.get(0)[1];
-                Coordinate crds = new Coordinate(x, y);
-                DirectPosition p = JTS.toDirectPosition(crds, crs);
-
-                try {
-                    r = h.getField().evaluate(p, new double[1]);
-                } catch (org.opengis.coverage.PointOutsideCoverageException e) {
-                    // if outside coverage, set to default value of 0.0
-                    count = count + 1;
-                    r = new double[1];
-                    r[0] = 0.0;
+                if (g instanceof GeometryPoint) {
+                    addGeometryPoint(g, h, hazardName);
+                } else if (g instanceof GeometryLineString) {
+                    addGeometryLineString(g, h, hazardName);
                 }
-
-                // add to exposures collection
-                exposures.get(hazardName).put(g.getIdentifier(), r[0]);
             }
 
-            if (count > 0) {
-                System.out.println(" -- > WARNING - " + count + " objects outside of hazard domain " + h.getFileName());
+            if (outsideExtentCount > 0) {
+                System.out.println(" -- > WARNING - " + outsideExtentCount +
+                        " objects outside of hazard domain " + h.getFileName());
                 System.out.println("      Used default exposure value of 0.0");
             }
+        }
+    }
+
+    private void addGeometryPoint(GeometryObject g, HazardField h, String hazardName) {
+
+        double x;       // longitude
+        double y;       // latitude
+        double[] r;     // exposures value
+
+        // getting coordinate responsesArray list: (lon, lat)
+        List<double[]> crd = g.getCoordinates();
+        // initialize new array list
+        exposures.get(hazardName).put(g.getIdentifier(), new ArrayList<>());
+
+        x = crd.get(0)[0];
+        y = crd.get(0)[1];
+        Coordinate crds = new Coordinate(x, y);
+        DirectPosition p = JTS.toDirectPosition(crds, crs);
+
+
+        try {
+            r = h.getField().evaluate(p, new double[1]);
+        } catch (org.opengis.coverage.PointOutsideCoverageException e) {
+            // if outside coverage, set to default value of 0.0
+            outsideExtentCount += 1;
+            r = new double[1];
+            r[0] = 0.0;
+        }
+
+        // add to exposures collection
+        exposures.get(hazardName).get(g.getIdentifier()).add(r[0]);
+
+    }
+
+    private void addGeometryLineString(GeometryObject g, HazardField h, String hazardName) {
+
+        double x;       // longitude
+        double y;       // latitude
+        double[] r;     // exposures value
+
+        // getting coordinate responsesArray list: (lon, lat)
+        List<double[]> crd = g.getCoordinates();
+
+        // initialize new array list
+        exposures.get(hazardName).put(g.getIdentifier(), new ArrayList<>());
+
+        for (int i = 0; i < crd.size(); i++) {
+
+            x = crd.get(i)[0];
+            y = crd.get(i)[1];
+
+            Coordinate crds = new Coordinate(x, y);
+            DirectPosition p = JTS.toDirectPosition(crds, crs);
+
+            try {
+                r = h.getField().evaluate(p, new double[1]);
+            } catch (org.opengis.coverage.PointOutsideCoverageException e) {
+                // if outside coverage, set to default value of 0.0
+                outsideExtentCount += 1;
+                r = new double[1];
+                r[0] = 0.0;
+            }
+            // add to exposures collection
+            exposures.get(hazardName).get(g.getIdentifier()).add(r[0]);
         }
     }
 
@@ -117,7 +168,7 @@ public class GFMEngine {
         return assetProperties;
     }
 
-    public HashMap<String, HashMap<String, Double>> getExposures() {
+    public Map<String, HashMap<String, ArrayList<Double>>> getExposures() {
         return exposures;
     }
 

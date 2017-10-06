@@ -1,11 +1,11 @@
 package gov.lanl.nisac.fragility.core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class GeometryLineString implements GeometryObject {
 
-    private ArrayList<double[]> coordinates;
+    private List<double[]> coordinates;
     private String identifier;
     private HashMap<Integer, double[]> exposureValues;
 
@@ -23,12 +23,12 @@ public class GeometryLineString implements GeometryObject {
     }
 
     @Override
-    public void setCoordinates(ArrayList<double[]> latLons) {
+    public void setCoordinates(List<double[]> latLons) {
         this.coordinates = latLons;
     }
 
     @Override
-    public ArrayList<double[]> getCoordinates() {
+    public List<double[]> getCoordinates() {
         return this.coordinates;
     }
 }

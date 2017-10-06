@@ -1,13 +1,12 @@
 package gov.lanl.nisac.fragility.core;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class GeometryPoint implements GeometryObject {
 
     // geoJSON POINT coordinates
-    private ArrayList<double[]> coordinates;
+    private List<double[]> coordinates;
     private String identifier;
-    private double exposureValue;
 
     public GeometryPoint(String id) {
         this.identifier = id;
@@ -19,12 +18,12 @@ public class GeometryPoint implements GeometryObject {
     }
 
     @Override
-    public void setCoordinates(ArrayList<double[]> latLons) {
+    public void setCoordinates(List<double[]> latLons) {
         this.coordinates = latLons;
     }
 
     @Override
-    public ArrayList<double[]> getCoordinates() {
+    public List<double[]> getCoordinates() {
         return this.coordinates;
     }
 }

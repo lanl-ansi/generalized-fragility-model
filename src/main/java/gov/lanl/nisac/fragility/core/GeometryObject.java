@@ -1,6 +1,6 @@
 package gov.lanl.nisac.fragility.core;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface GeometryObject {
 
@@ -13,13 +13,13 @@ public interface GeometryObject {
     /**
      * @param lonLat longitude and latitiude coordinates
      */
-    void setCoordinates(ArrayList<double[]> lonLat);
+    void setCoordinates(List<double[]> lonLat);
 
     /**
      *
      * @return returns a list of coordinates that defines a Geometry object
      */
-    ArrayList<double[]> getCoordinates();
+    List<double[]> getCoordinates();
 
 }
 

@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class GFMDataReader {
 
@@ -43,28 +44,53 @@ public final class GFMDataReader {
             e.printStackTrace();
         }
 
-        double[] coordHolder;
-        ArrayList<double[]> crd = null;
-
 
         for (JsonNode n : fileNodes.findValue("features")) {
-            JsonNode n1 = n.get("geometry").get("coordinates");
+            JsonNode coordNode = n.get("geometry").get("coordinates");
             String geoType = n.get("geometry").get("type").asText();
             String identifier = n.get("properties").get("id").asText();
 
             properties.add(n.get("properties"));
 
             GeometryObject g = geoObjectBuilder.getGeometry(geoType, identifier);
-            crd = new ArrayList<>();
-            coordHolder = new double[2];
 
-            coordHolder[0] = n1.get(0).asDouble();
-            coordHolder[1] = n1.get(1).asDouble();
-            crd.add(coordHolder);
-            g.setCoordinates(crd);
-
-            geometryObjects.add(g);
+            if (g instanceof GeometryPoint) {
+                addPoint(g, coordNode);
+            } else if (g instanceof GeometryLineString) {
+                addLineString(g, coordNode);
+            }
         }
+    }
+
+    private static void addPoint(GeometryObject g, JsonNode coordNode) {
+
+        List<double[]> crd = new ArrayList<>();
+        double[] coordHolder = new double[2];
+
+        coordHolder[0] = coordNode.get(0).asDouble();
+        coordHolder[1] = coordNode.get(1).asDouble();
+        crd.add(coordHolder);
+        g.setCoordinates(crd);
+
+        geometryObjects.add(g);
+
+    }
+
+    private static void addLineString(GeometryObject g, JsonNode coordNode) {
+
+        List<double[]> crd = new ArrayList<>();
+        double[] coordHolder;
+
+        for (int i = 0; i < coordNode.size(); i++) {
+            coordHolder = new double[2];
+            coordHolder[0] = coordNode.get(i).get(0).asDouble();
+            coordHolder[1] = coordNode.get(i).get(1).asDouble();
+            crd.add(coordHolder);
+        }
+
+        g.setCoordinates(crd);
+        geometryObjects.add(g);
+
     }
 
     public static ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {

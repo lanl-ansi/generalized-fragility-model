@@ -6,6 +6,7 @@ import gov.lanl.nisac.fragility.core.ResponseEstimator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ResponseEstimatorTemplate implements ResponseEstimator {
 
@@ -45,7 +46,7 @@ public class ResponseEstimatorTemplate implements ResponseEstimator {
         System.out.println("Calculating . . . ");
 
         // getting all exposures
-        HashMap<String, HashMap<String, Double>> exposures = gfmBroker.getExposures();
+        Map<String, HashMap<String, ArrayList<Double>>> exposures = gfmBroker.getExposures();
 
         // data structure to store fragility calculations/responses
         responses = new HashMap<>();
@@ -58,7 +59,7 @@ public class ResponseEstimatorTemplate implements ResponseEstimator {
         for (JsonNode n : assets) {
 
             String id = n.get("id").asText();
-            Double exposureValue = exposures.get("wind").get(id);
+            Double exposureValue = exposures.get("wind").get(id).get(0);
 
             // store responses
             responses.put(id, failure);
