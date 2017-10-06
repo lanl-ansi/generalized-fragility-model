@@ -97,7 +97,7 @@ public class GFMEngine {
             r[0] = 0.0;
         }
 
-        // add to exposures collection
+        // add point to exposures collection
         exposures.get(hazardName).get(g.getIdentifier()).add(r[0]);
 
     }
@@ -130,7 +130,7 @@ public class GFMEngine {
                 r = new double[1];
                 r[0] = 0.0;
             }
-            // add to exposures collection
+            // add point exposure to collection
             exposures.get(hazardName).get(g.getIdentifier()).add(r[0]);
         }
     }

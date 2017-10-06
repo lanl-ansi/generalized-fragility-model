@@ -46,7 +46,7 @@ public class ResponseEstimatorSpectralDisplacement implements ResponseEstimator 
         System.out.println("Calculating . . . ");
 
         // getting all exposures
-        HashMap<String, HashMap<String, Double>> exposures = gfmBroker.getExposures();
+        Map<String, HashMap<String, ArrayList<Double>>> exposures = gfmBroker.getExposures();
 
         // data structure to store fragility calculations/responses
         responses = new HashMap<>();
@@ -66,7 +66,7 @@ public class ResponseEstimatorSpectralDisplacement implements ResponseEstimator 
             // getting standard deviation of spectral displacement
             Double stdDev = n.get("LogNormStdDev").asDouble();
             // gettting spectral displacement exposure
-            Double exposureValue = exposures.get("eqd").get(id);
+            Double exposureValue = exposures.get("eqd").get(id).get(0);
 
             // conditional probability of being in, or exceeding, a particular damage state,
             // given the spectral displacement
