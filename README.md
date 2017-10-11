@@ -1,4 +1,9 @@
-# turbo-fresh-gfm
+# Generalized Fragility Model (GFM)
+
+[![Build Status](https://travis-ci.org/lanl-ansi/generalized-fragility-model.svg?branch=master)](https://travis-ci.org/lanl-ansi/generalized-fragility-model)
+
+[![codecov](https://codecov.io/gh/lanl-ansi/generalized-fragility-model/branch/master/graph/badge.svg)](https://codecov.io/gh/lanl-ansi/generalized-fragility-model)
+
 
 This is a new rewrite of [micot-general-fragility](https://github.com/lanl-ansi/micot-general-fragility).
 
