@@ -11,9 +11,9 @@ public class CommandLineOptionsTest extends TestCase {
         String[] cmds = new String[8];
 
         cmds[0] = "-a";
-        cmds[1] = "test_data\\inputs\\example_poles.json";
+        cmds[1] = "test_data/inputs/example_poles.json";
         cmds[2] = "-hf";
-        cmds[3] = "test_data\\fields\\iceField_example.asc test_data\\fields\\windField_example.asc";
+        cmds[3] = "test_data/fields/iceField_example.asc test_data/fields/windField_example.asc";
         cmds[4] = "-i";
         cmds[5] = "ice wind";
         cmds[6] = "-e";
@@ -28,13 +28,13 @@ public class CommandLineOptionsTest extends TestCase {
     }
 
     public void testGetAssetInputPath() throws Exception {
-        assertEquals(parser.getAssetInputPath(), "test_data\\inputs\\example_poles.json");
+        assertEquals(parser.getAssetInputPath(), "test_data/inputs/example_poles.json");
     }
 
     public void testGetHazardInputPaths() throws Exception {
         // String array !!
-        assertEquals(parser.getHazardInputPaths()[0], "test_data\\fields\\iceField_example.asc");
-        assertEquals(parser.getHazardInputPaths()[1], "test_data\\fields\\windField_example.asc");
+        assertEquals(parser.getHazardInputPaths()[0], "test_data/fields/iceField_example.asc");
+        assertEquals(parser.getHazardInputPaths()[1], "test_data/fields/windField_example.asc");
     }
 
     public void testHasIdentifiers() throws Exception {

@@ -20,9 +20,9 @@ public class PowerPoleWindIceStressTest extends TestCase {
         System.out.println("junk");
 
         cmds[0] = "-a";
-        cmds[1] = "test_data\\inputs\\example_poles.json";
+        cmds[1] = "test_data/inputs/example_poles.json";
         cmds[2] = "-hf";
-        cmds[3] = "test_data\\fields\\windField_example.asc test_data\\fields\\iceField_example.asc";
+        cmds[3] = "test_data/fields/windField_example.asc test_data/fields/iceField_example.asc";
         cmds[4] = "-i";
         cmds[5] = "wind ice";
         cmds[6] = "-e";
