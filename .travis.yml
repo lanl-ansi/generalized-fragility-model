@@ -5,6 +5,7 @@ os:
  
 jdk:
   - oraclejdk8
+  -
  
 script: "mvn cobertura:cobertura"
    
