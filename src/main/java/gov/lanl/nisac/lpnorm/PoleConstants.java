@@ -10,9 +10,6 @@ public final class PoleConstants {
     }
 
     // Asset Attributes
-    static final String ASSET_CLASS = "PowerDistributionPole";
-    static final String GEOMETRY_TYPE = "Point";
-
     static final float BASE_DIAMETER = 0.2222f;
     static final float CABLE_SPAN = 90.0f;
     static final float COMM_ATTACHMENT_HEIGHT = 4.7244f;
@@ -30,22 +27,6 @@ public final class PoleConstants {
     static final double STD_DEV_POLE_STRENGTH = 7700000.0;
     static final float TOP_DIAMETER = 0.153616f;
     static final double WOOD_DENSITY = 500.0;
-
-    // hazard field attributes
-    static final String HAZ_ID = "GFM-generated-ID";
-    static final String HAZARD_QUANTITY_TYPE = "Windspeed";
-    static final String HAZ_GRID_FORMAT = "ArcGrid";
-    static final String HAZ_CRS_CODE = "ArcGrid";
-    static final int HAZ_NUMBER_OF_BANDS = 1;
-    static final int HAZ_RASTER_BAND = 1;
-    static final String HAZ_VALUE_TYPE = "double";
-
-    // response estimators
-    static final String RSP_ID = "PowerPoleWindStressEstimator";
-    static final String RSP_ESTIMATOR_CLASS = "PowerPoleWindStressEstimator";
-    static final String RSP_ASSET_CLASS = "PowerDistributionPole";
-    static final String RSP_HAZ_QUANTITY_TYPE = "Windspeed";
-    static final String RSP_QUANTITY_TYPE = "DamageProbability";
 
     // pole spacing - meters
     static final double POLE_SPACING = 91.0;

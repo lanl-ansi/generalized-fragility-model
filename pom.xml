@@ -112,11 +112,9 @@
             <version>1.13</version>
         </dependency>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>23.0</version>
-            <!-- or, for Android: -->
-            <!--<version>23.0-android</version>-->
+            <groupId>org.geotools</groupId>
+            <artifactId>gt-epsg-hsql</artifactId>
+            <version>11.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -134,5 +132,4 @@
             <version>3.8.2</version>
         </dependency>
     </dependencies>
-
 </project>

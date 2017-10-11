@@ -28,7 +28,7 @@ public class HazardFieldFactory {
             return new HazardAsc(fileName, id);
 
         } else if (extension.equalsIgnoreCase("tif")) {
-            return new HazardTif(fileName);
+            return new HazardTif(fileName, id);
 
         } else {
             System.out.println("Cannot recognize file extension");

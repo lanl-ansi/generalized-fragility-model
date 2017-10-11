@@ -28,8 +28,8 @@ public class HazardAsc implements HazardField {
      * @param id - indentifier
      */
     HazardAsc(String fileLocation, String id) {
-        fileLocationPath = fileLocation;
-        identifier = id;
+        this.fileLocationPath = fileLocation;
+        this.identifier = id;
         setFileName(fileLocation);
         openFile();
 
@@ -40,10 +40,10 @@ public class HazardAsc implements HazardField {
      * @param fileLocation - defines absolute file location
      */
     private void setFileName(String fileLocation){
-        if (fileLocation.contains("\\")){
-            int idx = fileLocation.lastIndexOf("\\");
+        if (fileLocation.contains("/")){
+            int idx = fileLocation.lastIndexOf("/");
             String name = fileLocation.substring(idx+1);
-            fileName = name;
+            this.fileName = name;
         }
     }
 
@@ -60,7 +60,7 @@ public class HazardAsc implements HazardField {
 
     @Override
     public String getFileLocationPath() {
-        return fileLocationPath;
+        return this.fileLocationPath;
     }
 
     @Override
@@ -86,6 +86,6 @@ public class HazardAsc implements HazardField {
     }
 
     public String getIdentifier() {
-        return identifier;
+        return this.identifier;
     }
 }

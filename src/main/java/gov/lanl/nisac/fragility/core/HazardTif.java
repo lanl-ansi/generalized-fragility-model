@@ -1,27 +1,69 @@
 package gov.lanl.nisac.fragility.core;
 
+import com.vividsolutions.jts.geom.Coordinate;
 import org.geotools.coverage.grid.GridCoverage2D;
+import org.geotools.gce.arcgrid.ArcGridReader;
+import org.geotools.gce.geotiff.GeoTiffReader;
+import org.geotools.geometry.jts.JTS;
+import org.opengis.coverage.grid.GridCoverageReader;
+import org.opengis.geometry.DirectPosition;
+import org.opengis.referencing.crs.CoordinateReferenceSystem;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Hazard class for tif formatted data
  */
 public class HazardTif implements HazardField {
 
-    private final String fileLocation;
+    private final String fileLocationPath;
     private final String identifier;
+
+    private String fileName;
     private GridCoverage2D grid;
 
     /**
      * Constructor
-     * @param fileName defines file location
+     * @param fileLocation defines file location
      */
-    HazardTif(String fileName){
-        this.fileLocation = fileName;
-        this.identifier = "wind"; //TODO: generalize tif identifiers
+    HazardTif(String fileLocation, String id){
+        this.fileLocationPath = fileLocation;
+        this.identifier = id;
+        setFileName(fileLocation);
+        openFile();
+
     }
 
+    private void setFileName(String fileLocation){
+        if (fileLocation.contains("/")){
+            int idx = fileLocation.lastIndexOf("/");
+            String name = fileLocation.substring(idx+1);
+            this.fileName = name;
+        }
+    }
+
+    private void openFile() {
+
+        File f = new File(this.fileLocationPath);
+
+        try {
+            GridCoverageReader reader = new GeoTiffReader(f);
+            this.grid = (GridCoverage2D) reader.read(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Deprecated
     public double getExposure(double[] latLon) {
-        return 0;
+
+        Coordinate crd = new Coordinate(latLon[0], latLon[1]);
+        CoordinateReferenceSystem crs = grid.getCoordinateReferenceSystem2D();
+        DirectPosition p = JTS.toDirectPosition(crd, crs);
+        double[] r = grid.evaluate(p, new double[1]);
+
+        return r[0];
     }
 
     /**
@@ -30,7 +72,7 @@ public class HazardTif implements HazardField {
      */
     @Override
     public String getFileLocationPath() {
-        return fileLocation;
+        return this.fileLocationPath;
     }
 
     /**
@@ -53,7 +95,7 @@ public class HazardTif implements HazardField {
 
     @Override
     public String getIdentifier() {
-        return identifier;
+        return this.identifier;
     }
 
 }
