@@ -37,12 +37,13 @@ GFM is distributed as a Maven project:
 4. Update JAVA_HOME to point at directory of your Java installation.
 5. Install a git tool ([download](https://git-scm.com/downloads), apt-get, etc.)
 6. Download GFM repository using the following git command: 
-``` git clone https://github.com/tscrawford/turbo-fresh-gfm.git```
+```git clone https://github.com/tscrawford/turbo-fresh-gfm.git```
 7. Build and package code into an executable file using ```mvn -Dmaven.test.skip=true package```
 
 ### LANL Only
 If you are behind LANL's firewall, Maven needs to know the location of the proxy server.
 In ${USER_HOME_DIR}/.m2/settings.xml, add the following (create settings.xml if it does not exist)
+
 ```xml
 <?xml version="1.0"?>
 <settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd" 
@@ -165,8 +166,7 @@ Customizing your own response estimator routines is outlined in the following st
 
 1. Using _ResponseEstimateTemplate.java_, create new routine (located in _test_data_ directory)
 2. Update _ResponseEstimatorFactory.java_ (gov.lanl.nisac.core)
-* to include your new response estimator class and unique string identifier for command line
-input
+* to include your new response estimator class and unique string identifier for command line input
 
 
 ## Tutorial

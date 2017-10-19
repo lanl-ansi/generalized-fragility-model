@@ -1,6 +1,6 @@
 # Response Estimator Tutorial 
 
-This tutorial will mirror a methodology/data described from the HAZUS
+This tutorial will mirror a methodology and data described from the HAZUS
 Earthquake Modeling technical manual.  The technical manual can be found
 [here](https://www.fema.gov/media-library/assets/documents/24609).
 
@@ -57,7 +57,7 @@ W1M - 0.85
 The latitude and longitude values are randomly chosen, and example file is 
 in test_data/inputs/example_buildings.json
 
-> Building locations were randomly chosen and don't represent real building locations
+> Building locations were randomly chosen and does not represent real building locations
 
 
 ### Hazard Field - Spectral Displacement
@@ -116,7 +116,7 @@ double failure = 0.0;
         for (JsonNode n : assets) {
 
             String id = n.get("id").asText();
-            Double exposureValue = exposures.get("wind").get(id).get(0);
+            Double exposureValue = exposures.get("eqd").get(id).get(0);
 
             // store responses
             responses.put(id, failure);
