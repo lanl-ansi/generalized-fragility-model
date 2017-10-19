@@ -57,13 +57,13 @@ W1M - 0.85
 The latitude and longitude values are randomly chosen, and example file is 
 in test_data/inputs/example_buildings.json
 
-> Building locations were randomly chosen and does not represent real building locations
+> Building locations were randomly chosen and do not represent real building locations
 
 
 ### Hazard Field - Spectral Displacement
 
 An example hazard field is provided in test_data/fields/spectralField_example.asc
-> Spectral displacement field was randomly generated and doesn;t represent real data!
+> Spectral displacement field was randomly generated and does not represent real data!
 
 <img src="https://github.com/tscrawford/turbo-fresh-gfm/blob/master/test_data/hazardField.PNG" width="400" height="400" />
 
