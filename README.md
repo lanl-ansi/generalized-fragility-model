@@ -15,7 +15,7 @@ GFM basically accepts a set of geographic raster fields for each hazard quantity
 which are then exposed to those hazard fields by spatial location.  It then provides a data structure for users 
 to create their own custom-made response estimator routines. 
 
-<img src="https://github.com/tscrawford/turbo-fresh-gfm/blob/master/test_data/dataFlow.PNG" width="400" height="200" />
+<img src="https://github.com/lanl-ansi/generalized-fragility-model/tree/master/test_data/dataFlow.PNG" width="400" height="200" />
 
 The remainder of this document will cover the following:
 
