@@ -18,7 +18,8 @@ public class GFMDataWriter {
     }
 
     /**
-     * General routine that writes a JSON array
+     * General routine that writes a JSON array to specified file path.  If file path null
+     * then default file name "fragility_output.json" is given.
      *
      * @param responsesApproximations
      * @param filePath
@@ -39,6 +40,13 @@ public class GFMDataWriter {
         }
     }
 
+    /**
+     * General routine that writes a JSON array to specified file path.  If file path null
+     * then default file name "fragility_output.json" is given.
+     *
+     * @param objs
+     * @param filePath
+     */
     public static void writeResults(ObjectNode objs, String filePath){
 
         if (!(filePath == null)){
@@ -55,6 +63,13 @@ public class GFMDataWriter {
         }
     }
 
+    /**
+     * General routine that writes a JSON array to specified file path.  If file path null
+     * then default file name "fragility_output.json" is given.
+     *
+     * @param objs
+     * @param filePath
+     */
     public static void writeResults(JsonNode objs, String filePath){
 
         if (!(filePath == null)){

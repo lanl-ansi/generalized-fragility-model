@@ -8,11 +8,12 @@
 This is a new rewrite of [micot-general-fragility](https://github.com/lanl-ansi/micot-general-fragility).
 
 The Generalized Fragility Model (GFM) is an extensible software tool 
-that provides a framework for modelers to easily write customized fragility 
-routines using predefined software components.  GFM basically accepts a set of geographic 
-raster fields for each hazard quantity and a collection of assets, which are then exposed to those
-hazard fields by spatial location.  It then provides an interface for users to create their own
-custom-made response estimator routines. 
+that provides a framework and template for modelers to easily write customized fragility 
+routines using predefined software components.  GFM accepts a GeoJSON file of assets,
+
+GFM basically accepts a set of geographic raster fields for each hazard quantity and a collection of assets, 
+which are then exposed to those hazard fields by spatial location.  It then provides a data structure for users 
+to create their own custom-made response estimator routines. 
 
 <img src="https://github.com/tscrawford/turbo-fresh-gfm/blob/master/test_data/dataFlow.PNG" width="400" height="200" />
 
@@ -146,13 +147,17 @@ LineString types can hold multiple exposure values, and look something like this
 
 
 Notice how the exposure values are in the same order as specified with the -hf option.  For LineStrings,
-exposure values are in the order of first and last coordinates.
-
+exposure values are in the order of first and last coordinates; as specified in the GeoJSON's geometry coordinates. 
 
 
 #### Options overview
 
 ```-hf``` This tells fragility where your hazard raster data is located 
+```-i ``` This is the identifier that fragility routines use to extract exposure values from the general hash map structure
+```-e ``` Specifies the estimator routine to be used 
+```-o ``` output file path
+```-a ``` Asset data file location 
+
 
 # Customized Response Estimators
 
@@ -166,28 +171,12 @@ input
 
 ## Tutorial
 
-Tutorial is [here](tutorial.md).
+A tutorial that provides instructions on how to create new fragility routines [here](tutorial.md).
 
 
+## Resilience Design Tool (RDT)
 
-# RDT Input descriptions
-
-
-This option takes in RDT data and approximates poles locations along distribution lines.
-    
-```
--r      RDT proccessing option
--ro     generated poles output path (optional)    
--num    number of scenarios to generate - default is one (optional)
--so     scenario block file output (optional)
-
-```
-
-Example:
-
-``` 
-java -jar Fragility.jar -r test_data/inputs/example_rdt.json -i wind -e wind -hf test_data/fields/windField_example.asc -ro RDT_Poles.json -o repsonses.json -so SCENARIOS.json -num 13 
-```
+RDT options are provided [here](rdt.md)
 
 
 # Future Work
@@ -195,7 +184,5 @@ In no particular order:
 
 * incorporate hazard fields in Esri shapefile format
 * add functionality for GeoJSON MultiPoints, polygons, MultiLineString, etc.
-
-\alpha 
-
+ 
 

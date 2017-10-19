@@ -17,7 +17,7 @@ public class ResponseEstimatorFactory {
             return new PowerPoleWindIceStress(broker, fileOutputPath);
 
         } else {
-            System.out.println("Didn't recognize response estimator option -e: \""+estimatorId+"\"");
+            System.out.println("Didn't recognize response estimator option -e: \"" + estimatorId + "\"");
             System.exit(0);
         }
 

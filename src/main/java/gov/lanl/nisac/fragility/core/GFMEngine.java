@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vividsolutions.jts.geom.Coordinate;
 import gov.lanl.nisac.fragility.io.GFMDataWriter;
 import org.geotools.geometry.jts.JTS;
+import org.opengis.coverage.PointOutsideCoverageException;
 import org.opengis.geometry.DirectPosition;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
 
@@ -114,17 +115,17 @@ public class GFMEngine {
         // initialize new array list
         exposures.get(hazardName).put(g.getIdentifier(), new ArrayList<>());
 
-        for (int i = 0; i < crd.size(); i++) {
+        for (double[] aCrd : crd) {
 
-            x = crd.get(i)[0];
-            y = crd.get(i)[1];
+            x = aCrd[0];
+            y = aCrd[1];
 
             Coordinate crds = new Coordinate(x, y);
             DirectPosition p = JTS.toDirectPosition(crds, crs);
 
             try {
                 r = h.getField().evaluate(p, new double[1]);
-            } catch (org.opengis.coverage.PointOutsideCoverageException e) {
+            } catch (PointOutsideCoverageException e) {
                 // if outside coverage, set to default value of 0.0
                 outsideExtentCount += 1;
                 r = new double[1];
@@ -155,7 +156,7 @@ public class GFMEngine {
     }
 
     /**
-     * methods to set asset properties
+     * Method to set asset properties
      *
      * @param assetProperties - list of asset properties
      */
