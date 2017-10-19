@@ -172,4 +172,6 @@ manual, page 15-40:
         }
 ```
  
+5. Rebuild the executable jar file using: mvn install
+ 
 Done.
