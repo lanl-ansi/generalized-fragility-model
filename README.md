@@ -163,7 +163,7 @@ exposure values are in the order of first and last coordinates; as specified in 
 
 Customizing your own response estimator routines is outlined in the following steps:
 
-1. Using _ResponseEstimateTemplate.java_, create new routine
+1. Using _ResponseEstimateTemplate.java_, create new routine (located in _test_data_ directory)
 2. Update _ResponseEstimatorFactory.java_ (gov.lanl.nisac.core)
 * to include your new response estimator class and unique string identifier for command line
 input
