@@ -23,6 +23,7 @@ import static gov.lanl.nisac.lpnorm.PoleConstants.*;
  * This class handles RDT data processing and generates the corresponding scenario block
  */
 public final class RDTProcessing {
+    //TODO: This functionality should be packaged into ResponseEstimators
 
     private static ObjectNode rdtData;
     private static ObjectMapper mapper = new ObjectMapper();
