@@ -85,13 +85,11 @@ public final class RDTProcessing {
      * @param response
      * @param assetProperties
      */
-    private static void generateScenarios(ArrayNode response, ArrayList<JsonNode> assetProperties) {
+    public static void generateScenarios(ArrayNode response, ArrayList<JsonNode> assetProperties) {
 
         Random r = new Random();
 
-
         int timeCt = 0;
-        ArrayNode lineIdentifier;
 
         HashMap<String, String> poles = new HashMap();
 
@@ -102,23 +100,28 @@ public final class RDTProcessing {
 
         ArrayNode scenarioArray = mapper.createArrayNode();
 
+        // using a list to build line ids that are considered damaged.
+        // ArrayNode type has a bug with it's "has" method - produces duplicates
+        List<String> lineIdList;
+
         // generating scenarios
         do {
 
-            lineIdentifier = mapper.createArrayNode();
+            lineIdList = new ArrayList<>();
 
             for (JsonNode rd : response) {
                 // if response > rand(0,1) --> line is disabled
                 if (rd.get("value").asDouble() > r.nextFloat()) {
-                    String line = poles.get(rd.get("id").asText());
+                    String line = poles.get(rd.get("id").asText()).trim();
 
-                    if (!lineIdentifier.has(line)) {
-                        lineIdentifier.add(line);
+                    if (!lineIdList.contains(line)) {
+                        lineIdList.add(line);
                     }
                 }
             }
 
             timeCt += 1;
+            ArrayNode lineIdentifier = mapper.valueToTree(lineIdList);
 
             ObjectNode singleScenario = mapper.createObjectNode()
                     .put("id", String.valueOf(timeCt))
@@ -213,12 +216,6 @@ public final class RDTProcessing {
                     double numPoles = Math.floor(ndist * DEG_TO_METERS) / POLE_SPACING;
                     numPoles = Math.floor(numPoles);
 
-//                if (numPoles < 1) {
-//                    System.out.println(" distance between nodes: " + node1 + " & " + node2 +
-//                            " is " + ndist + " decimal degrees ( < 91 meters )");
-//                    System.out.println(" -- NO POLES created for line: " + lid);
-//                }
-
                     ObjectNode obj;
                     for (int i = 0; i < numPoles; i++) {
                         obj = createPoleAsset(id_count, lid, new double[]{x0, y0});
@@ -283,6 +280,14 @@ public final class RDTProcessing {
 
         return featureNode;
 
+    }
+
+    public static void setNumberOfScenarios(int number){
+        numberOfScenarios = number;
+    }
+
+    public static void setScenarioOutputPath(String path){
+        scenarioOutputPath = path;
     }
 
 }

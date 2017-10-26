@@ -14,7 +14,7 @@ public class Fragility {
     public static void main(String[] args) {
         parser = new CommandLineOptions(args);
 
-        if(args.length < 1){
+        if (args.length < 1) {
             System.err.println("no arguments provided - use help 'h' option");
             System.exit(1);
         }
@@ -22,7 +22,6 @@ public class Fragility {
         if (parser.hasRDT()) {
             String path = parser.getRdtInputPath();
             RDTProcessing.inferPoles(path, parser);
-
         } else {
             mainRoutine();
         }
@@ -55,5 +54,20 @@ public class Fragility {
         ResponseEstimatorFactory ref = new ResponseEstimatorFactory();
         ResponseEstimator r1 = ref.runResponseEstimator(estimator, broker, output);
         r1.writeResults();
+
+        // ----------------------------------------
+        // checking for RDT scenario option
+        if (parser.isHasScenarioOutput()) {
+            // how many scenarios? (default is one)
+            if (parser.isHasNumberOfScenarios())
+                RDTProcessing.setNumberOfScenarios(parser.getNumberOfScenarios());
+
+            if(parser.isHasScenarioOutput())
+                RDTProcessing.setScenarioOutputPath(parser.getScenarioOutput());
+            // generate scenario block
+            RDTProcessing.generateScenarios(broker.getResponsesArray(), broker.getAssetProperties());
+        }
+
     }
+
 }

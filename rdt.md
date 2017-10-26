@@ -17,3 +17,9 @@ Example:
 ``` 
 java -jar Fragility.jar -r test_data/inputs/example_rdt.json -i wind -e wind -hf test_data/fields/windField_example.asc -ro RDT_Poles.json -o repsonses.json -so SCENARIOS.json -num 13 
 ```
+
+To generate RDT scenario block based on pole input data (using "lineId" member):
+
+```
+java -jar Fragility.jar -a test_data/inputs/example_poles.json -i wind -e wind -so blockOUTPUT.json -num 15 -hf test_data/fields/windField_example.asc
+```
