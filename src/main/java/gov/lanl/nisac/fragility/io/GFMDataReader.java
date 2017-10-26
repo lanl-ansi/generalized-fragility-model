@@ -10,10 +10,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class GFMDataReader {
+public class GFMDataReader {
+    // TODO: make this class not static
 
     private static ObjectMapper objectMapper = new ObjectMapper();
-    private static JsonNode fileNodes;
+    private static JsonNode fileNodes = null;
     private static GeometryObjectFactory geoObjectBuilder = new GeometryObjectFactory();
     private static HazardFieldFactory hazardObjectBuilder = new HazardFieldFactory();
 

@@ -21,6 +21,18 @@ public class GFMDataReaderTest extends TestCase {
 
     }
 
+    public void testGFMDataReaderSingleTiff() throws Exception {
+
+        // single file input test
+        String[] fp = new String[1];
+        String[] ip = new String[1];
+        ip[0] = "ice";
+        fp[0] = "test_data/fields/windField_example.tif";
+        ArrayList<HazardField> hazardObjects1 = GFMDataReader.readHazardFile(fp,ip);
+        assertTrue(!hazardObjects1.isEmpty());
+
+    }
+
     public void testGFMDataReaderMultiple() throws Exception {
 
 

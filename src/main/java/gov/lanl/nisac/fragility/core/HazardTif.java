@@ -81,7 +81,7 @@ public class HazardTif implements HazardField {
      */
     @Override
     public String getFileName() {
-        return null;
+        return this.fileName;
     }
 
     /**

@@ -13,6 +13,7 @@ public class RDTExamplePolesTests extends TestCase {
 
 
     public void testExamplePoles() throws Exception {
+        System.out.println("Test: testExamplePoles");
         CommandLineOptions parser;
         String[] cmds = new String[14];
 
@@ -50,6 +51,8 @@ public class RDTExamplePolesTests extends TestCase {
 
     public void testExamplePoles1(){
 
+        System.out.println("Test: testExamplePoles1");
+
         CommandLineOptions parser;
         String[] cmds = new String[14];
 
@@ -85,6 +88,8 @@ public class RDTExamplePolesTests extends TestCase {
     }
 
     public void testExamplePoles2(){
+
+        System.out.println("Test: testExamplePoles2");
 
         CommandLineOptions parser;
         String[] cmds = new String[14];

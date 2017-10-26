@@ -31,9 +31,10 @@ public class HazardFieldFactory {
             return new HazardTif(fileName, id);
 
         } else {
-            System.out.println("Cannot recognize file extension");
-            System.exit(1);
+            System.out.println("Cannot recognize file extension: "+extension);
+            System.out.println("ERROR: File "+fileName+" is NULL");
+            return null;
         }
-        return null;
+
     }
 }

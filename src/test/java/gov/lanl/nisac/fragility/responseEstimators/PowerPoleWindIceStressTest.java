@@ -17,7 +17,6 @@ public class PowerPoleWindIceStressTest extends TestCase {
 
         String[] cmds = new String[10];
 
-        System.out.println("junk");
 
         cmds[0] = "-a";
         cmds[1] = "test_data/inputs/example_poles.json";
