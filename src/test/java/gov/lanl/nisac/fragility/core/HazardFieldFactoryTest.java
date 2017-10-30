@@ -19,7 +19,6 @@ public class HazardFieldFactoryTest extends TestCase {
     public void testGetHazardFieldTif() throws Exception {
 
         String fileNameTif = "test_data/fields/windField_example.tif";
-
         HazardFieldFactory hazfac = new HazardFieldFactory();
 
         HazardField hf2 = hazfac.getHazardField(fileNameTif, "wind");
@@ -30,9 +29,18 @@ public class HazardFieldFactoryTest extends TestCase {
     public void testGetHazardFieldNull() throws Exception {
 
         String fileNameTif = "test_data/fields/windField_example.xxx";
-
         HazardFieldFactory hazfac = new HazardFieldFactory();
 
+        HazardField hf2 = hazfac.getHazardField(fileNameTif, "wind");
+        assertNull(hf2);
+
+    }
+
+    public void testNoFileExtension() throws Exception {
+
+        // no file extension
+        String fileNameTif = "test_data/fields/windField_example";
+        HazardFieldFactory hazfac = new HazardFieldFactory();
         HazardField hf2 = hazfac.getHazardField(fileNameTif, "wind");
         assertNull(hf2);
 

@@ -31,11 +31,22 @@ public class GeometryObjectFactoryTest extends TestCase {
         String assets = parser.getAssetInputPath();
 
         // assets
-        GFMDataReader.readGeoJsonFile(assets);
-        ArrayList<GeometryObject> dataAssets = GFMDataReader.getGeometryObjects();
+        GFMDataReader gfmdr = new GFMDataReader();
+        gfmdr.readGeoJsonFile(assets);
+        ArrayList<GeometryObject> dataAssets = gfmdr.getGeometryObjects();
 
         assertTrue(dataAssets.get(0) instanceof GeometryLineString );
 
+    }
+
+    public void testGeometryNull(){
+
+        // test null returns
+        GeometryObject go1 = new GeometryObjectFactory().getGeometry("newLine", "3");
+        assertNull(go1);
+
+        GeometryObject go2 = new GeometryObjectFactory().getGeometry(null, "3");
+        assertNull(go2);
     }
 
 }

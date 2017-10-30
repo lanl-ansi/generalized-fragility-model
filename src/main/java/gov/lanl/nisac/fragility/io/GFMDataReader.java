@@ -11,49 +11,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GFMDataReader {
-    // TODO: make this class not static
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
-    private static JsonNode fileNodes = null;
-    private static GeometryObjectFactory geoObjectBuilder = new GeometryObjectFactory();
-    private static HazardFieldFactory hazardObjectBuilder = new HazardFieldFactory();
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private JsonNode fileNodes = null;
+    private GeometryObjectFactory geoObjectBuilder = new GeometryObjectFactory();
+    private HazardFieldFactory hazardObjectBuilder = new HazardFieldFactory();
 
-    private static ArrayList<JsonNode> properties = new ArrayList<>();
-    private static ArrayList<GeometryObject> geometryObjects = new ArrayList<>();
-    private static ArrayList<HazardField> hazardFields = new ArrayList<>();
+    private ArrayList<JsonNode> properties = new ArrayList<>();
+    private ArrayList<GeometryObject> geometryObjects = new ArrayList<>();
+    private ArrayList<HazardField> hazardFields = new ArrayList<>();
 
-    private GFMDataReader() {
+    public GFMDataReader() {
     }
 
-    public static ArrayList<GeometryObject> getGeometryObjects() {
-        return geometryObjects;
+    public ArrayList<GeometryObject> getGeometryObjects() {
+        return this.geometryObjects;
     }
 
-    public static ArrayList<JsonNode> getProperties() {
-        return properties;
+    public ArrayList<JsonNode> getProperties() {
+        return this.properties;
     }
 
-    public static void readGeoJsonFile(String FileLocation) {
+    public void readGeoJsonFile(String FileLocation) {
 
         InputStream inStream;
 
         try {
             inStream = new FileInputStream(FileLocation);
-            fileNodes = objectMapper.readTree(inStream);
+            this.fileNodes = this.objectMapper.readTree(inStream);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
 
-        for (JsonNode n : fileNodes.findValue("features")) {
+        for (JsonNode n : this.fileNodes.findValue("features")) {
             JsonNode coordNode = n.get("geometry").get("coordinates");
             String geoType = n.get("geometry").get("type").asText();
             String identifier = n.get("properties").get("id").asText();
 
-            properties.add(n.get("properties"));
+            this.properties.add(n.get("properties"));
 
-            GeometryObject g = geoObjectBuilder.getGeometry(geoType, identifier);
+            GeometryObject g = this.geoObjectBuilder.getGeometry(geoType, identifier);
 
             if (g instanceof GeometryPoint) {
                 addPoint(g, coordNode);
@@ -63,7 +62,7 @@ public class GFMDataReader {
         }
     }
 
-    private static void addPoint(GeometryObject g, JsonNode coordNode) {
+    private void addPoint(GeometryObject g, JsonNode coordNode) {
 
         List<double[]> crd = new ArrayList<>();
         double[] coordHolder = new double[2];
@@ -73,11 +72,11 @@ public class GFMDataReader {
         crd.add(coordHolder);
         g.setCoordinates(crd);
 
-        geometryObjects.add(g);
+        this.geometryObjects.add(g);
 
     }
 
-    private static void addLineString(GeometryObject g, JsonNode coordNode) {
+    private void addLineString(GeometryObject g, JsonNode coordNode) {
 
         List<double[]> crd = new ArrayList<>();
         double[] coordHolder;
@@ -90,11 +89,11 @@ public class GFMDataReader {
         }
 
         g.setCoordinates(crd);
-        geometryObjects.add(g);
+        this.geometryObjects.add(g);
 
     }
 
-    public static ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {
+    public ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {
 
         int numberFiles = fileName.length;
         int numberIdentifiers = id.length;
@@ -106,10 +105,10 @@ public class GFMDataReader {
 
         for (int i = 0; i < numberFiles; i++) {
             HazardField hf = hazardObjectBuilder.getHazardField(fileName[i], id[i]);
-            hazardFields.add(hf);
+            this.hazardFields.add(hf);
         }
 
-        return hazardFields;
+        return this.hazardFields;
     }
 
 }

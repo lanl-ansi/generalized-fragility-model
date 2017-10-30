@@ -55,17 +55,6 @@ public class HazardTif implements HazardField {
         }
     }
 
-    @Deprecated
-    public double getExposure(double[] latLon) {
-
-        Coordinate crd = new Coordinate(latLon[0], latLon[1]);
-        CoordinateReferenceSystem crs = grid.getCoordinateReferenceSystem2D();
-        DirectPosition p = JTS.toDirectPosition(crd, crs);
-        double[] r = grid.evaluate(p, new double[1]);
-
-        return r[0];
-    }
-
     /**
      *
      * @return absolute/relative file location

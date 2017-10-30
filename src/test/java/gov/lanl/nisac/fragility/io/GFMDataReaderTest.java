@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 public class GFMDataReaderTest extends TestCase {
 
+    GFMDataReader gfmdr = new GFMDataReader();
+
     public void testGFMDataReaderSingle() throws Exception {
 
         // single file input test
@@ -16,7 +18,7 @@ public class GFMDataReaderTest extends TestCase {
         String[] ip = new String[1];
         ip[0] = "ice";
         fp[0] = "test_data/fields/windField_example.asc";
-        ArrayList<HazardField> hazardObjects1 = GFMDataReader.readHazardFile(fp,ip);
+        ArrayList<HazardField> hazardObjects1 = gfmdr.readHazardFile(fp,ip);
         assertTrue(!hazardObjects1.isEmpty());
 
     }
@@ -28,7 +30,7 @@ public class GFMDataReaderTest extends TestCase {
         String[] ip = new String[1];
         ip[0] = "ice";
         fp[0] = "test_data/fields/windField_example.tif";
-        ArrayList<HazardField> hazardObjects1 = GFMDataReader.readHazardFile(fp,ip);
+        ArrayList<HazardField> hazardObjects1 = gfmdr.readHazardFile(fp,ip);
         assertTrue(!hazardObjects1.isEmpty());
 
     }
@@ -44,17 +46,17 @@ public class GFMDataReaderTest extends TestCase {
         fp1[0] = "test_data/fields/iceField_example.asc";
         fp1[1] = "test_data/fields/windField_example.asc";
 
-        ArrayList<HazardField> hazardObjects2 = GFMDataReader.readHazardFile(fp1,ip1);
+        ArrayList<HazardField> hazardObjects2 = gfmdr.readHazardFile(fp1,ip1);
         assertTrue(!hazardObjects2.isEmpty());
 
     }
 
     public void testGFMDataReaderAssets(){
-        GFMDataReader.readGeoJsonFile("test_data/inputs/example_poles.json");
-        ArrayList<GeometryObject> dataAssets = GFMDataReader.getGeometryObjects();
+        gfmdr.readGeoJsonFile("test_data/inputs/example_poles.json");
+        ArrayList<GeometryObject> dataAssets = gfmdr.getGeometryObjects();
         assertTrue(!dataAssets.isEmpty());
 
-        ArrayList<JsonNode> props = GFMDataReader.getProperties();
+        ArrayList<JsonNode> props = gfmdr.getProperties();
         assertTrue(!props.isEmpty());
     }
 }

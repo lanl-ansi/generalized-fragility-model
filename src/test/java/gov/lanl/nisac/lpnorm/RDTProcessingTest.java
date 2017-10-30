@@ -4,6 +4,7 @@ import gov.lanl.nisac.CommandLineOptions;
 import junit.framework.TestCase;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 public class RDTProcessingTest extends TestCase {
     private CommandLineOptions parser;
@@ -35,6 +36,15 @@ public class RDTProcessingTest extends TestCase {
     public void testRDT(){
         String path = parser.getRdtInputPath();
         RDTProcessing.inferPoles(path, parser);
+
+        RDTProcessing.setNumberOfScenarios(5);
+        RDTProcessing.setScenarioOutputPath("scenarioBlock.json");
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // testing RDT option flags
         assertTrue(parser.hasRDT());

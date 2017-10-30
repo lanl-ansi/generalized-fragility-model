@@ -41,14 +41,16 @@ public class GFMEngineTest extends TestCase {
         String[] ids = parser.getIdentifiers();
         String assets = parser.getAssetInputPath();
 
-        hazardObjects = GFMDataReader.readHazardFile(hazardFiles, ids);
+        GFMDataReader gfmdr = new GFMDataReader();
+
+        hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
 
         // assets
-        GFMDataReader.readGeoJsonFile(assets);
+        gfmdr.readGeoJsonFile(assets);
 
-        dataAssets = GFMDataReader.getGeometryObjects();
+        dataAssets = gfmdr.getGeometryObjects();
 
-        props = GFMDataReader.getProperties();
+        props = gfmdr.getProperties();
 
         broker = new GFMEngine();
         broker.setHazardfields(hazardObjects);

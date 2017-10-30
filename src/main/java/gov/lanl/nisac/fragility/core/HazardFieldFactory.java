@@ -20,7 +20,7 @@ public class HazardFieldFactory {
 
         } else {
             System.out.println("--> Hazard file has no file extension.");
-            System.exit(1);
+            extension = "xxx";
         }
 
         // Factory

@@ -41,12 +41,14 @@ public class PowerPoleWindIceStressTest extends TestCase {
         System.out.println(ids[0]);
         System.out.println(ids[1]);
 
-        ArrayList<HazardField> hazardObjects = GFMDataReader.readHazardFile(hazardFiles, ids);
+        GFMDataReader gfmdr = new GFMDataReader();
+
+        ArrayList<HazardField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
 
         // assets
-        GFMDataReader.readGeoJsonFile(assets);
-        ArrayList<GeometryObject> dataAssets = GFMDataReader.getGeometryObjects();
-        ArrayList<JsonNode> props = GFMDataReader.getProperties();
+        gfmdr.readGeoJsonFile(assets);
+        ArrayList<GeometryObject> dataAssets = gfmdr.getGeometryObjects();
+        ArrayList<JsonNode> props = gfmdr.getProperties();
 
         // GFM set-up and produce exposures
         GFMEngine broker = new GFMEngine();

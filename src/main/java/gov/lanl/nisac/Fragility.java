@@ -36,12 +36,13 @@ public class Fragility {
         String[] hazardFiles = parser.getHazardInputPaths();
         String[] ids = parser.getIdentifiers();
         String assets = parser.getAssetInputPath();
-        ArrayList<HazardField> hazardObjects = GFMDataReader.readHazardFile(hazardFiles, ids);
+        GFMDataReader gfmDataReader = new GFMDataReader();
+        ArrayList<HazardField> hazardObjects = gfmDataReader.readHazardFile(hazardFiles, ids);
 
         // assets
-        GFMDataReader.readGeoJsonFile(assets);
-        ArrayList<GeometryObject> dataAssets = GFMDataReader.getGeometryObjects();
-        ArrayList<JsonNode> props = GFMDataReader.getProperties();
+        gfmDataReader.readGeoJsonFile(assets);
+        ArrayList<GeometryObject> dataAssets = gfmDataReader.getGeometryObjects();
+        ArrayList<JsonNode> props = gfmDataReader.getProperties();
 
         // GFM set-up and produce exposures
         GFMEngine broker = new GFMEngine();

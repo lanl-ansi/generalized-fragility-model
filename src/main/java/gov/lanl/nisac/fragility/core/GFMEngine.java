@@ -43,13 +43,13 @@ public class GFMEngine {
 
         for (HazardField h : hazardFields) {
             // getting coordinate reference system
-            crs = h.getField().getCoordinateReferenceSystem2D();
+            this.crs = h.getField().getCoordinateReferenceSystem2D();
 
             // get hazard field identifier
             hazardName = h.getIdentifier();
 
             // create new HashMap for each identifier/hazard field
-            exposures.put(hazardName, new HashMap<>());
+            this.exposures.put(hazardName, new HashMap<>());
 
             // counter for geometry objects within field extent
             outsideExtentCount = 0;
