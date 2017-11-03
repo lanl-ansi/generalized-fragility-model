@@ -3,7 +3,7 @@ package gov.lanl.nisac;
 import junit.framework.TestCase;
 
 public class FragilityTest extends TestCase {
-    private CommandLineOptions parser;
+
     String[] cmds;
 
     public void setUp() throws Exception {

@@ -24,14 +24,29 @@ public class GFMDataReader {
     public GFMDataReader() {
     }
 
+    /**
+     * Method for accessing an array list of GeometryObjects.
+     *
+     * @return array list of GeometryObjects
+     */
     public ArrayList<GeometryObject> getGeometryObjects() {
         return this.geometryObjects;
     }
 
+    /**
+     * Method for accessing an array list of JsonNode objects.
+     *
+     * @return array list of GeometryObjects
+     */
     public ArrayList<JsonNode> getProperties() {
         return this.properties;
     }
 
+    /**
+     * Method that reads in a geojson file.
+     *
+     * @param FileLocation string formatted file location
+     */
     public void readGeoJsonFile(String FileLocation) {
 
         InputStream inStream;
@@ -45,6 +60,7 @@ public class GFMDataReader {
         }
 
 
+        // loops through asset file, adding the appropriate GeometryObjects to var geometryObjects
         for (JsonNode n : this.fileNodes.findValue("features")) {
             JsonNode coordNode = n.get("geometry").get("coordinates");
             String geoType = n.get("geometry").get("type").asText();

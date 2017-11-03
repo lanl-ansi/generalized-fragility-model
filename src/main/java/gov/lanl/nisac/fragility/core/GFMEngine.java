@@ -31,7 +31,7 @@ public class GFMEngine {
     private ArrayNode reponsesArray = mapper.createArrayNode();
 
     private int outsideExtentCount;
-    CoordinateReferenceSystem crs;
+    private CoordinateReferenceSystem crs;
 
     /**
      * method that extracts exposure values from hazard fields to geometry object identifiers
@@ -165,10 +165,18 @@ public class GFMEngine {
         this.assetProperties = assetProperties;
     }
 
+    /**
+     * Method to access asset properties
+     * @return array list of type JsonNode
+     */
     public ArrayList<JsonNode> getAssetProperties() {
         return assetProperties;
     }
 
+    /**
+     * Method  to access an hashmap of exposure values
+     * @return hashmap
+     */
     public Map<String, HashMap<String, ArrayList<Double>>> getExposures() {
         return exposures;
     }
@@ -191,6 +199,10 @@ public class GFMEngine {
         GFMDataWriter.writeResults(reponsesArray, fileOutputPath);
     }
 
+    /**
+     * method to access an arrayNode of responses
+     * @return arrayNode
+     */
     public ArrayNode getResponsesArray() {
         return this.reponsesArray;
     }

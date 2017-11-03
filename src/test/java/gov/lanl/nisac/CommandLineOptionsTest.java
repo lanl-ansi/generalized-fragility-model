@@ -61,4 +61,12 @@ public class CommandLineOptionsTest extends TestCase {
         assertEquals(parser.getEstimator(), "iceWind");
     }
 
+    public void testGetHelp() throws Exception{
+        CommandLineOptions.printHelp();
+    }
+
+    public void testCheckInputFiles() throws Exception{
+
+    }
+
 }

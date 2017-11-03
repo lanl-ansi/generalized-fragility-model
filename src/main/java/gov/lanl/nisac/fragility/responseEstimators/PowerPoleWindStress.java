@@ -127,7 +127,7 @@ class FragilityWind {
 
     }
 
-    public void calculate() {
+    private void calculate() {
 
         // pole weight = mass*G = G * π * D^2 * density / 4.0
         double poleDiameters = (topDiameter * topDiameter + baseDiameter * baseDiameter) / 2.0;

@@ -8,11 +8,13 @@ import junit.framework.TestCase;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class PowerPoleWindStressTIFFTest extends TestCase {
     private CommandLineOptions parser;
 
-    public void setupWindTest() throws Exception {
+    public void setUPTest() throws Exception  {
+        super.setUp();
 
         String[] cmds = new String[10];
 
@@ -25,7 +27,7 @@ public class PowerPoleWindStressTIFFTest extends TestCase {
         cmds[6] = "-e";
         cmds[7] = "wind";
         cmds[8] = "-o";
-        cmds[9] = "fragility_output_tiff.json";
+        cmds[9] = "fragility_output_tifff.json";
 
         parser = new CommandLineOptions(cmds);
 
@@ -58,13 +60,13 @@ public class PowerPoleWindStressTIFFTest extends TestCase {
     }
 
     public void testWriteResults() throws Exception {
+        setUPTest();
         System.out.println("--- ---- --->");
-        setupWindTest();
 
-        File f1 = new File("fragility_output_tiff.json");
-        System.out.println(f1.exists());
-        assertTrue(f1.exists());
-        f1.delete();
+        File ftiff = new File("fragility_output_tifff.json");
+        TimeUnit.MILLISECONDS.sleep(500);
+        assertTrue(ftiff.exists());
+        ftiff.delete();
     }
 
 }

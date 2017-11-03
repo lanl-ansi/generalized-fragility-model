@@ -203,21 +203,29 @@ public class CommandLineOptions {
     }
 
     /**
-     * helper method that
+     * helper method that shows options
      */
-    private static void printHelp() {
+    public static void printHelp() {
         String header = "fragility  [OPTIONS]\n options:\n" +
-                "-a              asset data\n" +
-                "-hf             hazard field files \n" +
-                "-i              identifiers\n" +
-                "-e              estimator identifier\n" +
-                "-o (optional)   output file name\n" +
-                "-r (optional)   RDT processing \n" +
-                "-num (optional) for RDT processing - number of scenarios to generate \n";
+                "-a               asset data\n" +
+                "-hf              hazard field files \n" +
+                "-i               identifiers\n" +
+                "-e               estimator identifier\n" +
+                "-o  (optional)   output file name\n" +
+                "-r  (optional)   RDT processing \n" +
+                "-so (optional)   use with -a (pole data) to produce RDT scenario block \n" +
+                "-num (optional)  for RDT processing - number of scenarios to generate \n";
 
         String footer =
-                "Examples:\nFragility.jar  -a <GeoJSON data> -hf <hazard fields>" +
-                        " -i <identifiers> -e <estimator name>\n";
+                "\nExample syntax:\nFragility.jar  -a <GeoJSON data> -hf <hazard fields>" +
+                        " -i <identifiers> -e <estimator name>\\n" +
+                "\n\nFragility.jar  -a <GeoJSON data> -hf <hazard fields> " +
+                        "-i <identifiers> -e <estimator name> -so " +
+                        "<filename> -num <number>\\n" +
+                "\n\nFragility.jar  -r <RDT data> -ro <RDTpoleData.json> -hf <hazard fields> " +
+                        "-i <identifiers> -e <estimator name> -so " +
+                        "<filename> -num <number>\\n";
+        ;
 
         System.out.println(header + footer);
     }

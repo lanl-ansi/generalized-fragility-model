@@ -8,6 +8,7 @@ import junit.framework.TestCase;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class GFMEngineTest extends TestCase {
 
@@ -20,9 +21,8 @@ public class GFMEngineTest extends TestCase {
 
         String[] cmds = new String[10];
 
-
         cmds[0] = "-a";
-        cmds[1] = "test_data/inputs/example_poles.json";
+        cmds[1] = "test_data/inputs/example_LineStrings.json";
         cmds[2] = "-hf";
         cmds[3] = "test_data/fields/windField_example.asc test_data/fields/iceField_example.asc";
         cmds[4] = "-i";
@@ -87,6 +87,7 @@ public class GFMEngineTest extends TestCase {
         broker.storeResults(responses, "example.json");
 
         File f = new File("example.json");
+        TimeUnit.MILLISECONDS.sleep(10);
         assertTrue(f.exists());
 
         f.delete();
