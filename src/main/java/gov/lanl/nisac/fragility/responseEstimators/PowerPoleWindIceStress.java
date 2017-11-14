@@ -67,6 +67,12 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
             responses.put(id, failure);
         }
     }
+    
+	@Override
+	public double getResponse(String id) {
+		return responses.get(id);
+	}
+
 }
 
 /**
