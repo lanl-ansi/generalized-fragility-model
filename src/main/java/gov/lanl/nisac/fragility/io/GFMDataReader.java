@@ -111,8 +111,8 @@ public class GFMDataReader {
 
     public ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {
 
-        int numberFiles = fileName.length;
-        int numberIdentifiers = id.length;
+        int numberFiles = (fileName == null) ? 0 : fileName.length;
+        int numberIdentifiers = (id == null) ? 0 : id.length;
 
         if (numberFiles != numberIdentifiers) {
             System.out.println("EXITING:  Number of files and identifiers aren't equal");

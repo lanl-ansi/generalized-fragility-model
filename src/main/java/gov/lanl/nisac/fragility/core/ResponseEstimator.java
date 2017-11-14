@@ -5,8 +5,14 @@ package gov.lanl.nisac.fragility.core;
  */
 public interface ResponseEstimator {
 
-    void calcFragility();
+    public void calcFragility();
 
-    void writeResults();
+    public void writeResults();
 
+    /**
+     * The the fragility response of an asset
+     * @param id
+     * @return
+     */
+    public double getResponse(String id);
 }

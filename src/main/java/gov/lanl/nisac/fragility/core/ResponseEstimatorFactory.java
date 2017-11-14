@@ -1,5 +1,6 @@
 package gov.lanl.nisac.fragility.core;
 
+import gov.lanl.nisac.fragility.responseEstimators.AssetStaticStress;
 import gov.lanl.nisac.fragility.responseEstimators.PowerPoleWindIceStress;
 import gov.lanl.nisac.fragility.responseEstimators.PowerPoleWindStress;
 
@@ -16,7 +17,11 @@ public class ResponseEstimatorFactory {
         } else if (estimatorId.equalsIgnoreCase("windIce")) {
             return new PowerPoleWindIceStress(broker, fileOutputPath);
 
-        } else {
+        }
+        else if (estimatorId.equalsIgnoreCase("static")) {
+            return new AssetStaticStress(broker, fileOutputPath);
+        }
+        else {
             System.out.println("Didn't recognize response estimator option -e: \"" + estimatorId + "\"");
             return null;
         }
