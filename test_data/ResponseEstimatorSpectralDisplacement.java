@@ -1,8 +1,8 @@
-package gov.lanl.nisac.fragility.responseEstimators;
+package gov.lanl.micot.application.fragility.responseEstimators;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import gov.lanl.nisac.fragility.core.GFMEngine;
-import gov.lanl.nisac.fragility.core.ResponseEstimator;
+import gov.lanl.micot.application.fragility.core.GFMEngine;
+import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;

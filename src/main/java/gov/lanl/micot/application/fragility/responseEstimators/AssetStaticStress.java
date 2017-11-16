@@ -6,24 +6,27 @@ import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-public class ResponseEstimatorTemplate implements ResponseEstimator {
+/**
+ * This class estimates stress based on a static number that is provided
+ * @author Russell Bent
+ *
+ */
+public class AssetStaticStress implements ResponseEstimator {
 
     private GFMEngine gfmBroker;
     private HashMap<String, Double> responses;
     private ArrayList<JsonNode> assets;
     private String fileOutputPath;
 
+    private static final double DEFAULT_RESPONSE = 0.5;
+    
     /**
-     * Response Estimator for power pole fragility with wind and ice stresses
-     *
-     * Do not change this method.
-     *
+     * Response Estimator based on a static number that is provided
      * @param broker
      * @param fileOutput
      */
-    public ResponseEstimatorTemplate(GFMEngine broker, String fileOutput) {
+    public AssetStaticStress(GFMEngine broker, String fileOutput) {
         gfmBroker = broker;
         assets = broker.getAssetProperties();
         fileOutputPath = fileOutput;
@@ -39,37 +42,30 @@ public class ResponseEstimatorTemplate implements ResponseEstimator {
         gfmBroker.storeResults(this.responses, fileOutputPath);
     }
 
-	/**
-	 * Do not change this method
-	 */
-	public double getResponse(String id) {
-		return responses.get(id);
-	}
-    
     /**
-     * General method place for fragility calculations
+     * General method place for static fragility calculations
      */
     public void calcFragility() {
         System.out.println("Calculating . . . ");
 
-        // getting all exposures
-        Map<String, HashMap<String, ArrayList<Double>>> exposures = gfmBroker.getExposures();
-
         // data structure to store fragility calculations/responses
         responses = new HashMap<>();
 
-        double failure=0.0;
-
         /*
-         ********  Calculate fragility here ********
+         ********  Calculate static fragility here ********
          */
         for (JsonNode n : assets) {
 
             String id = n.get("id").asText();
-            Double exposureValue = exposures.get("wind").get(id).get(0);
-
+            double failure = n.has("staticFailure") ? n.get("staticFailure").asDouble() : DEFAULT_RESPONSE;
+            
             // store responses
             responses.put(id, failure);
         }
     }
+
+	@Override
+	public double getResponse(String id) {
+		return responses.get(id);
+	}
 }
