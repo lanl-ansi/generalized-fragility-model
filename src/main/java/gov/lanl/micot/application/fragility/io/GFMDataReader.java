@@ -3,6 +3,7 @@ package gov.lanl.micot.application.fragility.io;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gov.lanl.micot.application.fragility.core.*;
+import gov.lanl.micot.application.utility.gis.RasterField;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,12 +21,14 @@ public class GFMDataReader {
     private ObjectMapper objectMapper = new ObjectMapper();
     private JsonNode fileNodes = null;
     private GeometryObjectFactory geoObjectBuilder = new GeometryObjectFactory();
-    private HazardFieldFactory hazardObjectBuilder = new HazardFieldFactory();
 
     private ArrayList<JsonNode> properties = new ArrayList<>();
     private ArrayList<GeometryObject> geometryObjects = new ArrayList<>();
-    private ArrayList<HazardField> hazardFields = new ArrayList<>();
+    private ArrayList<RasterField> hazardFields = new ArrayList<>();
 
+    /**
+     * Default constructor.
+     */
     public GFMDataReader() {
     }
 
@@ -79,6 +82,8 @@ public class GFMDataReader {
                 addPoint(g, coordNode);
             } else if (g instanceof GeometryLineString) {
                 addLineString(g, coordNode);
+            } else if (g instanceof GeometryMultiPoint) {
+                addLineString(g, coordNode);
             } else {
                 System.out.println("WARNING: " + g.getIdentifier() + " Geometry type is not implemented");
             }
@@ -88,7 +93,7 @@ public class GFMDataReader {
     /**
      * This method stores a longitude and latitude values into a <tt>GeometryPoint<tt/> object.
      *
-     * @param g         <tt>GeomteryObject<tt/>  that is used to store longitude and latitude locations
+     * @param g         <tt>GeometryObject<tt/>  that is used to store longitude and latitude locations
      * @param coordNode JsonNode container for longitude and latitude values
      */
     private void addPoint(GeometryObject g, JsonNode coordNode) {
@@ -108,7 +113,7 @@ public class GFMDataReader {
     /**
      * This method stores a longitude and latitude values into a <tt>GeometryLineString<tt/> object.
      *
-     * @param g         GeomteryObject that is used to store longitude and latitude locations
+     * @param g         <tt>GeometryObject<tt/> that is used to store longitude and latitude locations
      * @param coordNode JsonNode container for longitude and latitude values
      */
     private void addLineString(GeometryObject g, JsonNode coordNode) {
@@ -129,12 +134,11 @@ public class GFMDataReader {
     }
 
     /**
-     *
      * @param fileName String array of file locations
-     * @param id string array of identifiers in tandem with <tt>fileName<tt/>
+     * @param id       string array of identifiers in tandem with <tt>fileName<tt/>
      * @return an array list of type <tt>HazardField<tt/>
      */
-    public ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {
+    public ArrayList<RasterField> readHazardFile(String[] fileName, String[] id) {
 
         int numberFiles = (fileName == null) ? 0 : fileName.length;
         int numberIdentifiers = (id == null) ? 0 : id.length;
@@ -145,7 +149,7 @@ public class GFMDataReader {
         }
 
         for (int i = 0; i < numberFiles; i++) {
-            HazardField hf = hazardObjectBuilder.getHazardField(fileName[i], id[i]);
+            RasterField hf = new RasterField(fileName[i], id[i]);
             this.hazardFields.add(hf);
         }
 

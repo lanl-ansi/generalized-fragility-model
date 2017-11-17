@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.FragilityParameters;
 import gov.lanl.micot.application.fragility.core.*;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
+import gov.lanl.micot.application.utility.gis.RasterField;
 import junit.framework.TestCase;
 
 import java.io.File;
@@ -43,7 +44,7 @@ public class PowerPoleWindIceStressTest extends TestCase {
 
         GFMDataReader gfmdr = new GFMDataReader();
 
-        ArrayList<HazardField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
+        ArrayList<RasterField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
 
         // assets
         gfmdr.readGeoJsonFile(assets);

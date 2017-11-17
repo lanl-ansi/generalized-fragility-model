@@ -3,6 +3,7 @@ package gov.lanl.micot.application.rdt;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.*;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
+import gov.lanl.micot.application.utility.gis.RasterField;
 import junit.framework.TestCase;
 
 import java.io.File;
@@ -133,7 +134,7 @@ public class RDTExamplePolesTests extends TestCase {
         String[] ids = parser.getIdentifiers();
         String assets = parser.getAssetInputPath();
         GFMDataReader gfmdr = new GFMDataReader();
-        ArrayList<HazardField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
+        ArrayList<RasterField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
 
         // assets
         gfmdr.readGeoJsonFile(assets);

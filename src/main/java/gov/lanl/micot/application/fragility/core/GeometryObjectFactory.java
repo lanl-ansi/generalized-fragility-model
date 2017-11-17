@@ -1,13 +1,13 @@
 package gov.lanl.micot.application.fragility.core;
 
 /**
- * This class defines a GeoJSON Factory
+ * This class implements a GeoJSON Factory for different GeoJSON feature types
  *
- * @author TRevor Crawford
+ * @author Trevor Crawford
  */
 public class GeometryObjectFactory {
     /**
-     * geometry object factory
+     * GeometryObject factory constructor.
      *
      * @param shapeType - specified shape type
      * @param AssetId   - asset identification

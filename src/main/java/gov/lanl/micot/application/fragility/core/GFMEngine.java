@@ -4,14 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.vividsolutions.jts.geom.Coordinate;
 
 import gov.lanl.micot.application.fragility.io.GFMDataWriter;
-
-import org.geotools.geometry.jts.JTS;
-import org.opengis.coverage.PointOutsideCoverageException;
-import org.opengis.geometry.DirectPosition;
-import org.opengis.referencing.crs.CoordinateReferenceSystem;
+import gov.lanl.micot.application.utility.gis.RasterField;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +18,7 @@ import java.util.Map;
  */
 public class GFMEngine {
 
-    private ArrayList<HazardField> hazardFields;
+    private ArrayList<RasterField> hazardFields;
     private ArrayList<GeometryObject> geometryObjects;
     private ArrayList<JsonNode> assetProperties;
 
@@ -33,7 +28,7 @@ public class GFMEngine {
     private ArrayNode reponsesArray = mapper.createArrayNode();
 
     private int outsideExtentCount;
-    private CoordinateReferenceSystem crs;
+
 
     /**
      * Method that extracts exposure values from hazard fields to geometry object identifiers
@@ -44,14 +39,12 @@ public class GFMEngine {
         String hazardName = null;
 
         for (HazardField h : hazardFields) {
-            // getting coordinate reference system
-            this.crs = h.getField().getCoordinateReferenceSystem2D();
 
             // get hazard field identifier
             hazardName = h.getIdentifier();
 
             // create new HashMap for each identifier/hazard field
-            this.exposures.put(hazardName, new HashMap<>());
+            exposures.put(hazardName, new HashMap<>());
 
             // counter for geometry objects within field extent
             outsideExtentCount = 0;
@@ -70,7 +63,7 @@ public class GFMEngine {
 
             if (outsideExtentCount > 0) {
                 System.out.println(" -- > WARNING - " + outsideExtentCount +
-                        " objects outside of hazard domain " + h.getFileName());
+                        " objects outside of hazard id: " + h.getIdentifier());
                 System.out.println("      Used default exposure value of 0.0");
             }
         }
@@ -84,36 +77,19 @@ public class GFMEngine {
      * @param hazardName String hazard field identifier
      */
     private void addGeometryMultiPoint(GeometryObject g, HazardField h, String hazardName) {
-        double x;       // longitude
-        double y;       // latitude
-        double[] r;     // exposures value
-
-        // getting coordinate responsesArray list: (lon, lat)
-        List<double[]> crd = g.getCoordinates();
+        // get raster value at latitude/longitude coordinates
+        List<Double> rasterValues = h.evaluatePoints(g.getCoordinates());
 
         // initialize new array list
         exposures.get(hazardName).put(g.getIdentifier(), new ArrayList<>());
 
-        for (double[] aCrd : crd) {
-
-            x = aCrd[0];
-            y = aCrd[1];
-
-            Coordinate crds = new Coordinate(x, y);
-            DirectPosition p = JTS.toDirectPosition(crds, crs);
-
-            try {
-                r = h.getField().evaluate(p, new double[1]);
-            } catch (PointOutsideCoverageException e) {
-                // if outside coverage, set to default value of 0.0
-                outsideExtentCount += 1;
-                r = new double[1];
-                r[0] = 0.0;
-            }
+        for (Double rv : rasterValues) {
             // add point exposure to collection
-            exposures.get(hazardName).get(g.getIdentifier()).add(r[0]);
+            exposures.get(hazardName).get(g.getIdentifier()).add(rv);
         }
 
+        // check for points outside geographic extent of hazard field
+        checkPointsOutsideExtent(h);
     }
 
     /**
@@ -125,32 +101,17 @@ public class GFMEngine {
      */
     private void addGeometryPoint(GeometryObject g, HazardField h, String hazardName) {
 
-        double x;       // longitude
-        double y;       // latitude
-        double[] r;     // exposures value
-
-        // getting coordinate responsesArray list: (lon, lat)
-        List<double[]> crd = g.getCoordinates();
         // initialize new array list
         exposures.get(hazardName).put(g.getIdentifier(), new ArrayList<>());
 
-        x = crd.get(0)[0];
-        y = crd.get(0)[1];
-        Coordinate crds = new Coordinate(x, y);
-        DirectPosition p = JTS.toDirectPosition(crds, crs);
-
-
-        try {
-            r = h.getField().evaluate(p, new double[1]);
-        } catch (org.opengis.coverage.PointOutsideCoverageException e) {
-            // if outside coverage, set to default value of 0.0
-            outsideExtentCount += 1;
-            r = new double[1];
-            r[0] = 0.0;
-        }
+        // get raster value at latitude/longitude coordinates
+        double rasterValue = h.evaluatePoint(g.getCoordinates());
 
         // add point to exposures collection
-        exposures.get(hazardName).get(g.getIdentifier()).add(r[0]);
+        exposures.get(hazardName).get(g.getIdentifier()).add(rasterValue);
+
+        // check for points outside geographic extent of hazard field
+        checkPointsOutsideExtent(h);
 
     }
 
@@ -163,35 +124,34 @@ public class GFMEngine {
      */
     private void addGeometryLineString(GeometryObject g, HazardField h, String hazardName) {
 
-        double x;       // longitude
-        double y;       // latitude
-        double[] r;     // exposures value
-
-        // getting coordinate responsesArray list: (lon, lat)
-        List<double[]> crd = g.getCoordinates();
+        // get raster value at latitude/longitude coordinates
+        List<Double> rasterValues = h.evaluatePoints(g.getCoordinates());
 
         // initialize new array list
         exposures.get(hazardName).put(g.getIdentifier(), new ArrayList<>());
 
-        for (double[] aCrd : crd) {
-
-            x = aCrd[0];
-            y = aCrd[1];
-
-            Coordinate crds = new Coordinate(x, y);
-            DirectPosition p = JTS.toDirectPosition(crds, crs);
-
-            try {
-                r = h.getField().evaluate(p, new double[1]);
-            } catch (PointOutsideCoverageException e) {
-                // if outside coverage, set to default value of 0.0
-                outsideExtentCount += 1;
-                r = new double[1];
-                r[0] = 0.0;
-            }
+        for (Double rv : rasterValues) {
             // add point exposure to collection
-            exposures.get(hazardName).get(g.getIdentifier()).add(r[0]);
+            exposures.get(hazardName).get(g.getIdentifier()).add(rv);
         }
+
+        // check for points outside geographic extent of hazard field
+        checkPointsOutsideExtent(h);
+    }
+
+    /**
+     * This method provide a warning if any points are located outside a raster's extent.
+     *
+     * @param h a <tt>RasterField</tt>
+     */
+    private void checkPointsOutsideExtent(HazardField h){
+
+        if (h.getOutsideExtentCount() > 0) {
+            System.out.println(" -- > WARNING - " + outsideExtentCount +
+                    " objects outside of hazard identifier " + h.getIdentifier());
+            System.out.println("      Used default exposure value of 0.0");
+        }
+
     }
 
     /**
@@ -206,9 +166,9 @@ public class GFMEngine {
     /**
      * Method to set a collection of hazard fields
      *
-     * @param hazardfields - list of hazard fields
+     * @param hazardfields list of hazard fields
      */
-    public void setHazardfields(ArrayList<HazardField> hazardfields) {
+    public void setHazardfields(ArrayList<RasterField> hazardfields) {
         System.out.println(hazardfields.size() + " hazard fields read");
         hazardFields = hazardfields;
     }
@@ -216,7 +176,7 @@ public class GFMEngine {
     /**
      * Method to set asset properties
      *
-     * @param assetProperties - list of asset properties
+     * @param assetProperties list of asset properties
      */
     public void setAssetProperties(ArrayList<JsonNode> assetProperties) {
         System.out.println(assetProperties.size() + " assets read");

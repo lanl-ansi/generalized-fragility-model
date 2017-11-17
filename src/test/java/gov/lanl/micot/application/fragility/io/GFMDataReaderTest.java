@@ -2,7 +2,7 @@ package gov.lanl.micot.application.fragility.io;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GeometryObject;
-import gov.lanl.micot.application.fragility.core.HazardField;
+import gov.lanl.micot.application.utility.gis.RasterField;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class GFMDataReaderTest extends TestCase {
         String[] ip = new String[1];
         ip[0] = "ice";
         fp[0] = "test_data/fields/windField_example.asc";
-        ArrayList<HazardField> hazardObjects1 = gfmdr.readHazardFile(fp,ip);
+        ArrayList<RasterField> hazardObjects1 = gfmdr.readHazardFile(fp,ip);
         assertTrue(!hazardObjects1.isEmpty());
 
     }
@@ -30,7 +30,7 @@ public class GFMDataReaderTest extends TestCase {
         String[] ip = new String[1];
         ip[0] = "ice";
         fp[0] = "test_data/fields/windField_example.tif";
-        ArrayList<HazardField> hazardObjects1 = gfmdr.readHazardFile(fp,ip);
+        ArrayList<RasterField> hazardObjects1 = gfmdr.readHazardFile(fp,ip);
         assertTrue(!hazardObjects1.isEmpty());
 
     }
@@ -46,7 +46,7 @@ public class GFMDataReaderTest extends TestCase {
         fp1[0] = "test_data/fields/iceField_example.asc";
         fp1[1] = "test_data/fields/windField_example.asc";
 
-        ArrayList<HazardField> hazardObjects2 = gfmdr.readHazardFile(fp1,ip1);
+        ArrayList<RasterField> hazardObjects2 = gfmdr.readHazardFile(fp1,ip1);
         assertTrue(!hazardObjects2.isEmpty());
 
     }

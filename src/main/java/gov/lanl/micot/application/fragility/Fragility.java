@@ -3,6 +3,7 @@ package gov.lanl.micot.application.fragility;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.*;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
+import gov.lanl.micot.application.utility.gis.RasterField;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,7 @@ public class Fragility {
         String[] ids = parser.getIdentifiers();
         String assets = parser.getAssetInputPath();
         GFMDataReader gfmDataReader = new GFMDataReader();
-        ArrayList<HazardField> hazardObjects = gfmDataReader.readHazardFile(hazardFiles, ids);
+        ArrayList<RasterField> hazardObjects = gfmDataReader.readHazardFile(hazardFiles, ids);
 
         // assets
         gfmDataReader.readGeoJsonFile(assets);

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import gov.lanl.micot.application.fragility.core.*;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.fragility.io.GFMDataWriter;
+import gov.lanl.micot.application.utility.gis.RasterField;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -54,7 +55,7 @@ public final class RDTProcessing {
         String[] ids = parser.getIdentifiers();
 
         GFMDataReader gfmDataReader = new GFMDataReader();
-        ArrayList<HazardField> hazardObjects = gfmDataReader.readHazardFile(hazardFiles, ids);
+        ArrayList<RasterField> hazardObjects = gfmDataReader.readHazardFile(hazardFiles, ids);
 
         // assets
         gfmDataReader.readGeoJsonFile(polesOutputPath);

@@ -5,14 +5,20 @@ package gov.lanl.micot.application.fragility.core;
  */
 public interface ResponseEstimator {
 
-    public void calcFragility();
-
-    public void writeResults();
+    /**
+     * Generic method to run fragility calculations.
+     */
+    void calcFragility();
 
     /**
-     * The the fragility response of an asset
-     * @param id
-     * @return
+     * Generic method to write JSON results.
      */
-    public double getResponse(String id);
+    void writeResults();
+
+    /**
+     * The fragility response of an asset referenced by unique identifier.
+     * @param id unique identifier
+     * @return fragility value between zero and one.
+     */
+    double getResponse(String id);
 }

@@ -3,6 +3,7 @@ package gov.lanl.micot.application.fragility.core;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.FragilityParameters;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
+import gov.lanl.micot.application.utility.gis.RasterField;
 import junit.framework.TestCase;
 
 import java.io.File;
@@ -14,7 +15,7 @@ public class GFMEngineTest extends TestCase {
 
     private static GFMEngine broker;
     private ArrayList<GeometryObject> dataAssets = null;
-    private ArrayList<HazardField> hazardObjects = null;
+    private ArrayList<RasterField> hazardObjects = null;
     private ArrayList<JsonNode> props = null;
 
     public void setUp() {

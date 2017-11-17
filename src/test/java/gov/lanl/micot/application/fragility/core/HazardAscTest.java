@@ -1,23 +1,16 @@
 package gov.lanl.micot.application.fragility.core;
 
+import gov.lanl.micot.application.utility.gis.RasterField;
 import junit.framework.TestCase;
 
 public class HazardAscTest extends TestCase {
 
-    public HazardAsc hat;
+    public RasterField hat;
     public void setUp(){
-        hat = new HazardAsc("test_data/fields/windField_example.asc","wind");
+        hat = new RasterField("test_data/fields/windField_example.asc","wind");
     }
 
     public void testGetFileLocationPath() throws Exception {
-    }
-
-    public void testGetFileName() throws Exception {
-        assertEquals(hat.getFileName(),"windField_example.asc");
-    }
-
-    public void testGetField() throws Exception {
-        assertNotNull(hat.getField());
     }
 
     public void testGetIdentifier() throws Exception {
