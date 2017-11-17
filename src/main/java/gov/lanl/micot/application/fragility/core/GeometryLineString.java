@@ -3,6 +3,11 @@ package gov.lanl.micot.application.fragility.core;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class provides the user with methods to control GeoJSON line strings.
+ *
+ * @author Trevor Crawford
+ */
 public class GeometryLineString implements GeometryObject {
 
     private List<double[]> coordinates;

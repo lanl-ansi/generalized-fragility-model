@@ -1,5 +1,10 @@
 package gov.lanl.micot.application.fragility.core;
 
+/**
+ * This class defines a GeoJSON Factory
+ *
+ * @author TRevor Crawford
+ */
 public class GeometryObjectFactory {
     /**
      * geometry object factory

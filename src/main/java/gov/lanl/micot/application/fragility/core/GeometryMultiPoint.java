@@ -3,6 +3,11 @@ package gov.lanl.micot.application.fragility.core;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This class provides the user with methods to control GeoJSON MultiPoints.
+ *
+ * @author Trevor Crawford
+ */
 public class GeometryMultiPoint implements GeometryObject {
 
     private List<double[]> coordinates;

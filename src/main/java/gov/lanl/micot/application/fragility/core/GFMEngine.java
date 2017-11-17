@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.vividsolutions.jts.geom.Coordinate;
+
 import gov.lanl.micot.application.fragility.io.GFMDataWriter;
+
 import org.geotools.geometry.jts.JTS;
 import org.opengis.coverage.PointOutsideCoverageException;
 import org.opengis.geometry.DirectPosition;
@@ -17,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Manages and mediates functionality between geometry objects, hazard fields, and response estimators
+ * This class manages and mediates functionality between geometry objects, hazard fields, and response estimators
  */
 public class GFMEngine {
 
@@ -34,7 +36,7 @@ public class GFMEngine {
     private CoordinateReferenceSystem crs;
 
     /**
-     * method that extracts exposure values from hazard fields to geometry object identifiers
+     * Method that extracts exposure values from hazard fields to geometry object identifiers
      */
     public void produceExposures() {
 
@@ -62,7 +64,7 @@ public class GFMEngine {
                 } else if (g instanceof GeometryLineString) {
                     addGeometryLineString(g, h, hazardName);
                 } else if (g instanceof GeometryMultiPoint) {
-                    addMultiPoint(g, h, hazardName);
+                    addGeometryMultiPoint(g, h, hazardName);
                 }
             }
 
@@ -74,7 +76,14 @@ public class GFMEngine {
         }
     }
 
-    private void addMultiPoint(GeometryObject g, HazardField h, String hazardName) {
+    /**
+     * This method associates hazard field values to assets.
+     *
+     * @param g <tt>addGeometryMultiPoint</tt> MultiPoint object
+     * @param h <tt>HazardField</tt> object
+     * @param hazardName String hazard field identifier
+     */
+    private void addGeometryMultiPoint(GeometryObject g, HazardField h, String hazardName) {
         double x;       // longitude
         double y;       // latitude
         double[] r;     // exposures value
@@ -107,6 +116,13 @@ public class GFMEngine {
 
     }
 
+    /**
+     * This method associates hazard field values to assets.
+     *
+     * @param g <tt>GeometryPoint</tt> Point object
+     * @param h <tt>HazardField</tt> object
+     * @param hazardName String hazard field identifier
+     */
     private void addGeometryPoint(GeometryObject g, HazardField h, String hazardName) {
 
         double x;       // longitude
@@ -138,6 +154,13 @@ public class GFMEngine {
 
     }
 
+    /**
+     * This method associates hazard field values to assets.
+     *
+     * @param g <tt>LineString</tt> Point object
+     * @param h <tt>HazardField</tt> object
+     * @param hazardName String hazard field identifier
+     */
     private void addGeometryLineString(GeometryObject g, HazardField h, String hazardName) {
 
         double x;       // longitude
@@ -172,7 +195,7 @@ public class GFMEngine {
     }
 
     /**
-     * method to set a collection geometry objects
+     * Method to set a collection geometry objects
      *
      * @param geometryObjects - list of geometry objects
      */
@@ -181,7 +204,7 @@ public class GFMEngine {
     }
 
     /**
-     * method to set a collection of hazard fields
+     * Method to set a collection of hazard fields
      *
      * @param hazardfields - list of hazard fields
      */
@@ -217,7 +240,7 @@ public class GFMEngine {
     }
 
     /**
-     * Store results into a hashmap, id --> value
+     * Store results into a <tt>HashMap</tt> where String id provides double value
      *
      * @param responses      - a response hashmap of recorded response estimations
      * @param fileOutputPath - absolute file location for output data
@@ -235,7 +258,7 @@ public class GFMEngine {
     }
 
     /**
-     * method to access an arrayNode of responses
+     * Method to access an arrayNode of responses
      * @return arrayNode
      */
     public ArrayNode getResponsesArray() {

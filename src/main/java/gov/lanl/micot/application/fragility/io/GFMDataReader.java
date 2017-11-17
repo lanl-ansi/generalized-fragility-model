@@ -10,6 +10,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class provides methods to read formatted files and stores them in local field variables.
+ *
+ * @author Trevor Crawford
+ */
 public class GFMDataReader {
 
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -25,7 +30,7 @@ public class GFMDataReader {
     }
 
     /**
-     * Method for accessing an array list of GeometryObjects.
+     * Method for accessing an array list of <tt>GeometryObjects</tt>.
      *
      * @return array list of GeometryObjects
      */
@@ -43,7 +48,7 @@ public class GFMDataReader {
     }
 
     /**
-     * Method that reads in a geojson file.
+     * Method that reads in a GeoJSON file by file location.
      *
      * @param FileLocation string formatted file location
      */
@@ -74,10 +79,18 @@ public class GFMDataReader {
                 addPoint(g, coordNode);
             } else if (g instanceof GeometryLineString) {
                 addLineString(g, coordNode);
+            } else {
+                System.out.println("WARNING: " + g.getIdentifier() + " Geometry type is not implemented");
             }
         }
     }
 
+    /**
+     * This method stores a longitude and latitude values into a <tt>GeometryPoint<tt/> object.
+     *
+     * @param g         <tt>GeomteryObject<tt/>  that is used to store longitude and latitude locations
+     * @param coordNode JsonNode container for longitude and latitude values
+     */
     private void addPoint(GeometryObject g, JsonNode coordNode) {
 
         List<double[]> crd = new ArrayList<>();
@@ -92,6 +105,12 @@ public class GFMDataReader {
 
     }
 
+    /**
+     * This method stores a longitude and latitude values into a <tt>GeometryLineString<tt/> object.
+     *
+     * @param g         GeomteryObject that is used to store longitude and latitude locations
+     * @param coordNode JsonNode container for longitude and latitude values
+     */
     private void addLineString(GeometryObject g, JsonNode coordNode) {
 
         List<double[]> crd = new ArrayList<>();
@@ -109,6 +128,12 @@ public class GFMDataReader {
 
     }
 
+    /**
+     *
+     * @param fileName String array of file locations
+     * @param id string array of identifiers in tandem with <tt>fileName<tt/>
+     * @return an array list of type <tt>HazardField<tt/>
+     */
     public ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {
 
         int numberFiles = (fileName == null) ? 0 : fileName.length;

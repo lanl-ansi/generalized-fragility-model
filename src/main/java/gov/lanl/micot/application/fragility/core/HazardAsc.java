@@ -21,7 +21,7 @@ public class HazardAsc implements HazardField {
     /**
      * Constructor
      * @param fileLocation - string path to file
-     * @param id - indentifier
+     * @param id - unique identifier
      */
     HazardAsc(String fileLocation, String id) {
         this.fileLocationPath = fileLocation;
