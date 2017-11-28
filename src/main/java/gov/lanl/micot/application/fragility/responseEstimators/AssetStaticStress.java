@@ -3,9 +3,12 @@ package gov.lanl.micot.application.fragility.responseEstimators;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GFMEngine;
 import gov.lanl.micot.application.fragility.core.ResponseEstimator;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class estimates stress based on a static number that is provided
@@ -16,7 +19,7 @@ public class AssetStaticStress implements ResponseEstimator {
 
     private GFMEngine gfmBroker;
     private HashMap<String, Double> responses;
-    private ArrayList<JsonNode> assets;
+    private List<Map<String, PropertyData>> assets;
     private String fileOutputPath;
 
     private static final double DEFAULT_RESPONSE = 0.5;
@@ -54,10 +57,10 @@ public class AssetStaticStress implements ResponseEstimator {
         /*
          ********  Calculate static fragility here ********
          */
-        for (JsonNode n : assets) {
+        for (Map<String, PropertyData> n : assets) {
 
-            String id = n.get("id").asText();
-            double failure = n.has("staticFailure") ? n.get("staticFailure").asDouble() : DEFAULT_RESPONSE;
+            String id = n.get("id").asString();
+            double failure = DEFAULT_RESPONSE; //n.has("staticFailure") ? n.get("staticFailure").asDouble() : DEFAULT_RESPONSE;
             
             // store responses
             responses.put(id, failure);

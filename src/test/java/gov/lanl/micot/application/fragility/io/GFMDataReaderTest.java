@@ -2,10 +2,13 @@ package gov.lanl.micot.application.fragility.io;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GeometryObject;
-import gov.lanl.micot.application.utility.gis.RasterField;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.RasterField;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GFMDataReaderTest extends TestCase {
 
@@ -56,7 +59,7 @@ public class GFMDataReaderTest extends TestCase {
         ArrayList<GeometryObject> dataAssets = gfmdr.getGeometryObjects();
         assertTrue(!dataAssets.isEmpty());
 
-        ArrayList<JsonNode> props = gfmdr.getProperties();
+        List<Map<String, PropertyData>> props = gfmdr.getProperties();
         assertTrue(!props.isEmpty());
     }
 }

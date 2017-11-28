@@ -7,15 +7,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import gov.lanl.micot.application.fragility.core.*;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.fragility.io.GFMDataWriter;
-import gov.lanl.micot.application.utility.gis.RasterField;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.RasterField;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static gov.lanl.micot.application.rdt.PoleConstants.*;
 
@@ -60,7 +58,7 @@ public final class RDTProcessing {
         // assets
         gfmDataReader.readGeoJsonFile(polesOutputPath);
         ArrayList<GeometryObject> dataAssets = gfmDataReader.getGeometryObjects();
-        ArrayList<JsonNode> props = gfmDataReader.getProperties();
+        List<Map<String, PropertyData>> props = gfmDataReader.getProperties();
 
         // GFM set-up and produce exposures
         GFMEngine broker = new GFMEngine();
@@ -84,7 +82,7 @@ public final class RDTProcessing {
      * @param response
      * @param assetProperties
      */
-    public static void generateScenarios(ArrayNode response, ArrayList<JsonNode> assetProperties) {
+    public static void generateScenarios(ArrayNode response, List<Map<String, PropertyData>> assetProperties) {
 
         Random r = new Random();
 
@@ -92,9 +90,13 @@ public final class RDTProcessing {
 
         HashMap<String, String> poles = new HashMap();
 
-        // associate pole identifiers to it's JSON node
-        for (JsonNode n : assetProperties)
-            poles.put(n.get("id").asText(), n.get("lineId").asText());
+        for (Map<String, PropertyData> assetProperty : assetProperties) {
+            poles.put(assetProperty.get("id").asString(), assetProperty.get("lineId").asString());
+        }
+
+//        // associate pole identifiers to it's JSON node
+//        for (JsonNode n : assetProperties)
+//            poles.put(n.get("id").asText(), n.get("lineId").asText());
 
 
         ArrayNode scenarioArray = mapper.createArrayNode();
@@ -245,6 +247,7 @@ public final class RDTProcessing {
 
     private static ObjectNode createPoleAsset(int id, String line, double[] coord) {
 
+        String sid = String.valueOf(id);
         // creates one GeoJSON Point Object
         ObjectNode featureNode = mapper.createObjectNode()
                 .putPOJO("geometry", mapper.createObjectNode()
@@ -256,7 +259,7 @@ public final class RDTProcessing {
                 .put("type", "Feature")
 
                 .putPOJO("properties", mapper.createObjectNode()
-                        .put("id", id)
+                        .put("id", sid)
                         .put("baseDiameter", BASE_DIAMETER)
                         .put("cableSpan", CABLE_SPAN)
                         .put("commAttachmentHeight", COMM_ATTACHMENT_HEIGHT)

@@ -1,6 +1,6 @@
 package gov.lanl.micot.application.fragility.core;
 
-import gov.lanl.micot.application.utility.gis.RasterField;
+import gov.lanl.micot.application.utilities.gis.RasterField;
 import junit.framework.TestCase;
 
 public class HazardAscTest extends TestCase {

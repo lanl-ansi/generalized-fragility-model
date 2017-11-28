@@ -4,17 +4,19 @@ package gov.lanl.micot.application.fragility.responseEstimators;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GFMEngine;
 import gov.lanl.micot.application.fragility.core.ResponseEstimator;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PowerPoleWindIceStress implements ResponseEstimator {
 
     private GFMEngine gfmBroker;
     private HashMap<String, Double> responses;
-    private ArrayList<JsonNode> assets;
+    private List<Map<String, PropertyData>> assets;
     private String fileOutputPath;
 
 
@@ -54,18 +56,31 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
 
         double failure;
 
-        /*
+         /*
          ********  Calculate fragility here ********
          */
-        for (JsonNode n : assets) {
 
-            String id = n.get("id").asText();
+        for (Map<String, PropertyData> asset : assets) {
+
+            String id = asset.get("id").asString();
             Double dw = exposures.get("wind").get(id).get(0);
             Double di = exposures.get("ice").get(id).get(0);
 
-            failure = new FragilityWindIce(n, dw, di).getFailureProbability();
+            failure = new FragilityWindIce(asset, dw, di).getFailureProbability();
             responses.put(id, failure);
+
         }
+
+//
+//        for (JsonNode n : assets) {
+//
+//            String id = n.get("id").asText();
+//            Double dw = exposures.get("wind").get(id).get(0);
+//            Double di = exposures.get("ice").get(id).get(0);
+//
+//            failure = new FragilityWindIce(n, dw, di).getFailureProbability();
+//            responses.put(id, failure);
+//        }
     }
     
 	@Override
@@ -115,7 +130,7 @@ class FragilityWindIce {
      * @param wind
      * @param ice
      */
-    FragilityWindIce(JsonNode n, double wind, double ice) {
+    FragilityWindIce(Map<String, PropertyData> n, double wind, double ice) {
         windExposure = wind;
         iceThickness = ice;
         baseDiameter = n.get("baseDiameter").asDouble();

@@ -1,4 +1,4 @@
-package gov.lanl.micot.application.utility.gis.geotools;
+package gov.lanl.micot.application.utilities.gis.geotools;
 
 /**
  * @author Trevor Crawford

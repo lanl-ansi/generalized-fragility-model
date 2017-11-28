@@ -3,10 +3,13 @@ package gov.lanl.micot.application.fragility.core;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.FragilityParameters;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
-import gov.lanl.micot.application.utility.gis.RasterField;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.RasterField;
 import junit.framework.TestCase;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class ResponseEstimatorFactoryTest extends TestCase {
 
@@ -46,7 +49,7 @@ public class ResponseEstimatorFactoryTest extends TestCase {
         // assets
         gfmdr.readGeoJsonFile(assets);
         ArrayList<GeometryObject> dataAssets = gfmdr.getGeometryObjects();
-        ArrayList<JsonNode> props = gfmdr.getProperties();
+        List<Map<String, PropertyData>> props = gfmdr.getProperties();
 
         // GFM set-up and produce exposures
         GFMEngine broker = new GFMEngine();

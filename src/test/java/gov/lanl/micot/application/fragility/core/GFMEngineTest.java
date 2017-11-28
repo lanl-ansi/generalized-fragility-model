@@ -3,12 +3,15 @@ package gov.lanl.micot.application.fragility.core;
 import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.FragilityParameters;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
-import gov.lanl.micot.application.utility.gis.RasterField;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.RasterField;
 import junit.framework.TestCase;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class GFMEngineTest extends TestCase {
@@ -16,7 +19,7 @@ public class GFMEngineTest extends TestCase {
     private static GFMEngine broker;
     private ArrayList<GeometryObject> dataAssets = null;
     private ArrayList<RasterField> hazardObjects = null;
-    private ArrayList<JsonNode> props = null;
+    private List<Map<String, PropertyData>> props = null;
 
     public void setUp() {
 

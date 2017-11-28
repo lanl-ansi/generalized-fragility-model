@@ -1,11 +1,16 @@
 package gov.lanl.micot.application.rdt;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import gov.lanl.micot.application.fragility.core.*;
+import gov.lanl.micot.application.fragility.core.GFMEngine;
+import gov.lanl.micot.application.fragility.core.GeometryObject;
+import gov.lanl.micot.application.fragility.core.ResponseEstimator;
+import gov.lanl.micot.application.fragility.core.ResponseEstimatorFactory;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
-import gov.lanl.micot.application.utility.gis.RasterField;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.RasterField;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class FragilityRDT {
 
@@ -47,7 +52,7 @@ public class FragilityRDT {
         // assets
         gfmDataReader.readGeoJsonFile(assets);
         ArrayList<GeometryObject> dataAssets = gfmDataReader.getGeometryObjects();
-        ArrayList<JsonNode> props = gfmDataReader.getProperties();
+        List<Map<String, PropertyData>> props = gfmDataReader.getProperties();
 
         // GFM set-up and produce exposures
         GFMEngine broker = new GFMEngine();

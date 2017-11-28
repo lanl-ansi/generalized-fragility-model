@@ -1,19 +1,20 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GFMEngine;
 import gov.lanl.micot.application.fragility.core.ResponseEstimator;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PowerPoleWindStress implements ResponseEstimator {
 
     private GFMEngine gfmBroker;
     private HashMap<String, Double> responses;
-    private ArrayList<JsonNode> assets;
+    private List<Map<String, PropertyData>> assets;
     private String fileOutputPath;
 
     /**
@@ -55,13 +56,15 @@ public class PowerPoleWindStress implements ResponseEstimator {
         /*
          ********  Calculate fragility here ********
          */
-        for (JsonNode n : assets) {
 
-            String id = n.get("id").asText();
+        for (Map<String, PropertyData> asset : assets) {
+
+            String id = asset.get("id").asString();
             Double dv = exposures.get("wind").get(id).get(0);
 
-            failure = new FragilityWind(n, dv).getFailureProbability();
+            failure = new FragilityWind(asset, dv).getFailureProbability();
             responses.put(id, failure);
+
         }
     }
     
@@ -110,7 +113,8 @@ class FragilityWind {
      * @param n JsonNode that contains needed properties
      * @param exposure wind exposure value
      */
-    FragilityWind(JsonNode n, double exposure) {
+    FragilityWind(Map<String, PropertyData> n, double exposure) {
+
         windExposure = exposure;
         baseDiameter = n.get("baseDiameter").asDouble();
         cableSpan = n.get("cableSpan").asDouble();

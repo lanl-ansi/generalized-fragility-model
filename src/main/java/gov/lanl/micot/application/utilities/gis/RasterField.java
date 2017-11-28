@@ -1,8 +1,8 @@
-package gov.lanl.micot.application.utility.gis;
+package gov.lanl.micot.application.utilities.gis;
 
 import gov.lanl.micot.application.fragility.core.HazardField;
-import gov.lanl.micot.application.utility.gis.geotools.GeotoolsGIS;
-import gov.lanl.micot.application.utility.gis.geotools.GeotoolsGrid2D;
+import gov.lanl.micot.application.utilities.gis.geotools.GeotoolsGIS;
+import gov.lanl.micot.application.utilities.gis.geotools.GeotoolsGrid2D;
 
 import java.util.List;
 

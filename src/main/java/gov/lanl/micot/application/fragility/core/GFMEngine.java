@@ -1,12 +1,12 @@
 package gov.lanl.micot.application.fragility.core;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import gov.lanl.micot.application.fragility.io.GFMDataWriter;
-import gov.lanl.micot.application.utility.gis.RasterField;
+import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.RasterField;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class GFMEngine {
 
     private ArrayList<RasterField> hazardFields;
     private ArrayList<GeometryObject> geometryObjects;
-    private ArrayList<JsonNode> assetProperties;
+    private List<Map<String, PropertyData>> assetProperties;
 
     private Map<String, HashMap<String, ArrayList<Double>>> exposures = new HashMap<>();
 
@@ -178,7 +178,7 @@ public class GFMEngine {
      *
      * @param assetProperties list of asset properties
      */
-    public void setAssetProperties(ArrayList<JsonNode> assetProperties) {
+    public void setAssetProperties(List<Map<String, PropertyData>> assetProperties) {
         System.out.println(assetProperties.size() + " assets read");
         this.assetProperties = assetProperties;
     }
@@ -187,7 +187,7 @@ public class GFMEngine {
      * Method to access asset properties
      * @return array list of type JsonNode
      */
-    public ArrayList<JsonNode> getAssetProperties() {
+    public List<Map<String, PropertyData>> getAssetProperties() {
         return assetProperties;
     }
 
@@ -208,7 +208,8 @@ public class GFMEngine {
     public void storeResults(HashMap<String, Double> responses, String fileOutputPath) {
 
         responses.forEach((k, v) -> {
-            ObjectNode singleNode = mapper.createObjectNode().put("id", k)
+            ObjectNode singleNode = mapper.createObjectNode()
+                    .put("id", k)
                     .put("value", v);
             reponsesArray.add(singleNode);
         });
