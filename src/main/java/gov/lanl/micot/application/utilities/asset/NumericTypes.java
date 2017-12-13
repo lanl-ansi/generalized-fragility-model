@@ -15,33 +15,29 @@ public abstract class NumericTypes extends PropertyData {
     public abstract String stringValue();
 
 
+    @Override
     public final int asInt() {
         return this.intValue();
     }
 
+    @Override
     public final int asInt(int defaultValue) {
         return this.intValue();
     }
 
+    @Override
     public final double asDouble() {
         return this.doubleValue();
     }
 
+    @Override
     public final double asDouble(int defaultValue) {
         return defaultValue;
     }
 
+    @Override
     public final String asString(){
         return this.stringValue();
     }
-
-    public final String asString(int defaultValue){
-        return this.stringValue();
-    }
-
-    public final String asString(double defaultValue){
-        return this.stringValue();
-    }
-
 
 }

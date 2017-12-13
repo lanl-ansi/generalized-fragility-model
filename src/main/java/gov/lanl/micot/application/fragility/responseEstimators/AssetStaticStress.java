@@ -1,11 +1,9 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GFMEngine;
 import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +40,7 @@ public class AssetStaticStress implements ResponseEstimator {
      * Do not change this method.
      */
     public void writeResults() {
-        gfmBroker.storeResults(this.responses, fileOutputPath);
+        gfmBroker.writeJSONOutputs(this.responses, fileOutputPath);
     }
 
     /**

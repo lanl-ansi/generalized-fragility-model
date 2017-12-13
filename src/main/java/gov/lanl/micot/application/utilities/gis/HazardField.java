@@ -1,4 +1,4 @@
-package gov.lanl.micot.application.fragility.core;
+package gov.lanl.micot.application.utilities.gis;
 
 
 import java.util.List;

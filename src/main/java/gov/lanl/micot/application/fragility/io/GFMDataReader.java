@@ -1,10 +1,11 @@
 package gov.lanl.micot.application.fragility.io;
 
 import gov.lanl.micot.application.fragility.core.GeometryObject;
-import gov.lanl.micot.application.utilities.AssetData;
+import gov.lanl.micot.application.utilities.json.AssetDataFromJackson;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.HazardField;
 import gov.lanl.micot.application.utilities.gis.RasterField;
-import gov.lanl.micot.application.utilities.json.JacksonJsonData;
+import gov.lanl.micot.application.utilities.json.JsonDataFromJackson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class GFMDataReader {
 
     private List<Map<String, PropertyData>> properties = new ArrayList<>();
     private ArrayList<GeometryObject> geometryObjects = new ArrayList<>();
-    private ArrayList<RasterField> hazardFields = new ArrayList<>();
+    private ArrayList<HazardField> hazardFields = new ArrayList<>();
 
     /**
      * Default constructor.
@@ -52,8 +53,8 @@ public class GFMDataReader {
      */
     public void readGeoJsonFile(String FileLocation) {
 
-        AssetData jsonData = new JacksonJsonData();
-        jsonData.setAllValues(FileLocation);
+        AssetDataFromJackson jsonData = new JsonDataFromJackson();
+        jsonData.readGeoJsonFile(FileLocation);
         geometryObjects = jsonData.getGeometryObjects();
         properties = jsonData.getPropertyObjects();
     }
@@ -64,7 +65,7 @@ public class GFMDataReader {
      * @param id       string array of identifiers in tandem with <tt>fileName<tt/>
      * @return an array list of type <tt>HazardField<tt/>
      */
-    public ArrayList<RasterField> readHazardFile(String[] fileName, String[] id) {
+    public ArrayList<HazardField> readHazardFile(String[] fileName, String[] id) {
 
         int numberFiles = (fileName == null) ? 0 : fileName.length;
         int numberIdentifiers = (id == null) ? 0 : id.length;

@@ -1,9 +1,9 @@
 package gov.lanl.micot.application.fragility.core;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.FragilityParameters;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.HazardField;
 import gov.lanl.micot.application.utilities.gis.RasterField;
 import junit.framework.TestCase;
 
@@ -18,7 +18,7 @@ public class GFMEngineTest extends TestCase {
 
     private static GFMEngine broker;
     private ArrayList<GeometryObject> dataAssets = null;
-    private ArrayList<RasterField> hazardObjects = null;
+    private ArrayList<HazardField> hazardObjects = null;
     private List<Map<String, PropertyData>> props = null;
 
     public void setUp() {
@@ -88,7 +88,7 @@ public class GFMEngineTest extends TestCase {
         responses.put("1", 0.23334);
         responses.put("2", 0.45534);
 
-        broker.storeResults(responses, "example.json");
+        broker.writeJSONOutputs(responses, "example.json");
 
         File f = new File("example.json");
         TimeUnit.MILLISECONDS.sleep(10);

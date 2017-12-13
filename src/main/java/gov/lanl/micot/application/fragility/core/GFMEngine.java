@@ -1,12 +1,9 @@
 package gov.lanl.micot.application.fragility.core;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import gov.lanl.micot.application.fragility.io.GFMDataWriter;
+import gov.lanl.micot.application.utilities.json.AssetDataFromJackson;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
-import gov.lanl.micot.application.utilities.gis.RasterField;
+import gov.lanl.micot.application.utilities.gis.HazardField;
+import gov.lanl.micot.application.utilities.json.JsonDataFromJackson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,17 +15,14 @@ import java.util.Map;
  */
 public class GFMEngine {
 
-    private ArrayList<RasterField> hazardFields;
+    private ArrayList<HazardField> hazardFields;
     private ArrayList<GeometryObject> geometryObjects;
     private List<Map<String, PropertyData>> assetProperties;
-
     private Map<String, HashMap<String, ArrayList<Double>>> exposures = new HashMap<>();
-
-    private ObjectMapper mapper = new ObjectMapper();
-    private ArrayNode reponsesArray = mapper.createArrayNode();
-
+    
+    private AssetDataFromJackson jsonData = new JsonDataFromJackson();
     private int outsideExtentCount;
-
+    private HashMap<String, Double> assetResponses;
 
     /**
      * Method that extracts exposure values from hazard fields to geometry object identifiers
@@ -168,7 +162,7 @@ public class GFMEngine {
      *
      * @param hazardfields list of hazard fields
      */
-    public void setHazardfields(ArrayList<RasterField> hazardfields) {
+    public void setHazardfields(ArrayList<HazardField> hazardfields) {
         System.out.println(hazardfields.size() + " hazard fields read");
         hazardFields = hazardfields;
     }
@@ -200,29 +194,21 @@ public class GFMEngine {
     }
 
     /**
-     * Store results into a <tt>HashMap</tt> where String id provides double value
+     * Method to pass results into a JSON Writer
      *
      * @param responses      - a response hashmap of recorded response estimations
      * @param fileOutputPath - absolute file location for output data
      */
-    public void storeResults(HashMap<String, Double> responses, String fileOutputPath) {
-
-        responses.forEach((k, v) -> {
-            ObjectNode singleNode = mapper.createObjectNode()
-                    .put("id", k)
-                    .put("value", v);
-            reponsesArray.add(singleNode);
-        });
-
-        System.out.println("Writing response estimators");
-        GFMDataWriter.writeResults(reponsesArray, fileOutputPath);
+    public void writeJSONOutputs(HashMap<String, Double> responses, String fileOutputPath) {
+        assetResponses = responses;
+        jsonData.writeJSON(responses, fileOutputPath);
     }
 
     /**
      * Method to access an arrayNode of responses
      * @return arrayNode
      */
-    public ArrayNode getResponsesArray() {
-        return this.reponsesArray;
+    public HashMap<String, Double> getResponsesArray() {
+        return this.assetResponses;
     }
 }

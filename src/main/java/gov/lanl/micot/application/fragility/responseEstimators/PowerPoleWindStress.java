@@ -36,7 +36,7 @@ public class PowerPoleWindStress implements ResponseEstimator {
      * Do not change this method
      */
     public void writeResults() {
-        gfmBroker.storeResults(this.responses, fileOutputPath);
+        gfmBroker.writeJSONOutputs(this.responses, fileOutputPath);
     }
 
     /**

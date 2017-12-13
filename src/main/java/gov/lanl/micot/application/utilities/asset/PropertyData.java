@@ -60,4 +60,13 @@ public abstract class PropertyData {
     public boolean isString(boolean defaultValue) {
         return defaultValue;
     }
+
+    public boolean isBoolean() {
+        return this.isString(false);
+    }
+
+    public boolean isBoolean(boolean defaultValue) {
+        return defaultValue;
+    }
+
 }

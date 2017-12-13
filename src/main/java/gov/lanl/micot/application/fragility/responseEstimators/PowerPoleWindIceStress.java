@@ -1,7 +1,6 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GFMEngine;
 import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
@@ -39,7 +38,7 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
      * Do not change this method - generic method to write JSON
      */
     public void writeResults() {
-        gfmBroker.storeResults(responses, fileOutputPath);
+        gfmBroker.writeJSONOutputs(responses, fileOutputPath);
     }
 
     /**
@@ -70,17 +69,6 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
             responses.put(id, failure);
 
         }
-
-//
-//        for (JsonNode n : assets) {
-//
-//            String id = n.get("id").asText();
-//            Double dw = exposures.get("wind").get(id).get(0);
-//            Double di = exposures.get("ice").get(id).get(0);
-//
-//            failure = new FragilityWindIce(n, dw, di).getFailureProbability();
-//            responses.put(id, failure);
-//        }
     }
     
 	@Override

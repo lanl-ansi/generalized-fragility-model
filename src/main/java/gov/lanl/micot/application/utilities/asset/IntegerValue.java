@@ -18,7 +18,8 @@ public class IntegerValue extends NumericTypes {
         return (double) this.assetValue;
     }
 
-    public String StringValue(){
+    @Override
+    public String stringValue(){
         return String.valueOf(this.assetValue);
     }
 
@@ -33,10 +34,6 @@ public class IntegerValue extends NumericTypes {
     }
 
     @Override
-    public String stringValue() {
-        return null;
-    }
-
     public boolean isString(){
         return false;
     }

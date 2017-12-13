@@ -5,6 +5,7 @@ import gov.lanl.micot.application.fragility.FragilityParameters;
 import gov.lanl.micot.application.fragility.core.*;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
+import gov.lanl.micot.application.utilities.gis.HazardField;
 import gov.lanl.micot.application.utilities.gis.RasterField;
 import junit.framework.TestCase;
 
@@ -43,7 +44,7 @@ public class PowerPoleWindStressTIFFTest extends TestCase {
         String[] ids = parser.getIdentifiers();
         String assets = parser.getAssetInputPath();
         GFMDataReader gfmdr = new GFMDataReader();
-        ArrayList<RasterField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
+        ArrayList<HazardField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
 
         // assets
         gfmdr.readGeoJsonFile(assets);

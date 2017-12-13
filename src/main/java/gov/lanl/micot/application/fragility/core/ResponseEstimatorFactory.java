@@ -35,6 +35,5 @@ public class ResponseEstimatorFactory {
             System.out.println("Didn't recognize response estimator option -e: \"" + estimatorId + "\"");
             return null;
         }
-
     }
 }

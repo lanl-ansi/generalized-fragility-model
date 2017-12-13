@@ -1,6 +1,5 @@
 package gov.lanl.micot.application.utilities.gis;
 
-import gov.lanl.micot.application.fragility.core.HazardField;
 import gov.lanl.micot.application.utilities.gis.geotools.GeotoolsGIS;
 import gov.lanl.micot.application.utilities.gis.geotools.GeotoolsGrid2D;
 

@@ -15,11 +15,16 @@ public class BooleanValue extends ValueTypes {
 
     @Override
     public String StringValue() {
-        return "";
+        return String.valueOf(assetValue);
     }
 
     @Override
     public boolean isString() {
         return false;
+    }
+
+    @Override
+    public boolean isBoolean() {
+        return true;
     }
 }

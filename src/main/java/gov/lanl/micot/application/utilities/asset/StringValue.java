@@ -22,4 +22,9 @@ public class StringValue extends ValueTypes {
     public boolean isString(){
         return true;
     }
+
+    @Override
+    public boolean isBoolean() {
+        return false;
+    }
 }

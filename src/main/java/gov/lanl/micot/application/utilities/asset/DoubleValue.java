@@ -35,7 +35,7 @@ public class DoubleValue extends NumericTypes {
 
     @Override
     public String stringValue() {
-        return null;
+        return String.valueOf(this.assetValue);
     }
 
 }
