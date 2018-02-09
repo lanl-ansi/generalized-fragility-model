@@ -2,9 +2,9 @@ package gov.lanl.micot.application.fragility;
 
 import gov.lanl.micot.application.fragility.core.*;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
+import gov.lanl.micot.application.fragility.responseEstimators.ResponseEstimator;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 import gov.lanl.micot.application.utilities.gis.HazardField;
-import gov.lanl.micot.application.utilities.gis.RasterField;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,21 +1,14 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
 import gov.lanl.micot.application.fragility.core.GFMEngine;
-import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class PowerPoleWindStress implements ResponseEstimator {
-
-    private GFMEngine gfmBroker;
-    private HashMap<String, Double> responses;
-    private List<Map<String, PropertyData>> assets;
-    private String fileOutputPath;
+public class PowerPoleWindStress extends ResponseEstimator {
 
     /**
      * Response Estimator for power pole fragility with wind and ice stresses
@@ -24,19 +17,13 @@ public class PowerPoleWindStress implements ResponseEstimator {
      * @param fileOutput
      */
     public PowerPoleWindStress(GFMEngine broker, String fileOutput) {
+
         gfmBroker = broker;
         assets = broker.getAssetProperties();
         fileOutputPath = fileOutput;
 
         // calculate fragility in this method
         calcFragility();
-    }
-
-    /**
-     * Do not change this method
-     */
-    public void writeResults() {
-        gfmBroker.writeJSONOutputs(this.responses, fileOutputPath);
     }
 
     /**
@@ -67,11 +54,6 @@ public class PowerPoleWindStress implements ResponseEstimator {
 
         }
     }
-    
-	@Override
-	public double getResponse(String id) {
-		return responses.get(id);
-	}
 
 }
 

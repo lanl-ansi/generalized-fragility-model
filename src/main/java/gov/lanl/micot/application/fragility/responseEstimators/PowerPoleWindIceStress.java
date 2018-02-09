@@ -2,22 +2,14 @@ package gov.lanl.micot.application.fragility.responseEstimators;
 
 
 import gov.lanl.micot.application.fragility.core.GFMEngine;
-import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 import org.apache.commons.math3.distribution.NormalDistribution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class PowerPoleWindIceStress implements ResponseEstimator {
-
-    private GFMEngine gfmBroker;
-    private HashMap<String, Double> responses;
-    private List<Map<String, PropertyData>> assets;
-    private String fileOutputPath;
-
+public class PowerPoleWindIceStress extends ResponseEstimator {
 
     /**
      * Response Estimator for power pole fragility with wind and ice stresses
@@ -32,13 +24,6 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
 
         // calculate fragility in this method
         calcFragility();
-    }
-
-    /**
-     * Do not change this method - generic method to write JSON
-     */
-    public void writeResults() {
-        gfmBroker.writeJSONOutputs(responses, fileOutputPath);
     }
 
     /**
@@ -70,12 +55,6 @@ public class PowerPoleWindIceStress implements ResponseEstimator {
 
         }
     }
-    
-	@Override
-	public double getResponse(String id) {
-		return responses.get(id);
-	}
-
 }
 
 /**

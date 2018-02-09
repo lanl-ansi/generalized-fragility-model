@@ -16,7 +16,7 @@ public interface GeometryObject {
     String getIdentifier();
 
     /**
-     * @param lonLat longitude and latitiude coordinates
+     * @param lonLat longitude and latitude coordinates
      */
     void setCoordinates(List<double[]> lonLat);
 

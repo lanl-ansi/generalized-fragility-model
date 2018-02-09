@@ -1,11 +1,9 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
 import gov.lanl.micot.application.fragility.core.GFMEngine;
-import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,12 +11,8 @@ import java.util.Map;
  * @author Russell Bent
  *
  */
-public class AssetStaticStress implements ResponseEstimator {
+public class AssetStaticStress extends ResponseEstimator {
 
-    private GFMEngine gfmBroker;
-    private HashMap<String, Double> responses;
-    private List<Map<String, PropertyData>> assets;
-    private String fileOutputPath;
 
     private static final double DEFAULT_RESPONSE = 0.5;
     
@@ -34,13 +28,6 @@ public class AssetStaticStress implements ResponseEstimator {
 
         // calculate fragility in this method
         calcFragility();
-    }
-
-    /**
-     * Do not change this method.
-     */
-    public void writeResults() {
-        gfmBroker.writeJSONOutputs(this.responses, fileOutputPath);
     }
 
     /**
@@ -64,9 +51,4 @@ public class AssetStaticStress implements ResponseEstimator {
             responses.put(id, failure);
         }
     }
-
-	@Override
-	public double getResponse(String id) {
-		return responses.get(id);
-	}
 }

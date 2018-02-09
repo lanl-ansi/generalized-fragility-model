@@ -3,6 +3,7 @@ package gov.lanl.micot.application.fragility.core;
 import gov.lanl.micot.application.fragility.responseEstimators.AssetStaticStress;
 import gov.lanl.micot.application.fragility.responseEstimators.PowerPoleWindIceStress;
 import gov.lanl.micot.application.fragility.responseEstimators.PowerPoleWindStress;
+import gov.lanl.micot.application.fragility.responseEstimators.ResponseEstimator;
 
 /**
  * This class implements the response estimator factory.
