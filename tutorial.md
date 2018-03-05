@@ -93,7 +93,7 @@ From this point on, you are free to do whatever you like.
 
 #### Steps for example ResponseEstimatorSpectralDisplacement
 
-Using ResponseEstimatorTemplate.java (inside responseEstimators package):
+Using ResponseEstimatorTemplate.java (inside the test_data directory):
  
 1. change the file name to "ResponseEstimatorSpectralDisplacement.java".  This java class will serve 
 as the entry point for all fragility calculations with example data.
@@ -109,14 +109,27 @@ This basically registers your new class to be specified from command line option
 3. below the ```responses``` declaration, paste the following code
 ```java
 double failure = 0.0;
+        NormalDistribution nd = null;
 
         /*
          ********  Calculate fragility here ********
          */
         for (JsonNode n : assets) {
 
+            // getting asset identifier
             String id = n.get("id").asText();
+            // getting median spectral value
+            Double msd = n.get("MSD").asDouble();
+            // getting standard deviation of spectral displacement
+            Double stdDev = n.get("LogNormStdDev").asDouble();
+            // gettting spectral displacement exposure
             Double exposureValue = exposures.get("eqd").get(id).get(0);
+
+            // conditional probability of being in, or exceeding, a particular damage state,
+            // given the spectral displacement
+            Double dv = (1.0/stdDev)*Math.log(exposureValue/msd);
+            nd = new NormalDistribution();
+            failure = nd.cumulativeProbability(dv);
 
             // store responses
             responses.put(id, failure);

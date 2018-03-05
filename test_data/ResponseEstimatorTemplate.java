@@ -1,24 +1,23 @@
-package gov.lanl.nisac.fragility.responseEstimators;
+package gov.lanl.micot.application.fragility.responseEstimators;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import gov.lanl.nisac.fragility.core.GFMEngine;
-import gov.lanl.nisac.fragility.core.ResponseEstimator;
+import gov.lanl.micot.application.fragility.core.GFMEngine;
+import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ResponseEstimatorTemplate implements ResponseEstimator {
+/**
+ * This is a template class to build a fragility routine
+ *
+ * @author Trevor Crawford
+ */
+public class ResponseEstimatorTemplate extends ResponseEstimator {
 
-    private GFMEngine gfmBroker;
-    private HashMap<String, Double> responses;
-    private ArrayList<JsonNode> assets;
-    private String fileOutputPath;
 
     /**
-     * Response Estimator for power pole fragility with wind and ice stresses
-     *
-     * Do not change this method.
+     * Response Estimator for new fragility routines
      *
      * @param broker
      * @param fileOutput
@@ -32,20 +31,6 @@ public class ResponseEstimatorTemplate implements ResponseEstimator {
         calcFragility();
     }
 
-    /**
-     * Do not change this method.
-     */
-    public void writeResults() {
-        gfmBroker.storeResults(this.responses, fileOutputPath);
-    }
-
-	/**
-	 * Do not change this method
-	 */
-	public double getResponse(String id) {
-		return responses.get(id);
-	}
-    
     /**
      * General method place for fragility calculations
      */
@@ -63,13 +48,40 @@ public class ResponseEstimatorTemplate implements ResponseEstimator {
         /*
          ********  Calculate fragility here ********
          */
-        for (JsonNode n : assets) {
 
-            String id = n.get("id").asText();
-            Double exposureValue = exposures.get("wind").get(id).get(0);
+        for (Map<String, PropertyData> asset : assets) {
 
-            // store responses
+            // grab asset id value
+            String id = asset.get("id").asString();
+
+            // grab exposure values
+            // EXAMPLE:
+            // Double dw = exposures.get("hazardFieldName").get(id).get(0);
+
+            // failure probability - example based on using internal class FragilityExample
+            //
+            failure = new FragilityExample().getFailureProbability();
             responses.put(id, failure);
+
         }
+
     }
+
+
+}
+
+/**
+ *  Basic class outline to a single fragilitliy calculation.  This only a simple example class.
+ */
+class FragilityExample{
+
+    FragilityExample(){
+
+        getFailureProbability()
+    }
+
+    double getFailureProbability(){
+        return 0.0;
+    }
+
 }
