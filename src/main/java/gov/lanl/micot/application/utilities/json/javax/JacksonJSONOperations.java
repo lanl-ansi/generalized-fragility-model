@@ -34,6 +34,11 @@ public class JacksonJSONOperations {
     public JacksonJSONOperations() {
     }
 
+    /**
+     * Method for reading and parsing JSON data into appropriate field data structures
+     *
+     * @param FileLocation string file location
+     */
     public void readJsonFile(String FileLocation) {
 
         InputStream inStream;
@@ -68,6 +73,11 @@ public class JacksonJSONOperations {
         }
     }
 
+    /**
+     * Helper Method for parsing property member values from JSON.
+     *
+     * @param p
+     */
     private void parseProperties(JsonNode p) {
 
         Iterator<Map.Entry<String, JsonNode>> pIterator = p.fields();
@@ -96,6 +106,11 @@ public class JacksonJSONOperations {
         properties.add(property);
     }
 
+    /**
+     * Getter method for property data
+     *
+     * @return List of property data that is mapped by id values
+     */
     public List<Map<String, PropertyData>> getPropertyObjects() {
         return properties;
     }
@@ -154,9 +169,9 @@ public class JacksonJSONOperations {
      * @param objs
      * @param filePath
      */
-    public static void writePoleOutput(ObjectNode objs, String filePath){
+    public static void writePoleOutput(ObjectNode objs, String filePath) {
 
-        if (!(filePath == null)){
+        if (!(filePath == null)) {
             polesOutputPath = filePath;
         }
 
@@ -171,6 +186,13 @@ public class JacksonJSONOperations {
 
     }
 
+    /**
+     * Helper method that stores estinator responses into an intermediate ArrayNode, then calls
+     * GFMDataWriter method to write results.
+     *
+     * @param responses      HashMap of asset identifiers and response values.
+     * @param fileOutputPath String file path to write JSON results.
+     */
     public void writeJSON(HashMap<String, Double> responses, String fileOutputPath) {
         responses.forEach((k, v) -> {
             ObjectNode singleNode = mapper.createObjectNode()
@@ -277,7 +299,7 @@ public class JacksonJSONOperations {
                 .put("type", "FeatureCollection")
                 .putPOJO("features", features);
 
-        writePoleOutput(featureNode,polesOutputPath );
+        writePoleOutput(featureNode, polesOutputPath);
     }
 
     private static ObjectNode createPoleAsset(int id, String line, double[] coord) {
@@ -317,11 +339,11 @@ public class JacksonJSONOperations {
 
     }
 
-    public void writeRDTScenarios(Map<Integer, List<String>> lineScenarios, String scenarioFilePath){
+    public void writeRDTScenarios(Map<Integer, List<String>> lineScenarios, String scenarioFilePath) {
 
         ArrayNode scenarioArray = mapper.createArrayNode();
 
-        lineScenarios.forEach((k,v)->{
+        lineScenarios.forEach((k, v) -> {
 
             ArrayNode lineIdentifier = mapper.valueToTree(v);
 

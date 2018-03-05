@@ -26,6 +26,11 @@ public class GeotoolsGrid2D implements GeotoolsGIS {
 
     private int outsideExtentCount = 0;
 
+    /**
+     * Method to read in ArcGrid formatted file and stored in GridCoverage2D field variable.
+     *
+     * @param fileLocation
+     */
     public void readArcGrid(String fileLocation) {
 
         File f = new File(fileLocation);
@@ -41,6 +46,11 @@ public class GeotoolsGrid2D implements GeotoolsGIS {
 
     }
 
+    /**
+     * Method to read in GeoTIFF formatted file and stored in GridCoverage2D field variable.
+     *
+     * @param fileLocation file string path.
+     */
     public void readTiffGrid(String fileLocation){
 
         File f = new File(fileLocation);
@@ -55,6 +65,12 @@ public class GeotoolsGrid2D implements GeotoolsGIS {
         }
     }
 
+    /**
+     * Method that returns a point value from longitude and latitude coordinate values.
+     *
+     * @param crd longitude and latitude double array values
+     * @return single exposure value
+     */
     public double getPointValue(List<double[]> crd) {
         double x;       // longitude
         double y;       // latitude
@@ -79,6 +95,12 @@ public class GeotoolsGrid2D implements GeotoolsGIS {
         return r[0];
     }
 
+    /**
+     * Method that returns a point values from an array longitude and latitude coordinate values.
+     *
+     * @param crd longitude and latitude double array values
+     * @return an array of exposure value
+     */
     public List<Double> getPointValues(List<double[]> crd) {
         double x;       // longitude
         double y;       // latitude
@@ -108,6 +130,11 @@ public class GeotoolsGrid2D implements GeotoolsGIS {
         return rList;
     }
 
+    /**
+     * Method that returns the count of assets outside of raster extent(s).
+     *
+     * @return count of assets outside of raster extent(s)
+     */
     public int getOutsideExtentCount() {
         return this.outsideExtentCount;
     }

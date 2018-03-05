@@ -26,6 +26,7 @@ public interface HazardField {
     List<Double> evaluatePoints(List<double[]> crd);
 
     /**
+     *
      * @return
      */
     int getOutsideExtentCount();

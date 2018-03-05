@@ -1,6 +1,5 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import gov.lanl.micot.application.fragility.core.GFMEngine;
 import gov.lanl.micot.application.fragility.core.ResponseEstimator;
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -8,17 +7,10 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ResponseEstimatorSpectralDisplacement implements ResponseEstimator {
-
-    private GFMEngine gfmBroker;
-    private HashMap<String, Double> responses;
-    private ArrayList<JsonNode> assets;
-    private String fileOutputPath;
+public class ResponseEstimatorSpectralDisplacement extends ResponseEstimator {
 
     /**
-     * Response Estimator for power pole fragility with wind and ice stresses
-     * <p>
-     * Do not change this method.
+     * Response Estimator example for Spectral Displacement fragility applied to buildings.
      *
      * @param broker
      * @param fileOutput
@@ -30,13 +22,6 @@ public class ResponseEstimatorSpectralDisplacement implements ResponseEstimator 
 
         // calculate fragility in this method
         calcFragility();
-    }
-
-    /**
-     * Do not change this method.
-     */
-    public void writeResults() {
-        gfmBroker.storeResults(this.responses, fileOutputPath);
     }
 
     /**
