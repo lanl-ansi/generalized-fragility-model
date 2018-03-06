@@ -32,7 +32,7 @@ public class GFMEngineTest extends TestCase {
         cmds[4] = "-i";
         cmds[5] = "wind ice";
         cmds[6] = "-e";
-        cmds[7] = "windIce";
+        cmds[7] = "PowerPoleWindIceStress";
         cmds[8] = "-o";
         cmds[9] = "fragility_ice_output.json";
 
@@ -97,10 +97,6 @@ public class GFMEngineTest extends TestCase {
         f.delete();
     }
 
-    public void testGetResponsesArray() throws Exception {
-
-        assertNotNull(broker.getResponsesArray());
-    }
 
     public void testProduceExposures() throws Exception {
 

@@ -18,7 +18,7 @@ public class CommandLineParametersTest extends TestCase {
         cmds[4] = "-i";
         cmds[5] = "ice wind";
         cmds[6] = "-e";
-        cmds[7] = "iceWind";
+        cmds[7] = "PowerPoleWindIceStress";
 
         parser = new FragilityParameters(cmds);
 
@@ -59,7 +59,7 @@ public class CommandLineParametersTest extends TestCase {
     }
 
     public void testGetEstimator() throws Exception {
-        assertEquals(parser.getEstimator(), "iceWind");
+        assertEquals(parser.getEstimator(), "PowerPoleWindIceStress");
     }
 
     public void testGetHelp() throws Exception{

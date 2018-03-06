@@ -1,6 +1,5 @@
 package gov.lanl.micot.application;
 
-//import org.apache.commons.cli.*;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.Option;

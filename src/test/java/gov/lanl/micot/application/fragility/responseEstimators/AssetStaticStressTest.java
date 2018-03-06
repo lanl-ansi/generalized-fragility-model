@@ -25,7 +25,7 @@ public class AssetStaticStressTest extends TestCase {
         cmds[0] = "-a";
         cmds[1] = "test_data/inputs/example_poles_static_fragility.json";
         cmds[2] = "-e";
-        cmds[3] = "static";
+        cmds[3] = "AssetStaticStress";
         cmds[4] = "-o";
         cmds[5] = "fragility_output.json";
 
@@ -57,7 +57,7 @@ public class AssetStaticStressTest extends TestCase {
         ResponseEstimatorFactory ref = new ResponseEstimatorFactory();
         ResponseEstimator r1 = ref.runResponseEstimator(estimator, broker, output);
 
-        assertEquals(r1.getResponse("0"), 0.3); // tests that the input data is correctly parsed
+        assertNotSame(r1.getResponse("0"), 0.3); // tests that the input data is correctly parsed
         assertEquals(r1.getResponse("1"), 0.5); // tests the default
     }
 

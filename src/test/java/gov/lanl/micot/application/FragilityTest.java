@@ -19,7 +19,7 @@ public class FragilityTest extends TestCase {
         cmds[4] = "-i";
         cmds[5] = "ice wind";
         cmds[6] = "-e";
-        cmds[7] = "windIce";
+        cmds[7] = "PowerPoleWindIceStress";
 
     }
 

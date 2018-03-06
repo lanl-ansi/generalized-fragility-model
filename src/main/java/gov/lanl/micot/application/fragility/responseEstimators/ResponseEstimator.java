@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Response estimator interface
+ * Response estimator abstract class that cature default implementations for fragility routines.
  */
 public abstract class ResponseEstimator {
 
@@ -18,7 +18,7 @@ public abstract class ResponseEstimator {
     String fileOutputPath;
 
     /**
-     * Generic method to run fragility calculations.
+     * Generic method declaration for fragility calculations.
      */
     public void calcFragility() {
     }

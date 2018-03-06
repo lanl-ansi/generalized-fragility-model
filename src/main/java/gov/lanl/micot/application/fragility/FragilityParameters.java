@@ -60,7 +60,7 @@ public class FragilityParameters extends CommandLineParameters{
     }
 
     /**
-     * helper method that shows fragilityOptions
+     * helper method that shows fragility pptions
      */
     public static void printHelp() {
         String header = "fragility  [OPTIONS]\n fragilityOptions:\n" +
@@ -75,11 +75,7 @@ public class FragilityParameters extends CommandLineParameters{
                         " -i <identifiers> -e <estimator name>\\n" +
                         "\n\nFragility.jar  -a <GeoJSON data> -hf <hazard fields> " +
                         "-i <identifiers> -e <estimator name> -so " +
-                        "<filename> -num <number>\\n" +
-                        "\n\nFragility.jar  -r <RDT data> -ro <RDTpoleData.json> -hf <hazard fields> " +
-                        "-i <identifiers> -e <estimator name> -so " +
-                        "<filename> -num <number>\\n\n";
-
+                        "<filename> -num <number>\\n";
 
         System.out.println(header + footer);
     }

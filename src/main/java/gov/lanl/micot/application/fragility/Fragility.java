@@ -15,6 +15,8 @@ public class Fragility {
     private static FragilityParameters parser;
 
     public static void main(String[] args) {
+
+        // parse arguments
         parser = new FragilityParameters(args);
 
         if (args.length < 1) {
@@ -26,6 +28,9 @@ public class Fragility {
 
     }
 
+    /**
+     * Main Fragility calling routine
+     */
     private static void mainRoutine() {
 
         String output = parser.getOutputFilePath();

@@ -1,13 +1,12 @@
 # Response Estimator Tutorial 
 
-This tutorial will mirror a methodology and data described from the HAZUS
+This tutorial will parallel the methodology and data described from the HAZUS
 Earthquake Modeling technical manual.  The technical manual can be found
 [here](https://www.fema.gov/media-library/assets/documents/24609).
 
-Federal Emergency Management Agency [FEMA] 
+> Federal Emergency Management Agency [FEMA] 
 (2015) Hazus-MH—MH 2.1 earthquake model technical manual. 
 FEMA, Mitigation Division, Washington, DC, Unites States. 
-
 
 
 ## Building Fragility curves
@@ -97,55 +96,50 @@ Using ResponseEstimatorTemplate.java (inside the test_data directory):
  
 1. change the file name to "ResponseEstimatorSpectralDisplacement.java".  This java class will serve 
 as the entry point for all fragility calculations with example data.
-
-2. Let's call this example estimator "eqdisplacement" and paste the following code into ResponseEstimatorFactory.java
+This basically registers your new class to be specified from command line options 
+``` -e ResponseEstimatorSpectralDisplacement ```.
+2. below the ```responses``` declaration, paste the following code.
+> NOTE: we use Apache commons _org.apache.commons.math3.distribution.NormalDistribution_ package as a part of this 
+routine (https://commons.apache.org/). 
 ```java
-else if (estimatorId.equalsIgnoreCase("eqdisplacement")) {
-            return new ResponseEstimatorSpectralDisplacement(broker, fileOutputPath);
-        }
-```
-This basically registers your new class to be specified from command line options ``` -e eqdisplacement ```.
-
-3. below the ```responses``` declaration, paste the following code
-```java
-double failure = 0.0;
+        double failure = 0.0;
         NormalDistribution nd = null;
 
         /*
          ********  Calculate fragility here ********
          */
-        for (JsonNode n : assets) {
-
-            // getting asset identifier
-            String id = n.get("id").asText();
+        
+         for (Map<String, PropertyData> asset : assets) {
+        
+             // getting asset identifier
+            String id = asset.get("id").asString();
             // getting median spectral value
-            Double msd = n.get("MSD").asDouble();
+            Double msd = asset.get("MSD").get(id).get(0);
             // getting standard deviation of spectral displacement
-            Double stdDev = n.get("LogNormStdDev").asDouble();
-            // gettting spectral displacement exposure
+            Double stdDev = asset.get("LogNormStdDev").get(id).get(0);
+            // getting spectral displacement exposure
             Double exposureValue = exposures.get("eqd").get(id).get(0);
+            
+            // fragility calc yet to come...
 
-            // conditional probability of being in, or exceeding, a particular damage state,
-            // given the spectral displacement
-            Double dv = (1.0/stdDev)*Math.log(exposureValue/msd);
-            nd = new NormalDistribution();
-            failure = nd.cumulativeProbability(dv);
-
-            // store responses
+            // store response
             responses.put(id, failure);
+        
+                }
+        
         }
 ```
 Now you should be able to build and run this example using the following
 
 ``` 
--a test_data/inputs/example_buildings.json -i eqd -e eqdisplacement -hf test_data/fields/spectralField_example.asc -o responses.json 
+-a test_data/inputs/example_buildings.json -i eqd -e ResponseEstimatorSpectralDisplacement -hf test_data/fields/spectralField_example.asc -o responses.json 
 ```
 This will print out responses of 0.0 for all building identifiers in responses.json
 
-Notice option ``` -i eqd ```,  this identifies the hazard field from ``` exposures ``` hash map.
+Notice option ``` -i eqd ```,  this identifies the hazard field from ``` exposures ``` hash map variable.
 
-``` exposureValue ``` isn't used yet, but this variable stores the hazard exposure value from spectralField_example.asc,
-based on building spatial coordinates.
+Also notice ``` exposureValue ``` isn't used yet, but this variable stores the hazard exposure value from 
+spectralField_example.asc - based on building spatial coordinates from asset GeoJSON information.
 
 
 4. Add function calculation for the probability of being in or exceeding a given damage state,
@@ -155,33 +149,36 @@ manual, page 15-40:
 <img src="https://github.com/tscrawford/turbo-fresh-gfm/blob/master/test_data/equation.PNG"/>
 
 
-```java 
-
+```java
         double failure = 0.0;
         NormalDistribution nd = null;
 
         /*
          ********  Calculate fragility here ********
          */
-        for (JsonNode n : assets) {
-
-            // getting asset identifier
-            String id = n.get("id").asText();
+        
+         for (Map<String, PropertyData> asset : assets) {
+        
+             // getting asset identifier
+            String id = asset.get("id").asString();
             // getting median spectral value
-            Double msd = n.get("MSD").asDouble();
+            Double msd = asset.get("MSD").get(id).get(0);
             // getting standard deviation of spectral displacement
-            Double stdDev = n.get("LogNormStdDev").asDouble();
-            // gettting spectral displacement exposure
+            Double stdDev = asset.get("LogNormStdDev").get(id).get(0);
+            // getting spectral displacement exposure
             Double exposureValue = exposures.get("eqd").get(id).get(0);
-
+            
             // conditional probability of being in, or exceeding, a particular damage state,
             // given the spectral displacement
             Double dv = (1.0/stdDev)*Math.log(exposureValue/msd);
             nd = new NormalDistribution();
             failure = nd.cumulativeProbability(dv);
 
-            // store responses
+            // store response
             responses.put(id, failure);
+        
+                }
+        
         }
 ```
  

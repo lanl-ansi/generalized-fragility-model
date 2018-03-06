@@ -26,7 +26,7 @@ public class ResponseEstimatorFactoryTest extends TestCase {
         cmds[4] = "-i";
         cmds[5] = "wind ice";
         cmds[6] = "-e";
-        cmds[7] = "windIce";
+        cmds[7] = "PowerPoleWindIceStress";
         cmds[8] = "-o";
         cmds[9] = "fragility_ice_output.json";
 
@@ -59,16 +59,19 @@ public class ResponseEstimatorFactoryTest extends TestCase {
         broker.produceExposures();
 
         ResponseEstimatorFactory ref = new ResponseEstimatorFactory();
-        ResponseEstimator ppw = ref.runResponseEstimator("wind",broker,"nothing");
+        ResponseEstimator ppw = ref.runResponseEstimator("PowerPoleWindStress",broker,"nothing");
         assertNotNull(ppw);
 
-        ResponseEstimator ppw1 = ref.runResponseEstimator("windIce",broker,"nothing");
+        ResponseEstimatorFactory ref1 = new ResponseEstimatorFactory();
+        ResponseEstimator ppw1 = ref1.runResponseEstimator("PowerPoleWindIceStress",broker,"nothing");
         assertNotNull(ppw1);
 
-        ResponseEstimator ppw2 = ref.runResponseEstimator("flood",broker,"nothing");
+        ResponseEstimatorFactory ref2 = new ResponseEstimatorFactory();
+        ResponseEstimator ppw2 = ref2.runResponseEstimator("flood",broker,"nothing");
         assertNull(ppw2);
 
-        ResponseEstimator ppw3 = ref.runResponseEstimator("nothing",broker,"nothing");
+        ResponseEstimatorFactory ref3 = new ResponseEstimatorFactory();
+        ResponseEstimator ppw3 = ref3.runResponseEstimator("nothing",broker,"nothing");
         assertNull(ppw3);
 
     }

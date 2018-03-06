@@ -20,7 +20,7 @@ public class GeometryObjectFactoryTest extends TestCase {
         cmds[4] = "-i";
         cmds[5] = "wind";
         cmds[6] = "-e";
-        cmds[7] = "wind";
+        cmds[7] = "PowerPoleWindStress";
 
         parser = new FragilityParameters(cmds);
 

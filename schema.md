@@ -1,5 +1,9 @@
 # Generalized Fragility Model Schemas 
 
+
+   > NOTE: UNDER DEVELOPEMENT
+
+ 
 GFM leverages GeoJSON standardization and adds property values 
 with each feature object's properties member.  
 

@@ -108,7 +108,7 @@ public class RDTExamplePolesTests extends TestCase {
         cmds[8] = "-i";
         cmds[9] = "wind";
         cmds[10] = "-e";
-        cmds[11] = "wind";
+        cmds[11] = "PowerPoleWindStress.java";
         cmds[12] = "-hf";
         cmds[13] = "test_data/fields/windField_example.asc";
 

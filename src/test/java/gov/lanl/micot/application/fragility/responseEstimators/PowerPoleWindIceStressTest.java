@@ -28,7 +28,7 @@ public class PowerPoleWindIceStressTest extends TestCase {
         cmds[4] = "-i";
         cmds[5] = "wind ice";
         cmds[6] = "-e";
-        cmds[7] = "windIce";
+        cmds[7] = "PowerPoleWindIceStress";
         cmds[8] = "-o";
         cmds[9] = "fragility_ice_output.json";
 

@@ -25,7 +25,7 @@ public class ResponseEstimatorSpectralDisplacement extends ResponseEstimator {
     }
 
     /**
-     * General method place for fragility calculations
+     * spectral displacement fragility routine
      */
     public void calcFragility() {
         System.out.println("Calculating . . . ");
@@ -42,15 +42,16 @@ public class ResponseEstimatorSpectralDisplacement extends ResponseEstimator {
         /*
          ********  Calculate fragility here ********
          */
-        for (JsonNode n : assets) {
+
+        for (Map<String, PropertyData> asset : assets) {
 
             // getting asset identifier
-            String id = n.get("id").asText();
+            String id = asset.get("id").asString();
             // getting median spectral value
-            Double msd = n.get("MSD").asDouble();
+            Double msd = asset.get("MSD").get(id).get(0);
             // getting standard deviation of spectral displacement
-            Double stdDev = n.get("LogNormStdDev").asDouble();
-            // gettting spectral displacement exposure
+            Double stdDev = asset.get("LogNormStdDev").get(id).get(0);
+            // getting spectral displacement exposure
             Double exposureValue = exposures.get("eqd").get(id).get(0);
 
             // conditional probability of being in, or exceeding, a particular damage state,
@@ -59,8 +60,9 @@ public class ResponseEstimatorSpectralDisplacement extends ResponseEstimator {
             nd = new NormalDistribution();
             failure = nd.cumulativeProbability(dv);
 
-            // store responses
+            // store response
             responses.put(id, failure);
+
         }
     }
 }

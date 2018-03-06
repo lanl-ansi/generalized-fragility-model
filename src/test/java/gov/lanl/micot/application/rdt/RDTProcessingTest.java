@@ -25,7 +25,7 @@ public class RDTProcessingTest extends TestCase {
         cmds[10] = "-i";
         cmds[11] = "wind";
         cmds[12] = "-e";
-        cmds[13] = "wind";
+        cmds[13] = "PowerPoleWindStress";
         cmds[14] = "-hf";
         cmds[15] = "test_data/fields/windField_example.asc";
 
