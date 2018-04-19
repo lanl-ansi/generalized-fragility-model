@@ -89,7 +89,7 @@ public class CommandLineParameters {
      * @param args
      * @throws ParseException
      */
-    public void parse(String[] args) throws ParseException {
+        public void parse(String[] args) throws ParseException {
         CommandLine commandLine;
         parser = new DefaultParser();
 

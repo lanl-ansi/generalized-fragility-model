@@ -55,9 +55,12 @@ public class GFMEngine {
                 }
             }
 
+            // get number of assets outside given raster extent
+            outsideExtentCount = h.getOutsideExtentCount();
+
             if (outsideExtentCount > 0) {
                 System.out.println(" -- > WARNING - " + outsideExtentCount +
-                        " objects outside of hazard id: " + h.getIdentifier());
+                        " objects outside of hazard extent: " + h.getIdentifier());
                 System.out.println("      Used default exposure value of 0.0");
             }
         }
@@ -82,8 +85,6 @@ public class GFMEngine {
             exposures.get(hazardName).get(g.getIdentifier()).add(rv);
         }
 
-        // check for points outside geographic extent of hazard field
-        checkPointsOutsideExtent(h);
     }
 
     /**
@@ -103,9 +104,6 @@ public class GFMEngine {
 
         // add point to exposures collection
         exposures.get(hazardName).get(g.getIdentifier()).add(rasterValue);
-
-        // check for points outside geographic extent of hazard field
-        checkPointsOutsideExtent(h);
 
     }
 
@@ -129,24 +127,9 @@ public class GFMEngine {
             exposures.get(hazardName).get(g.getIdentifier()).add(rv);
         }
 
-        // check for points outside geographic extent of hazard field
-        checkPointsOutsideExtent(h);
-    }
-
-    /**
-     * This method provide a warning if any points are located outside a raster's extent.
-     *
-     * @param h a <tt>RasterField</tt>
-     */
-    private void checkPointsOutsideExtent(HazardField h){
-
-        if (h.getOutsideExtentCount() > 0) {
-            System.out.println(" -- > WARNING - " + outsideExtentCount +
-                    " objects outside of hazard identifier " + h.getIdentifier());
-            System.out.println("      Used default exposure value of 0.0");
-        }
 
     }
+
 
     /**
      * Method to set a collection geometry objects

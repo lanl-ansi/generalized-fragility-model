@@ -60,7 +60,7 @@ public class FragilityParameters extends CommandLineParameters{
     }
 
     /**
-     * helper method that shows fragility pptions
+     * Helper method that shows fragility pptions
      */
     public static void printHelp() {
         String header = "fragility  [OPTIONS]\n fragilityOptions:\n" +
