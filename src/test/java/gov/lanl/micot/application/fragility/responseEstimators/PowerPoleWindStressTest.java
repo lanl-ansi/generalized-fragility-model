@@ -15,7 +15,7 @@ import java.util.Map;
 public class PowerPoleWindStressTest extends TestCase {
     private FragilityParameters parser;
 
-    public void setupWindTest() throws Exception {
+    public void setUp() throws Exception  {
 
         String[] cmds = new String[10];
 
@@ -30,15 +30,19 @@ public class PowerPoleWindStressTest extends TestCase {
         cmds[8] = "-o";
         cmds[9] = "fragility_output.json";
 
-        parser = new FragilityParameters(cmds);
+        this.parser = new FragilityParameters(cmds);
 
-        String output = parser.getOutputFilePath();
-        String estimator = parser.getEstimator();
+
+    }
+
+    public void testWriteResults() throws Exception {
+        String output = this.parser.getOutputFilePath();
+        String estimator = this.parser.getEstimator();
 
         // hazards
-        String[] hazardFiles = parser.getHazardInputPaths();
-        String[] ids = parser.getIdentifiers();
-        String assets = parser.getAssetInputPath();
+        String[] hazardFiles = this.parser.getHazardInputPaths();
+        String[] ids = this.parser.getIdentifiers();
+        String assets = this.parser.getAssetInputPath();
         GFMDataReader gfmdr = new GFMDataReader();
         ArrayList<HazardField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
 
@@ -58,16 +62,12 @@ public class PowerPoleWindStressTest extends TestCase {
         ResponseEstimatorFactory ref = new ResponseEstimatorFactory();
         ResponseEstimator r1 = ref.runResponseEstimator(estimator, broker, output);
         r1.writeResults();
-    }
-
-    public void testWriteResults() throws Exception {
-        System.out.println("--- ---- --->");
-        setupWindTest();
 
         File f = new File("fragility_output.json");
         System.out.println(f.exists());
         assertTrue(f.exists());
         f.delete();
+        assertTrue(!f.exists());
     }
 
 }

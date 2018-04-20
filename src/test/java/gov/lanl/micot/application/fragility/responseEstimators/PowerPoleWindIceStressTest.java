@@ -30,7 +30,7 @@ public class PowerPoleWindIceStressTest extends TestCase {
         cmds[6] = "-e";
         cmds[7] = "PowerPoleWindIceStress";
         cmds[8] = "-o";
-        cmds[9] = "fragility_ice_output.json";
+        cmds[9] = "fragility_ice_output_test.json";
 
         parser = new FragilityParameters(cmds);
         String output = parser.getOutputFilePath();
@@ -70,11 +70,12 @@ public class PowerPoleWindIceStressTest extends TestCase {
         System.out.println("--- ---- --->");
         setupWindIceTest();
 
-        File f = new File("fragility_ice_output.json");
+        File f = new File("fragility_ice_output_test.json");
         System.out.println(f.exists());
 
         assertTrue(f.exists());
         f.delete();
+        assertTrue(!f.exists());
     }
 
 

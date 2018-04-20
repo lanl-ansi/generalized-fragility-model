@@ -141,13 +141,31 @@ public class GFMEngine {
     }
 
     /**
+     * Method to get a collection geometry objects
+     * @return geometryObjects;
+     */
+    public ArrayList<GeometryObject> getGeometryObjects() {
+        return this.geometryObjects;
+    }
+
+    /**
      * Method to set a collection of hazard fields
      *
      * @param hazardfields list of hazard fields
      */
     public void setHazardfields(ArrayList<HazardField> hazardfields) {
         System.out.println(hazardfields.size() + " hazard fields read");
-        hazardFields = hazardfields;
+        this.hazardFields = hazardfields;
+    }
+
+    /**
+     * Method to get the collection of hazard fields
+     *
+     * @return hazardfields list of hazard fields
+     */
+    public ArrayList<HazardField> getHazardfields() {
+
+        return this.hazardFields;
     }
 
     /**

@@ -55,8 +55,8 @@ public class GFMDataReader {
 
         AssetDataFromJackson jsonData = new JsonDataFromJackson();
         jsonData.readGeoJsonFile(FileLocation);
-        geometryObjects = jsonData.getGeometryObjects();
-        properties = jsonData.getPropertyObjects();
+        this.geometryObjects = jsonData.getGeometryObjects();
+        this.properties = jsonData.getPropertyObjects();
     }
 
 

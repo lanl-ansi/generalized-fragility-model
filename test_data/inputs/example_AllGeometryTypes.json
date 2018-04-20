@@ -9,7 +9,7 @@
 	 [-72.64177, 41.75765],
 	 [-72.58691, 41.73666]
     ],
-    "type": "MultiPoint"
+    "type": "LineString"
    },
    "properties": {
     "baseDiameter": 0.289,
@@ -29,7 +29,38 @@
     "topDiameter": 0.289,
     "woodDensity": 500.0,
     "lineId": "l222002",
-    "id": "MP-0"
+    "id": "LS-0"
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates": [
+     -72.655093135,
+     41.749083498
+    ],
+    "type": "Point"
+   },
+   "properties": {
+    "baseDiameter": 0.289,
+    "cableSpan": 80.0,
+    "commAttachmentHeight": 5.0,
+    "commCableDiameter": 0.04,
+    "commCableNumber": 1,
+    "commCableWireDensity": 1500.0,
+    "height": 12.0,
+    "meanPoleStrength": 38600000.0,
+    "powerAttachmentHeight": 11.0,
+    "powerCableDiameter": 0.025,
+    "powerCableNumber": 3,
+    "powerCableWireDensity": 2700.0,
+    "powerCircuitName": "GFM-generated",
+    "stdDevPoleStrength": 7700000.0,
+    "topDiameter": 0.289,
+    "woodDensity": 500.0,
+    "lineId": "l222002",
+    "staticFailure": 0.3,
+    "id": "0"
    },
    "type": "Feature"
   },
@@ -60,37 +91,6 @@
     "woodDensity": 500.0,
     "lineId": "l2002",
     "id": "MP-1"
-   },
-   "type": "Feature"
-  },
-  {
-   "geometry": {
-    "coordinates": [
-     [-72.7607, 41.8603],
-	 [-72.6623, 41.8741],
-	 [-72.5008, 41.8872]
-    ],
-    "type": "MultiPoint"
-   },
-   "properties": {
-    "baseDiameter": 0.289,
-    "cableSpan": 90.0,
-    "commAttachmentHeight": 4.724400043487549,
-    "commCableDiameter": 0.04,
-    "commCableNumber": 2,
-    "commCableWireDensity": 2700.0,
-    "height": 9.144000053405762,
-    "meanPoleStrength": 38600000.0,
-    "powerAttachmentHeight": 5.638800144195557,
-    "powerCableDiameter": 0.025,
-    "powerCableNumber": 3,
-    "powerCableWireDensity": 1500.0,
-    "powerCircuitName": "GFM-generated",
-    "stdDevPoleStrength": 7700000.0,
-    "topDiameter": 0.289,
-    "woodDensity": 500.0,
-    "lineId": "l2002",
-    "id": "MP-2"
    },
    "type": "Feature"
   }

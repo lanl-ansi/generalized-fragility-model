@@ -11,12 +11,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class PowerPoleWindStressTIFFTest extends TestCase {
+
     private FragilityParameters parser;
 
-    public void setUPTest() throws Exception  {
+    public void setUp() throws Exception  {
         super.setUp();
 
         String[] cmds = new String[10];
@@ -32,15 +32,21 @@ public class PowerPoleWindStressTIFFTest extends TestCase {
         cmds[8] = "-o";
         cmds[9] = "fragility_output_tifff.json";
 
-        parser = new FragilityParameters(cmds);
+        this.parser = new FragilityParameters(cmds);
 
-        String output = parser.getOutputFilePath();
-        String estimator = parser.getEstimator();
+
+
+    }
+
+    public void testWriteResults() throws Exception {
+
+        String output = this.parser.getOutputFilePath();
+        String estimator = this.parser.getEstimator();
 
         // hazards
-        String[] hazardFiles = parser.getHazardInputPaths();
-        String[] ids = parser.getIdentifiers();
-        String assets = parser.getAssetInputPath();
+        String[] hazardFiles = this.parser.getHazardInputPaths();
+        String[] ids = this.parser.getIdentifiers();
+        String assets = this.parser.getAssetInputPath();
         GFMDataReader gfmdr = new GFMDataReader();
         ArrayList<HazardField> hazardObjects = gfmdr.readHazardFile(hazardFiles, ids);
 
@@ -60,16 +66,11 @@ public class PowerPoleWindStressTIFFTest extends TestCase {
         ResponseEstimatorFactory ref = new ResponseEstimatorFactory();
         ResponseEstimator r1 = ref.runResponseEstimator(estimator, broker, output);
         r1.writeResults();
-    }
-
-    public void testWriteResults() throws Exception {
-        setUPTest();
-        System.out.println("--- ---- --->");
 
         File ftiff = new File("fragility_output_tifff.json");
-        TimeUnit.MILLISECONDS.sleep(500);
         assertTrue(ftiff.exists());
         ftiff.delete();
+        assertTrue(!ftiff.exists());
     }
 
 }

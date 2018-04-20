@@ -81,12 +81,12 @@ public class RDTExamplePolesTests extends TestCase {
         File file;
         file = new File("scenarioBlock1.json");
         assertTrue(file.exists());
-//        file.delete();
+        file.delete();
 
 
         file = new File("fragility_output_example_poles_1.json");
         assertTrue(file.exists());
-//        file.delete();
+        file.delete();
 
     }
 

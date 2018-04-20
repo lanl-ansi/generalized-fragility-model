@@ -1,6 +1,5 @@
 package gov.lanl.micot.application.rdt;
 
-import gov.lanl.micot.application.CommandLineParameters;
 import junit.framework.TestCase;
 
 import java.io.File;
@@ -57,23 +56,40 @@ public class RDTProcessingTest extends TestCase {
 
     public void testOutputFiles() throws InterruptedException {
 
+        String path = parser.getRdtInputPath();
+        RDTProcessing.inferPoles(path, parser);
+
+        RDTProcessing.setNumberOfScenarios(5);
+        RDTProcessing.setScenarioOutputPath("scenarioBlock.json");
+
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // testing RDT option flags
+        assertTrue(parser.isHasRDTPoles());
+        assertTrue(parser.isHasNumberOfScenarios());
+        assertTrue(parser.isHasScenarioOutput());
+
+        System.out.println("-- > option assertions complete.");
+
         File frdt = new File("fragility_output_from_rdt.json");
-        TimeUnit.MILLISECONDS.sleep(1000);
         System.out.println(frdt.exists());
         assertTrue(frdt.exists());
         frdt.delete();
 
         File fpoles = new File("rdt_gfm_output_poles.json");
-        TimeUnit.MILLISECONDS.sleep(200);
         System.out.println(fpoles.exists());
         assertTrue(fpoles.exists());
         fpoles.delete();
 
         File fscenario = new File("scenarioBlock.json");
-        TimeUnit.MILLISECONDS.sleep(200);
         System.out.println(fscenario.exists());
         assertTrue(fscenario.exists());
         fscenario.delete();
+        assertTrue(!fscenario.exists());
 
     }
 

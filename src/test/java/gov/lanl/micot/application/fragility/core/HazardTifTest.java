@@ -9,9 +9,6 @@ public class HazardTifTest extends TestCase {
         hat = new RasterField("test_data/fields/windField_example.tif","wind");
     }
 
-    public void testGetFileLocationPath() throws Exception {
-    }
-
     public void testGetIdentifier() throws Exception {
         assertEquals(hat.getIdentifier(),"wind");
     }
