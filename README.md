@@ -190,7 +190,6 @@ Fragility options that are aligned with MICOT RDT tool [here](rdt.md)
 In no particular order:
 
 * Incorporate hazard fields in Esri shapefile format
-* Add functionality for GeoJSON MultiPoints, polygons, MultiLineString, etc.
 * Add new (generic) fragility routines: earthquakes, blast overpressure, etc.
  
 

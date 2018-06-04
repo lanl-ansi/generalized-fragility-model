@@ -2,10 +2,10 @@ package gov.lanl.micot.application.rdt;
 
 
 import gov.lanl.micot.application.CommandLineParameters;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.Option;
 import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
@@ -150,6 +150,7 @@ public class RDTParameters extends CommandLineParameters {
                 "-e               estimator identifier\n" +
                 "-o  (optional)   output file name\n" +
                 "-r  (optional)   RDT processing \n" +
+                "-ro (optional)   generated poles output path \n" +
                 "-so (optional)   use with -a (pole data) to produce RDT scenario block \n" +
                 "-num (optional)  for RDT processing - number of scenarios to generate \n";
 
@@ -179,7 +180,7 @@ public class RDTParameters extends CommandLineParameters {
     }
 
     /**
-     * checks if a file exists
+     * Checks if a file exists
      *
      * @param filePath
      */

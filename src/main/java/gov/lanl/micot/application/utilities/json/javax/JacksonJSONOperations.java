@@ -187,7 +187,7 @@ public class JacksonJSONOperations {
     }
 
     /**
-     * Helper method that stores estinator responses into an intermediate ArrayNode, then calls
+     * Helper method that stores estimator responses into an intermediate ArrayNode, then calls
      * GFMDataWriter method to write results.
      *
      * @param responses      HashMap of asset identifiers and response values.
@@ -210,7 +210,6 @@ public class JacksonJSONOperations {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode fileNodes = null;
         HashMap<String, List<Double>> nodeLocation;
-        HashMap<String, List<Double>> lineParameters;
         InputStream inStream;
 
         try {
@@ -276,7 +275,7 @@ public class JacksonJSONOperations {
 
                     ObjectNode obj;
                     for (int i = 0; i < numPoles; i++) {
-                        obj = createPoleAsset(id_count, lid, new double[]{x0, y0});
+                        obj = createPoleAsset(id_count, lid, new double[]{x0, y0}, lid);
 
                         features.add(obj);
 
@@ -302,7 +301,7 @@ public class JacksonJSONOperations {
         writePoleOutput(featureNode, polesOutputPath);
     }
 
-    private static ObjectNode createPoleAsset(int id, String line, double[] coord) {
+    private ObjectNode createPoleAsset(int id, String line, double[] coord, String lid) {
 
         String sid = String.valueOf(id);
         // creates one GeoJSON Point Object
@@ -333,7 +332,7 @@ public class JacksonJSONOperations {
                         .put("stdDevPoleStrength", STD_DEV_POLE_STRENGTH)
                         .put("topDiameter", TOP_DIAMETER)
                         .put("woodDensity", WOOD_DENSITY)
-                        .put("lineId", line));
+                        .put("powerLineId", line));
 
         return featureNode;
 
@@ -348,7 +347,7 @@ public class JacksonJSONOperations {
             ArrayNode lineIdentifier = mapper.valueToTree(v);
 
             ObjectNode singleScenario = mapper.createObjectNode()
-                    .put("id", String.valueOf(v))
+                    .put("id", String.valueOf(k))
                     .putPOJO("hardened_disabled_lines", mapper.createArrayNode())
                     .putPOJO("disable_lines", lineIdentifier);
 

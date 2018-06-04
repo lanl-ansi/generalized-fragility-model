@@ -98,7 +98,7 @@ Here is a current list of pole definitions:
         "type": "string",
         "description": "asset identifier"
     },
-    "lineID":
+    "powerLineID":
     {
         "type": "string",
         "description": "Line identifier"

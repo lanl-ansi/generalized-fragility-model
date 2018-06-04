@@ -13,6 +13,7 @@ RDT input data examples can be found exploring JSON formatted files
 #### RDT specific options
     
 ```
+-a      pole asset data, use with -so to produce RDT scenario block
 -r      RDT proccessing option
 -ro     generated poles output path (optional)    
 -num    number of scenarios to generate - default is one (optional)
@@ -27,9 +28,9 @@ Generate 13 scenarios - no asset (poles) input, only RDT
 java -jar Fragility.jar -r test_data/inputs/example_rdt.json -i wind -e wind -hf test_data/fields/windField_example.asc -ro RDT_Poles.json -o repsonses.json -so SCENARIOS.json -num 13 
 ```
 
-To generate RDT scenario block based on pole input data (using "lineId" member), with 15 scenarios:
+To generate RDT scenario block based on pole input data (using "powerLineId" key), with 5 scenarios:
 
 ```
-java -jar Fragility.jar -a test_data/inputs/example_poles.json -i wind -e wind -so blockOUTPUT.json -num 15 -hf test_data/fields/windField_example.asc
+java -jar Fragility.jar -a test_data/inputs/example_poles.json -i wind -e wind -so blockOUTPUT.json -num 5 -hf test_data/fields/windField_example.asc
 ```
 > Notice ```-a``` option for pole inputs.

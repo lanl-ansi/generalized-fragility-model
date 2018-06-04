@@ -1,11 +1,13 @@
 package gov.lanl.micot.application.rdt;
 
-import gov.lanl.micot.application.fragility.core.*;
+import gov.lanl.micot.application.fragility.core.GFMEngine;
+import gov.lanl.micot.application.fragility.core.GeometryObject;
+import gov.lanl.micot.application.fragility.core.ResponseEstimatorFactory;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.fragility.responseEstimators.ResponseEstimator;
-import gov.lanl.micot.application.utilities.json.AssetDataFromJackson;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 import gov.lanl.micot.application.utilities.gis.HazardField;
+import gov.lanl.micot.application.utilities.json.AssetDataFromJackson;
 import gov.lanl.micot.application.utilities.json.JsonDataFromJackson;
 
 import java.util.*;
@@ -83,7 +85,7 @@ public final class RDTProcessing {
         HashMap<String, String> poles = new HashMap();
 
         for (Map<String, PropertyData> assetProperty : assetProperties) {
-            poles.put(assetProperty.get("id").asString(), assetProperty.get("lineId").asString());
+            poles.put(assetProperty.get("id").asString(), assetProperty.get("powerLineId").asString());
         }
 
         // list to build each scenario

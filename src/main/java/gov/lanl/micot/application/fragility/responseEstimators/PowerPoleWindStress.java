@@ -97,8 +97,8 @@ class FragilityWind {
      */
     FragilityWind(Map<String, PropertyData> n, double exposure) {
 
-        windExposure = exposure;
         baseDiameter = n.get("baseDiameter").asDouble();
+        windExposure = exposure;
         cableSpan = n.get("cableSpan").asDouble();
         cableSpan = n.get("cableSpan").asDouble();
         commAttachmentHeight = n.get("commAttachmentHeight").asDouble();
