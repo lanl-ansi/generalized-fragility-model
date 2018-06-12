@@ -59,7 +59,7 @@ public class CommandLineParametersTest extends TestCase {
     }
 
     public void testGetEstimator() throws Exception {
-        assertEquals(parser.getEstimator(), "PowerPoleWindIceStress");
+        assertEquals(parser.getResponseEstimator(), "PowerPoleWindIceStress");
     }
 
     public void testGetHelp() throws Exception{

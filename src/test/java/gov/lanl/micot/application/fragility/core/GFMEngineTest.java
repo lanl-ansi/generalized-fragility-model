@@ -43,7 +43,7 @@ public class GFMEngineTest {
         parser = new FragilityParameters(cmds);
 
         String output = parser.getOutputFilePath();
-        String estimator = parser.getEstimator();
+        String estimator = parser.getResponseEstimator();
 
         // hazards
         String[] hazardFiles = parser.getHazardInputPaths();
@@ -162,7 +162,7 @@ public class GFMEngineTest {
         this.broker.produceExposures();
 
         Map<String, HashMap<String, ArrayList<Double>>> expValues = this.broker.getExposures();
-        String estimator = parser.getEstimator();
+        String estimator = parser.getResponseEstimator();
         String output = parser.getOutputFilePath();
 
         // compute response approximations
@@ -195,7 +195,7 @@ public class GFMEngineTest {
         this.broker.produceExposures();
 
         Map<String, HashMap<String, ArrayList<Double>>> expValues = this.broker.getExposures();
-        String estimator = parser.getEstimator();
+        String estimator = parser.getResponseEstimator();
         String output = parser.getOutputFilePath();
 
         // compute response approximations

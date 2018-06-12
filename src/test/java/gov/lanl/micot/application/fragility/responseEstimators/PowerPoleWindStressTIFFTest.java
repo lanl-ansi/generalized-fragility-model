@@ -1,7 +1,9 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
 import gov.lanl.micot.application.fragility.FragilityParameters;
-import gov.lanl.micot.application.fragility.core.*;
+import gov.lanl.micot.application.fragility.core.GFMEngine;
+import gov.lanl.micot.application.fragility.core.GeometryObject;
+import gov.lanl.micot.application.fragility.core.ResponseEstimatorFactory;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 import gov.lanl.micot.application.utilities.gis.HazardField;
@@ -41,7 +43,7 @@ public class PowerPoleWindStressTIFFTest extends TestCase {
     public void testWriteResults() throws Exception {
 
         String output = this.parser.getOutputFilePath();
-        String estimator = this.parser.getEstimator();
+        String estimator = this.parser.getResponseEstimator();
 
         // hazards
         String[] hazardFiles = this.parser.getHazardInputPaths();

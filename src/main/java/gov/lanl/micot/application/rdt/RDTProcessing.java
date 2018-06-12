@@ -41,7 +41,7 @@ public final class RDTProcessing {
         rdtData.readWriteRDTJSON(filePath, polesOutputPath);
 
         String output = parser.getOutputFilePath();
-        String estimator = parser.getEstimator();
+        String estimator = parser.getResponseEstimator();
 
         // hazards
         String[] hazardFiles = parser.getHazardInputPaths();

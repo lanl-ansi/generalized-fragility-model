@@ -1,6 +1,8 @@
 package gov.lanl.micot.application.rdt;
 
-import gov.lanl.micot.application.fragility.core.*;
+import gov.lanl.micot.application.fragility.core.GFMEngine;
+import gov.lanl.micot.application.fragility.core.GeometryObject;
+import gov.lanl.micot.application.fragility.core.ResponseEstimatorFactory;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.fragility.responseEstimators.ResponseEstimator;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
@@ -38,7 +40,7 @@ public class FragilityRDT {
     private static void mainRoutine() {
 
         String output = parser.getOutputFilePath();
-        String estimator = parser.getEstimator();
+        String estimator = parser.getResponseEstimator();
 
         // hazards
         String[] hazardFiles = parser.getHazardInputPaths();

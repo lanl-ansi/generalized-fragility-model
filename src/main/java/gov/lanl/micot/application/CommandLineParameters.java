@@ -1,11 +1,6 @@
 package gov.lanl.micot.application;
 
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.*;
 
 import java.io.File;
 
@@ -28,7 +23,7 @@ public class CommandLineParameters {
     private String[] hazardInputPaths;
     private String[] identifiers;
     private String outputFilePath;
-    private String estimator;
+    private String responseEstimator;
 
 
     public CommandLineParameters() {
@@ -51,14 +46,14 @@ public class CommandLineParameters {
         );
 
         options.addOption(Option.builder("e")
-                .desc("response estimator identifier")
+                .desc("response responseEstimator identifier")
                 .hasArg()
                 .longOpt("responseEstimator")
                 .build()
         );
 
         options.addOption(Option.builder("i")
-                .desc("estimator identifier - same order as hazard file names")
+                .desc("responseEstimator identifier - same order as hazard file names")
                 .hasArgs()
                 .valueSeparator(' ')
                 .longOpt("identifiers")
@@ -74,7 +69,7 @@ public class CommandLineParameters {
         );
 
         options.addOption(Option.builder("o")
-                .desc("response estimator output path")
+                .desc("response responseEstimator output path")
                 .hasArg()
                 .longOpt("output")
                 .build()
@@ -89,7 +84,7 @@ public class CommandLineParameters {
      * @param args
      * @throws ParseException
      */
-        public void parse(String[] args) throws ParseException {
+    protected void parse(String[] args) throws ParseException {
         CommandLine commandLine;
         parser = new DefaultParser();
 
@@ -113,7 +108,7 @@ public class CommandLineParameters {
         }
 
         if (commandLine.hasOption("responseEstimator")) {
-            estimator = commandLine.getOptionValue("responseEstimator");
+            responseEstimator = commandLine.getOptionValue("responseEstimator");
         }
 
         if (commandLine.hasOption("hazardFields")) {
@@ -126,22 +121,22 @@ public class CommandLineParameters {
     /**
      * helper method that shows options
      */
-    public static void printHelp() {
+    protected static void printHelp() {
         String header = "fragility  [OPTIONS]\n options:\n" +
                 "-a               asset data\n" +
                 "-hf              hazard field files \n" +
                 "-i               identifiers\n" +
-                "-e               estimator identifier\n" +
+                "-e               responseEstimator identifier\n" +
                 "-o  (optional)   output file name\n";
 
         String footer =
                 "\nExample syntax:\nFragility.jar  -a <GeoJSON data> -hf <hazard fields>" +
-                        " -i <identifiers> -e <estimator name>\\n" +
+                        " -i <identifiers> -e <responseEstimator name>\\n" +
                 "\n\nFragility.jar  -a <GeoJSON data> -hf <hazard fields> " +
-                        "-i <identifiers> -e <estimator name> -so " +
+                        "-i <identifiers> -e <responseEstimator name> -so " +
                         "<filename> -num <number>\\n" +
                 "\n\nFragility.jar  -r <RDT data> -ro <RDTpoleData.json> -hf <hazard fields> " +
-                        "-i <identifiers> -e <estimator name> -so " +
+                        "-i <identifiers> -e <responseEstimator name> -so " +
                         "<filename> -num <number>\\n\n";
 
 
@@ -215,8 +210,20 @@ public class CommandLineParameters {
         return outputFilePath;
     }
 
-    public String getEstimator() {
-        return estimator;
+    public String getResponseEstimator() {
+        return responseEstimator;
+    }
+
+    protected void setHazardInputPaths(String[] hazardInputPaths) {
+        this.hazardInputPaths = hazardInputPaths;
+    }
+
+    protected void setIdentifiers(String[] identifiers) {
+        this.identifiers = identifiers;
+    }
+
+    protected void setResponseEstimator(String estimator) {
+        this.responseEstimator = estimator;
     }
 
 }

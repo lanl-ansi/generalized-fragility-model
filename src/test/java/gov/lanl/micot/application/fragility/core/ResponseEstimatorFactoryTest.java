@@ -37,7 +37,7 @@ public class ResponseEstimatorFactoryTest extends TestCase {
 
 
         String output = parser.getOutputFilePath();
-        String estimator = parser.getEstimator();
+        String estimator = parser.getResponseEstimator();
 
         // hazards
         String[] hazardFiles = parser.getHazardInputPaths();

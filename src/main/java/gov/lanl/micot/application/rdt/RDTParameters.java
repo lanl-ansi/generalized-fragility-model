@@ -25,6 +25,8 @@ public class RDTParameters extends CommandLineParameters {
     private String rdtPolesOutput;
     private boolean hasRDTPoles;
 
+    private boolean hasWindField;
+
 
     /**
      * Constructor
@@ -56,6 +58,14 @@ public class RDTParameters extends CommandLineParameters {
         rdtOptions.addOption(Option.builder("h")
                 .desc("Fragility RDT help")
                 .longOpt("help")
+                .build()
+        );
+
+        rdtOptions.addOption(Option.builder("wf")
+                .hasArgs()
+                .valueSeparator(' ')
+                .desc("wind field raster")
+                .longOpt("windField")
                 .build()
         );
 
@@ -117,9 +127,28 @@ public class RDTParameters extends CommandLineParameters {
         }
 
         if (commandLine.hasOption("rdt")) {
-//            hasRDT = true;
             rdtInputPath = commandLine.getOptionValue("rdt");
             checkFile(rdtInputPath);
+        }
+
+        // This option sets multiple flags
+        if (commandLine.hasOption("wf")) {
+            this.hasWindField = true;
+
+            // set hazard field
+            String[] windFieldInput = commandLine.getOptionValues("windField");
+            checkFiles(windFieldInput);
+            setHazardInputPaths(windFieldInput);
+
+
+            // set identifier
+            String[] identifier = {"wind"};
+            setIdentifiers(identifier);
+
+            // set estimator
+            String estimatorRoutine = "PowerPoleWindStress";
+            setResponseEstimator(estimatorRoutine);
+
         }
 
         if (commandLine.hasOption("numberScenarios")) {
@@ -148,6 +177,7 @@ public class RDTParameters extends CommandLineParameters {
                 "-hf              hazard field files \n" +
                 "-i               identifiers\n" +
                 "-e               estimator identifier\n" +
+                "-wf (optional)   legacy wind field file input - do not run with -hf \n" +
                 "-o  (optional)   output file name\n" +
                 "-r  (optional)   RDT processing \n" +
                 "-ro (optional)   generated poles output path \n" +
@@ -221,5 +251,9 @@ public class RDTParameters extends CommandLineParameters {
 
     public String getRdtInputPath(){
         return rdtInputPath;
+    }
+
+    public boolean isHasWindField() {
+        return hasWindField;
     }
 }

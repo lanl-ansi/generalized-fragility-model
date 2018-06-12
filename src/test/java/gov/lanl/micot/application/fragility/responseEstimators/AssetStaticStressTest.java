@@ -1,7 +1,9 @@
 package gov.lanl.micot.application.fragility.responseEstimators;
 
 import gov.lanl.micot.application.fragility.FragilityParameters;
-import gov.lanl.micot.application.fragility.core.*;
+import gov.lanl.micot.application.fragility.core.GFMEngine;
+import gov.lanl.micot.application.fragility.core.GeometryObject;
+import gov.lanl.micot.application.fragility.core.ResponseEstimatorFactory;
 import gov.lanl.micot.application.fragility.io.GFMDataReader;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 import gov.lanl.micot.application.utilities.gis.HazardField;
@@ -32,7 +34,7 @@ public class AssetStaticStressTest extends TestCase {
         parser = new FragilityParameters(cmds);
 
         String output = parser.getOutputFilePath();
-        String estimator = parser.getEstimator();
+        String estimator = parser.getResponseEstimator();
 
         // hazards
         String[] hazardFiles = parser.getHazardInputPaths();

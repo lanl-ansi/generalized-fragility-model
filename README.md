@@ -13,7 +13,7 @@ routines using predefined software components.  GFM accepts a GeoJSON file of as
 
 GFM basically accepts a set of geographic raster fields for each hazard quantity and a collection of assets, 
 which are then exposed to those hazard fields by spatial location.  It then provides a data structure for users 
-to create their own custom-made response estimator routines. 
+to create their own custom-made response responseEstimator routines.
 
 <img src="https://github.com/lanl-ansi/generalized-fragility-model/blob/master/test_data/dataFlow.PNG" width="400" height="200" />
 
@@ -105,7 +105,7 @@ For multiple values, use a space separator (see example below).
         -a      asset data 
         -hf     hazard field input files
         -i      hazard identifiers
-        -e      estimator identifier
+        -e      responseEstimator identifier
         -o      output file name (optional) - defaults to "fragility_output.json" 
  ```
 
@@ -153,17 +153,17 @@ exposure values are in the order of first and last coordinates; as specified in 
 
 ```-hf``` This tells fragility where your hazard raster data is located 
 ```-i ``` This is the identifier that fragility routines use to extract exposure values from the general hash map structure
-```-e ``` Specifies the estimator routine by exact class name 
+```-e ``` Specifies the responseEstimator routine by exact class name
 ```-o ``` output file path
 ```-a ``` Asset data file location 
 
 
 # Customized Response Estimators
 
-Customizing your own response estimator routines is outlined in the following steps:
+Customizing your own response responseEstimator routines is outlined in the following steps:
 
 -- Using _ResponseEstimateTemplate.java_, create new routine (located in _test_data_ directory)
-* create new response estimator class
+* create new response responseEstimator class
 * class name is used to uniquely identify routine from command line input
 
 -- Develop fragility routine inside public method _calcFragility_.  This method serves as the anchor point for accessing
@@ -190,6 +190,7 @@ Fragility options that are aligned with MICOT RDT tool [here](rdt.md)
 In no particular order:
 
 * Incorporate hazard fields in Esri shapefile format
+* For Symmetric hazard fields, allow GFM to read in a look-up-table
 * Add new (generic) fragility routines: earthquakes, blast overpressure, etc.
  
 
