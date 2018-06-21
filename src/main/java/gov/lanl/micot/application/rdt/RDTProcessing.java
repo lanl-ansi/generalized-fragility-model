@@ -38,6 +38,8 @@ public final class RDTProcessing {
         if (parser.isHasRDTPoles()) polesOutputPath = parser.getRdtPolesOutput();
 
         AssetDataFromJackson rdtData = new JsonDataFromJackson();
+
+        // this routine infers poles and writes GeoJSON file
         rdtData.readWriteRDTJSON(filePath, polesOutputPath);
 
         String output = parser.getOutputFilePath();

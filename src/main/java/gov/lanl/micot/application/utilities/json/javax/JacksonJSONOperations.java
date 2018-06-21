@@ -18,6 +18,9 @@ import java.util.*;
 
 import static gov.lanl.micot.application.rdt.PoleConstants.*;
 
+/**
+ * Class that manages RDT functionality from RDT input, inferring pole data to geometry objects, and
+ */
 public class JacksonJSONOperations {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
