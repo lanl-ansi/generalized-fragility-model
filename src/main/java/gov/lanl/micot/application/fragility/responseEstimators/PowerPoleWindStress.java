@@ -91,7 +91,7 @@ class FragilityWind {
     private NormalDistribution nd = null;
 
     /**
-     * Fragility computations for wind induced probability of damage.
+     * Fragility computations for wind induced probability of pole failure.
      * @param n JsonNode that contains needed properties
      * @param exposure wind exposure value
      */

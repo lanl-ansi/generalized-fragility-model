@@ -26,6 +26,7 @@ public class RDTParameters extends CommandLineParameters {
     private boolean hasRDTPoles;
 
     private boolean hasWindField;
+    private boolean hasPrintHelp;
 
 
     /**
@@ -122,6 +123,7 @@ public class RDTParameters extends CommandLineParameters {
 
         // Check to see if only help is requested.
         if (commandLine.hasOption("help")) {
+            setHasPrintHelp(true);
             printRDTHelp();
             System.exit(0);
         }
@@ -256,4 +258,14 @@ public class RDTParameters extends CommandLineParameters {
     public boolean isHasWindField() {
         return hasWindField;
     }
+
+    public void setHasPrintHelp(boolean hasPrintHelp) {
+        this.hasPrintHelp = hasPrintHelp;
+    }
+
+    public boolean getHasPrintHelp(){
+        return this.hasPrintHelp;
+    }
+
+
 }

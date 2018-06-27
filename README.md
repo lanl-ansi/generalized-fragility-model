@@ -9,7 +9,8 @@ This is a rewrite of [micot-general-fragility](https://github.com/lanl-ansi/mico
 
 The Generalized Fragility Model (GFM) is an extensible software tool 
 that provides a framework and template for modelers to easily write customized fragility 
-routines using predefined software components.  GFM accepts a GeoJSON file of assets,
+routines using predefined software components.  This code is provided under a BSD license as part of the
+Multi-Infrastructure Control and Optimization Toolkit (MICOT) project, LA-CC-13-108.
 
 GFM basically accepts a set of geographic raster fields for each hazard quantity and a collection of assets, 
 which are then exposed to those hazard fields by spatial location.  It then provides a data structure for users 

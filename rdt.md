@@ -2,7 +2,8 @@
 # MICOT Resilience Design Tool (RDT) Input descriptions
 
 
-This module covers options that are aligned with the [Resilience Design Tool](https://github.com/lanl-ansi/micot) (RDT).
+This module covers options that are aligned with the
+[Multi Infrastructure Control and Optimization Toolkit (MICOT)](https://github.com/lanl-ansi/micot).
 Currently, these options provide helper functions for reading RDT inputs and generating approximate power pole locations
 along spatially detailed distribution lines.  When ```so``` is enabled, an RDT scenario block is generated.  If desired,
 multiple scenarios are generated when combined with ``` num ``` option.
@@ -10,7 +11,7 @@ multiple scenarios are generated when combined with ``` num ``` option.
 RDT input data examples can be found exploring JSON formatted files
  [here](https://github.com/lanl-ansi/micot/tree/master/application_data/lpnorm)
 
-#### RDT specific options
+#### MICOT specific options
     
 ```
 -a      pole asset data, use with -so to produce RDT scenario block
@@ -18,7 +19,6 @@ RDT input data examples can be found exploring JSON formatted files
 -ro     generated poles output path (optional)    
 -num    number of scenarios to generate - default is one (optional)
 -so     scenario block file output (optional)
-
 ```
 
 Examples:

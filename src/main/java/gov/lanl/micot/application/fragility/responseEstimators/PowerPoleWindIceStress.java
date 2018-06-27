@@ -92,7 +92,7 @@ class FragilityWindIce {
     private NormalDistribution nd = null;
 
     /**
-     * Fragility computations for ice and wind induced probability of damage.
+     * Fragility computations for ice and wind induced probability of pole failure.
      * @param n
      * @param wind
      * @param ice

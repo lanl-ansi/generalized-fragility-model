@@ -3,7 +3,6 @@ package gov.lanl.micot.application.fragility.responseEstimators;
 import gov.lanl.micot.application.fragility.core.GFMEngine;
 import gov.lanl.micot.application.utilities.asset.PropertyData;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +23,6 @@ public class ThresholdFlood extends ResponseEstimator {
     public void calcFragility() {
 
         System.out.println("Calculating . . . ");
-        Double depth_value = Double.valueOf(JOptionPane.showInputDialog("Threshold depth value"));
-
 
         // getting all exposures
         Map<String, HashMap<String, ArrayList<Double>>> exposures = gfmBroker.getExposures();
@@ -33,7 +30,7 @@ public class ThresholdFlood extends ResponseEstimator {
         // data structure for stored fragility calculations
         responses = new HashMap<>();
 
-        double failure=0.0;
+        double failure;
 
         /*
          ********  Calculate fragility here ********
@@ -42,11 +39,16 @@ public class ThresholdFlood extends ResponseEstimator {
         for (Map<String, PropertyData> asset : assets) {
             failure=0.0;
 
+
             String id = asset.get("id").asString();
+            double fv = asset.get("floodThresholdValue").asDouble();
+
             Double dw = exposures.get("flood").get(id).get(0);
 
-            if (depth_value > dw){
+            if (fv < dw){
                 failure=1.0;
+            }else{
+                failure=0.0;
             }
 
             responses.put(id, failure);

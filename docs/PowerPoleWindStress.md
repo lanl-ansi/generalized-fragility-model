@@ -14,7 +14,7 @@ Sa, Y. (2002). Reliability analysis of electric distribution lines (Doctoral dis
 
 ## Model Formulation
 
-Quick summary of pole fragility:
+Quick outline of pole fragility:
 
 probability of failure = the cumulative normal distribution of the pole strength (given mean and standard deviations) evaluated at the pole tensile stress
 
