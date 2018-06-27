@@ -38,7 +38,7 @@ GFM is distributed as a Maven project:
 4. Update JAVA_HOME to point at directory of your Java installation.
 5. Install a git tool ([download](https://git-scm.com/downloads), apt-get, etc.)
 6. Download GFM repository using the following git command: 
-```git clone https://github.com/tscrawford/turbo-fresh-gfm.git```
+```git clone https://github.com/tscrawford/generalized-fragility-model.git```
 7. Build and package code into an executable file using ```mvn -Dmaven.test.skip=true package```
 
 ### LANL Only

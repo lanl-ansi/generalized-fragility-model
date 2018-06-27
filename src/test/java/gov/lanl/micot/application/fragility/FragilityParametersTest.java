@@ -6,9 +6,6 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.junit.Before;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.junit.Assert.assertThat;
-
 public class FragilityParametersTest extends TestCase {
     private FragilityParameters parser;
     String[] cmds;
@@ -68,7 +65,7 @@ public class FragilityParametersTest extends TestCase {
 
         CommandLineParser clp = FragilityParameters.getCommandLineParser();
 
-        assertThat(clp, instanceOf(CommandLineParser.class));
+        assertTrue(clp instanceof CommandLineParser);
 
 
     }
