@@ -4,6 +4,7 @@ import gov.lanl.micot.application.fragility.FragilityParameters;
 import junit.framework.TestCase;
 
 public class CommandLineParametersTest extends TestCase {
+
     private CommandLineParameters parser;
 
     public void setUp() throws Exception {
