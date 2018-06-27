@@ -1,0 +1,34 @@
+{
+ "type": "FeatureCollection",
+ "name": "Example of assets locations",
+ "features": [
+  {
+   "geometry": {
+    "coordinates": [
+     -72.655093135,
+     41.749083498
+    ],
+    "type": "Point"
+   },
+   "properties": {
+    "floodThresholdValue": 0.05,
+    "id": "0"
+   },
+   "type": "Feature"
+  },
+  {
+   "geometry": {
+    "coordinates": [
+     -72.65588665338039,
+     41.748887093791694
+    ],
+    "type": "Point"
+   },
+   "properties": {
+    "floodThresholdValue": 2.2,
+    "id": "1"
+   },
+   "type": "Feature"
+  }
+ ]
+}
