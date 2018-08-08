@@ -5,10 +5,14 @@ import gov.lanl.micot.application.utilities.asset.PropertyData;
 import gov.lanl.micot.application.utilities.gis.HazardField;
 import gov.lanl.micot.application.utilities.json.JsonDataFromJackson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 
 /**
  * This class manages and mediates functionality between geometry objects, hazard fields, and response estimators
@@ -203,6 +207,46 @@ public class GFMEngine {
     public void writeJSONOutputs(HashMap<String, Double> responses, String fileOutputPath) {
         assetResponses = responses;
         jsonData.writeJSON(responses, fileOutputPath);
+    }
+
+    public void writeCSVOutputs(HashMap<String, Double> responses, String fileOutputPath) {
+        assetResponses = responses;
+
+        if (fileOutputPath == null){
+            fileOutputPath = "fragility_output.csv";
+        }
+
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileOutputPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            writer.write("AssetID,DamageProbability\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        for (Map.Entry<String,Double> entry : responses.entrySet()) {
+//            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+            try {
+                writer.write(entry.getKey());
+                writer.write(",");
+                writer.write(entry.getValue().toString());
+                writer.write("\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

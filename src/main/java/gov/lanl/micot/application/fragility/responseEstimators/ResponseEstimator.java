@@ -28,7 +28,8 @@ public abstract class ResponseEstimator {
      * Generic method to write JSON results.
      */
     public void writeResults() {
-        gfmBroker.writeJSONOutputs(this.responses, fileOutputPath);
+        gfmBroker.writeCSVOutputs(this.responses, fileOutputPath);
+//        gfmBroker.writeJSONOutputs(this.responses, fileOutputPath);
     }
 
     /**
