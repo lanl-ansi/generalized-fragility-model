@@ -35,7 +35,6 @@ public class ResponseEstimatorFactoryTest extends TestCase {
 
     public void testRunResponseEstimator() throws Exception {
 
-
         String output = parser.getOutputFilePath();
         String estimator = parser.getResponseEstimator();
 
@@ -75,7 +74,5 @@ public class ResponseEstimatorFactoryTest extends TestCase {
         assertNull(ppw3);
 
     }
-
-
 
 }

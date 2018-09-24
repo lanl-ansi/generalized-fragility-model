@@ -18,7 +18,7 @@ public class ResponseEstimatorFactory {
      * @param estimatorId    estimator identification
      * @param broker         mediator reference to exposure data structures for fragility computations
      * @param fileOutputPath file output path
-     * @return a ResponseEstimator Object specific to the estimator identifier.
+     * @return ResponseEstimator Object specific to the estimator identifier.
      */
     public ResponseEstimator runResponseEstimator(String estimatorId, GFMEngine broker, String fileOutputPath) {
 
@@ -48,7 +48,6 @@ public class ResponseEstimatorFactory {
             e.printStackTrace();
         }
 
-        // return Appropriate response estimator
         return responseEstimator;
     }
 

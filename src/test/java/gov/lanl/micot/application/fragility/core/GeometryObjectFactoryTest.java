@@ -35,4 +35,10 @@ public class GeometryObjectFactoryTest extends TestCase {
 
     }
 
+    public void testshapeNull() {
+        GeometryObject go = new GeometryObjectFactory().getGeometry(null, null);
+        assertEquals(go, null);
+
+    }
+
 }

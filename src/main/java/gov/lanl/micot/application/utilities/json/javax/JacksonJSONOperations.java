@@ -33,6 +33,7 @@ public class JacksonJSONOperations {
     private ArrayNode responsesArray = mapper.createArrayNode();
 
     private static String polesOutputPath = "poles_output.json";
+    private boolean nullFlag = false;
 
     public JacksonJSONOperations() {
     }
@@ -74,6 +75,10 @@ public class JacksonJSONOperations {
                 System.out.println("WARNING: " + g.getIdentifier() + " Geometry type is not implemented");
             }
         }
+
+        if (nullFlag) {
+            System.out.println("*** INFO - Input JSON file has fields that contain 'NULL' values *** ");
+        }
     }
 
     /**
@@ -85,6 +90,7 @@ public class JacksonJSONOperations {
 
         Iterator<Map.Entry<String, JsonNode>> pIterator = p.fields();
         Map<String, PropertyData> property = new HashMap<>();
+
 
         while (pIterator.hasNext()) {
 
@@ -101,7 +107,7 @@ public class JacksonJSONOperations {
                 propertyField = new StringValue(entry.getValue().asText("no value specified"));
             } else {
                 propertyField = null;
-                System.out.println(entry.getValue().asText());
+                this.nullFlag = true;
             }
 
             property.put(entry.getKey(), propertyField);
@@ -248,6 +254,7 @@ public class JacksonJSONOperations {
                 xfmrExist = n.get("is_transformer").asBoolean();
             }
 
+            // don't use lines that have transformers - causes issue with micot optimization solution
             if (!xfmrExist) {
 
                 String lid = String.valueOf(n.get("id").asText());
