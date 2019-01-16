@@ -3,6 +3,7 @@ package gov.lanl.micot.application;
 import org.apache.commons.cli.*;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 /**
@@ -114,11 +115,37 @@ public class CommandLineParameters {
         if (commandLine.hasOption("hazardFields")) {
             hasHazards = true;
             hazardInputPaths = commandLine.getOptionValues("hazardFields");
+            hazardInputPaths = postProcess(hazardInputPaths); // getOptionValues doesn't like spaces in the file names
             checkFiles(hazardInputPaths);
         }
     }
 
-    /**
+    private String[] postProcess(String[] hazardInputPaths) {
+    	ArrayList<String> temp = new ArrayList<String>();
+    	
+    	String str = "";
+    	for (int i = 0; i < hazardInputPaths.length; ++i) {
+    		String s = hazardInputPaths[i];
+    		if (str.length() == 0) {
+				str = s;
+			}
+			else {
+				str += " " + s;
+			}
+    		
+    		if (s.contains(".")) {// hack
+    			temp.add(str);
+    			str = "";
+    		}
+    	}
+    	
+    	
+		// TODO Auto-generated method stub
+		return temp.toArray(new String[0]);
+	}
+
+
+	/**
      * helper method that shows options
      */
     protected static void printHelp() {
